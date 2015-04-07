@@ -18,7 +18,7 @@ class Hint
     /**
      * @ManyToOne(targetEntity="Clue", inversedBy="hints")
      **/
-    protected $clueID; //should be a reference to a Clue object
+    protected $clue; //should be a reference to a Clue object
     /**
      * @Column(type="integer")
      * @var int
@@ -46,13 +46,13 @@ class Hint
         $this->value = $value;
     }
 
-    public function getClueID()
+    public function getClue()
     {
-        return $this->clueID;
+        return $this->clue;
     }
 
-    public function setClueID($clueID)
+    public function setClue($clue)
     {
-        $this->clueID = $clueID;
+        $this->clue = $clue;
     }
 }

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @Entity @Table(name="hunt")
+ */
 class Hunt
 {
     /**
@@ -6,6 +9,10 @@ class Hunt
      * @var int
      */
     protected $id;
+    /**
+     * @ManyToOne(targetEntity="Story", inversedBy="hunts")
+     **/
+    protected $story;
     /**
      * @Column(type="datetime")
      * @var DateTime
@@ -41,4 +48,5 @@ class Hunt
     {
         $this->end = $end;
     }
+
 }

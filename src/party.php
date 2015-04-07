@@ -1,24 +1,20 @@
 <?php
 /**
- * @Entity @Table(name="story")
+ * @Entity @Table(name="party")
  */
-class Story
+class Party
 {
     /**
      * @Id @Column(type="integer") @GeneratedValue
      * @var int
      */
     protected $id;
+
     /**
      * @Column(type="string")
      * @var string
      */
     protected $name;
-    /**
-     * @Column(type="string")
-     * @var string
-     */
-    protected $description;
 
     public function getId()
     {
@@ -35,29 +31,21 @@ class Story
         $this->name = $name;
     }
 
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
+    /**
+     * @ManyToMany(targetEntity="User")
+     * @var users[]
+     */
+    protected $users = null;
 
     /**
-     * @OneToMany(targetEntity="Hunt", mappedBy="story")
+     * @ManyToMany(targetEntity="Hunt")
      * @var hunts[]
-     **/
+     */
     protected $hunts = null;
 
     public function __construct()
     {
+        $this->users = new ArrayCollection();
         $this->hunts = new ArrayCollection();
-    }
-
-    public function addHunt($hint)
-    {
-        $this->hunts[] = $hunt;
     }
 }
