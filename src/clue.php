@@ -32,12 +32,12 @@ class Clue
     }
 
     /**
-     * @OneToMany(targetEntity="Answer", mappedBy="nextClueID")
+     * @OneToMany(targetEntity="Answer", mappedBy="nextClue")
      * @var answers[]
      **/
     protected $answers = null;
     /**
-     * @OneToMany(targetEntity="Hint", mappedBy="clueID")
+     * @OneToMany(targetEntity="Hint", mappedBy="clue")
      * @var hints[]
      **/
     protected $hints = null;
@@ -46,5 +46,15 @@ class Clue
     {
         $this->answers = new ArrayCollection();
         $this->hints = new ArrayCollection();
+    }
+
+    public function addAnswer($answer)
+    {
+        $this->answers[] = $answer;
+    }
+
+    public function addHint($hint)
+    {
+        $this->hints[] = $hint;
     }
 }

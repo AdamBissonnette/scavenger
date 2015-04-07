@@ -18,7 +18,7 @@ class Answer
     /**
      * @ManyToOne(targetEntity="Clue", inversedBy="answers")
      **/
-    protected $nextClueID; //should be a reference to a Clue object
+    protected $nextClue; //should be a reference to a Clue object
 
     public function getId()
     {
@@ -37,11 +37,12 @@ class Answer
 
     public function getNextClue()
     {
-        return $this->nextClueID;
+        return $this->nextClue;
     }
 
-    public function setNextClue($nextClueID)
+    public function setNextClue($nextClue)
     {
-        $this->nextClueID = $nextClueID;
+        $nextClue->addAnswer($this);
+        $this->nextClue = $nextClue;
     }
 }
