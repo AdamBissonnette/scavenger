@@ -11,6 +11,7 @@ class Hunt
     protected $id;
     /**
      * @ManyToOne(targetEntity="Story", inversedBy="hunts")
+     * @var story
      **/
     protected $story;
     /**
@@ -23,6 +24,12 @@ class Hunt
      * @var DateTime
      */
     protected $end;
+
+    /**
+     * @OneToOne(targetEntity="Clue")
+     * @var currentClue
+     */
+    protected $currentClue;
 
     public function getId()
     {
@@ -58,6 +65,16 @@ class Hunt
     public function setEnd($end)
     {
         $this->end = $end;
+    }
+
+    public function getCurrentClue()
+    {
+        return $this->currentClue;
+    }
+
+    public function setCurrentClue($currentClue)
+    {
+        $this->currentClue = $currentClue;
     }
 
 }
