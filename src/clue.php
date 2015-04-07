@@ -33,9 +33,16 @@ class Clue
 
     /**
      * @OneToMany(targetEntity="Answer", mappedBy="nextClue")
+     * @var acceptedAnswers[]
+     **/
+    protected $acceptedAnswers = null;
+
+    /**
+     * @ManyToMany(targetEntity="Answer")
      * @var answers[]
      **/
-    protected $answers = null;
+    protected $answers;
+
     /**
      * @OneToMany(targetEntity="Hint", mappedBy="clue")
      * @var hints[]
@@ -44,8 +51,14 @@ class Clue
 
     public function __construct()
     {
+        $this->acceptedAnswers = new ArrayCollection();
         $this->answers = new ArrayCollection();
         $this->hints = new ArrayCollection();
+    }
+
+    public function addAcceptedAnswer($acceptedAnswer)
+    {
+        $this->acceptedAnswer = $acceptedAnswer;
     }
 
     public function addAnswer($answer)

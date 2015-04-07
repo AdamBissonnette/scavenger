@@ -16,7 +16,8 @@ class Answer
      */
     protected $value;
     /**
-     * @ManyToOne(targetEntity="Clue", inversedBy="answers")
+     * @ManyToOne(targetEntity="Clue", inversedBy="acceptedAnswers")
+     * @var nextClue
      **/
     protected $nextClue; //should be a reference to a Clue object
 
