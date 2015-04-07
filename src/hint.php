@@ -53,6 +53,7 @@ class Hint
 
     public function setClue($clue)
     {
+        $clue->addHint($this);
         $this->clue = $clue;
     }
 }

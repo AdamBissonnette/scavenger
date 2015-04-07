@@ -29,6 +29,17 @@ class Hunt
         return $this->id;
     }
 
+    public function getStory()
+    {
+        return $this->story;
+    }
+
+    public function setStory($story)
+    {
+        $story->addHunt($this);
+        $this->story = $story;
+    }
+
     public function getStart()
     {
         return $this->start;

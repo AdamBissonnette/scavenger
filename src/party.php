@@ -48,4 +48,14 @@ class Party
         $this->users = new ArrayCollection();
         $this->hunts = new ArrayCollection();
     }
+
+    public function addHunt($hunt)
+    {
+        $this->hunts[] = $hunt;
+    }
+
+    public function addUser($user)
+    {
+        $this->users[] = $user;
+    }
 }
