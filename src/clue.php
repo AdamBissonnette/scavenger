@@ -1,7 +1,7 @@
 <?php
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * @Entity @Table(name="clue")
+ * @Entity(repositoryClass="ClueRepository") @Table(name="clue")
  */
 class Clue
 {
@@ -14,21 +14,21 @@ class Clue
      * @Column(type="string")
      * @var string
      */
-    protected $clue;
+    protected $value;
 
     public function getId()
     {
         return $this->id;
     }
 
-    public function getClue()
+    public function getValue()
     {
-        return $this->clue;
+        return $this->value;
     }
 
-    public function setClue($clue)
+    public function setValue($value)
     {
-        $this->clue = $clue;
+        $this->value = $value;
     }
 
     /**
@@ -56,5 +56,10 @@ class Clue
     public function addHint($hint)
     {
         $this->hints[] = $hint;
+    }
+
+    public function toString()
+    {
+        return $this->id . ", " . $this->value;
     }
 }

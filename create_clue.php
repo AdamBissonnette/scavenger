@@ -1,8 +1,20 @@
 <?php
 require_once "bootstrap.php";
-$newClue = $argv[1];
+
+$storyID = $argv[1];
+$clueValue = $argv[2];
+
+$story = $entityManager->find("Story", $storyID);
+if (!$story) {
+    echo "No story.\n";
+    exit(1);
+}
+
 $clue = new Clue();
-$clue->setClue($newClue);
+$clue->setValue($clueValue);
+$story->addClue($clue);
+
 $entityManager->persist($clue);
 $entityManager->flush();
-echo "Created Clue with ID " . $clue->getId() . "\n";
+
+echo "Created Clue " . $clue->toString() . "\n";

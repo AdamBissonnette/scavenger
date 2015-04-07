@@ -1,4 +1,5 @@
 <?php
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @Entity @Table(name="story")
  */
@@ -51,13 +52,30 @@ class Story
      **/
     protected $hunts = null;
 
+    /**
+     * @ManyToMany(targetEntity="Clue")
+     * @var clues[]
+     */
+    protected $clues = null;
+
     public function __construct()
     {
         $this->hunts = new ArrayCollection();
+        $this->clues = new ArrayCollection();
     }
 
-    public function addHunt($hint)
+    public function addHunt($hunt)
     {
         $this->hunts[] = $hunt;
+    }
+
+    public function addClue($clue)
+    {
+        $this->clues[] = $clue;
+    }
+
+    public function toString()
+    {
+        return $this->id . ", " . $this->name . ", " . $this->description;
     }
 }

@@ -45,4 +45,9 @@ class Answer
         $nextClue->addAnswer($this);
         $this->nextClue = $nextClue;
     }
+
+    public function toString()
+    {
+        return $this->id . ", " . $this->value . ", (" . $this->nextClue->toString() . ")";
+    }
 }
