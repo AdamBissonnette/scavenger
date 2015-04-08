@@ -14,11 +14,26 @@ class Clue implements JsonSerializable
      * @Column(type="string")
      * @var string
      */
+    protected $name;
+    /**
+     * @Column(type="string")
+     * @var string
+     */
     protected $value;
 
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     public function getValue()
@@ -80,6 +95,7 @@ class Clue implements JsonSerializable
     {
         return array(
             'id' => $this->id,
+            'name' => $this->name,
             'value'=> $this->value,
         );
     }
