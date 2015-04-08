@@ -1,6 +1,6 @@
 angular.module('scavengerApp', [])
     .controller('scavengerCtrl', ['$scope', '$http', function($scope, $http) {
-        $scope.formData = {"value" : ""};
+        $scope.formData = {"id" : "-1", "value" : "", "name": ""};
 
 
         $scope.formData.submit = function(item, event) {
