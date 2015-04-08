@@ -1,9 +1,10 @@
 <?php
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @Entity @Table(name="answer")
  */
-class Answer
+class Answer implements JsonSerializable
 {
     /**
      * @Id @Column(type="integer") @GeneratedValue
@@ -50,5 +51,14 @@ class Answer
     public function toString()
     {
         return $this->id . ", " . $this->value . ", (" . $this->nextClue->toString() . ")";
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'value'=> $this->value,
+            'nextClue'=> $this->nextClue->jsonSerialize()
+        );
     }
 }

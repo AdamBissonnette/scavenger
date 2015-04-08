@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @Entity @Table(name="log")
  */
-class Log
+class Log implements JsonSerializable
 {
     /**
      * @Id @Column(type="integer") @GeneratedValue
@@ -70,5 +71,16 @@ class Log
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'to'=> $this->to,
+            'from'=> $this->from,
+            'value'=> $this->value,
+            'date'=> $this->date,
+        );
     }
 }

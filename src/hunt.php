@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @Entity @Table(name="hunt")
  */
-class Hunt
+class Hunt implements JsonSerializable
 {
     /**
      * @Id @Column(type="integer") @GeneratedValue
@@ -77,4 +78,14 @@ class Hunt
         $this->currentClue = $currentClue;
     }
 
+    public function jsonSerialize()
+    {
+        return array(
+             'id' => $this->id,
+             'story'=> $this->story->jsonSerialize(),
+             'start'=> $this->start,
+             'end'=> $this->end,
+             'currentClue'=> $this->currentClue->jsonSerialize()
+        );
+    }
 }

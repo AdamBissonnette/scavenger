@@ -1,8 +1,9 @@
 <?php
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @Entity @Table(name="party")
  */
-class Party
+class Party implements JsonSerializable
 {
     /**
      * @Id @Column(type="integer") @GeneratedValue
@@ -57,5 +58,13 @@ class Party
     public function addUser($user)
     {
         $this->users[] = $user;
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'name' => $this->name
+        );
     }
 }

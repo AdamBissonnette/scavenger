@@ -3,7 +3,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @Entity @Table(name="hint")
  */
-class Hint
+class Hint implements JsonSerializable
 {
     /**
      * @Id @Column(type="integer") @GeneratedValue
@@ -55,5 +55,14 @@ class Hint
     {
         $clue->addHint($this);
         $this->clue = $clue;
+    }
+
+        public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'value'=> $this->value,
+            'clue'=> $this->clue->jsonSerialize()
+        );
     }
 }

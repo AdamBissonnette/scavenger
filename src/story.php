@@ -3,7 +3,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @Entity @Table(name="story")
  */
-class Story
+class Story implements JsonSerializable
 {
     /**
      * @Id @Column(type="integer") @GeneratedValue
@@ -77,5 +77,14 @@ class Story
     public function toString()
     {
         return $this->id . ", " . $this->name . ", " . $this->description;
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'name' => $this->name,
+            'description'=> $this->description,
+        );
     }
 }
