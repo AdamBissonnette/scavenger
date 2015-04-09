@@ -1,45 +1,72 @@
 angular.module('scavengerApp')
-    .controller('clueCtrl', ['$scope', '$rootScope', '$state', 'ClueListService', '$http', function($scope, $rootScope, $state, ClueListService, $http) {
-        $scope.formData = {id : "-1", name: "", value : ""};
+  .controller('clueCtrl', ['$scope', '$rootScope', '$state', 'ClueListService', '$http', function($scope, $rootScope, $state, ClueListService, $http) {
 
+    $http({
+        method: 'POST',
+        url: "callbacks.php",
+        data: {fn : "gclues"},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }).
+      success(function(response) {
+        ClueListService.setList(response);
+        //console.log(response);
         $scope.clueList = ClueListService.getList();
+      }).
+      error(function(response) {
+        console.log(response);
+      });
 
-        console.log($scope.clueList);
+    $scope.ctrlFormData = {id : "-1", name: "", value : ""};
 
-        $scope.formData.submit = function(item, event) {  
-          var index = ($scope.clueList.length + 1);
-          $scope.clueList[index].push({id : index, name: $scope.formData.name, value : $scope.formData.value});
-          ClueListService.saveList($scope.clueList);
-          $scope.formData.reset();
+    $scope.ctrlFormData.submit = function(item, event) {
+      var data = {fn: "aeclue", id : $scope.ctrlFormData.id, name: $scope.ctrlFormData.name, value : $scope.ctrlFormData.value}
 
-          // var dataObject = $scope.formData;
+      $http({
+        method: 'POST',
+        url: "callbacks.php",
+        data: data,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }).
+      success(function(response) {
+        data.id = response.id;
+        $scope.clueList[data.id] = data;
+        ClueListService.setList($scope.clueList);
+      }).
+      error(function(response) {
+        console.log(response);
+      });
 
-          //  var responsePromise = $http.post("index.php", dataObject, {});
-          //  responsePromise.success(function(dataFromServer, status, headers, config) {
-          //     //console.log(dataFromServer.title);
-          //  });
-          //   responsePromise.error(function(data, status, headers, config) {
-          //     alert("Submitting form failed!");
-          //  });
-         }
+      $scope.ctrlFormData.reset();
+    }
 
-         $scope.formData.reset = function() {
-          $scope.formData.id = -1;
-          $scope.formData.name = "";
-          $scope.formData.value = "";
-         }
+     $scope.ctrlFormData.reset = function() {
+      $scope.ctrlFormData.id = -1;
+      $scope.ctrlFormData.name = "";
+      $scope.ctrlFormData.value = "";
+     }
 
-         $scope.editItem = function(item) {
-          $scope.formData.id = item.id;
-          $scope.formData.name = item.name;
-          $scope.formData.value = item.value;
-         }
+     $scope.editItem = function(item) {
+      $scope.ctrlFormData.id = item.id;
+      $scope.ctrlFormData.name = item.name;
+      $scope.ctrlFormData.value = item.value;
+     }
 
-        $scope.deleteItem = function(item) {
-          var currentList = $scope.clueList;
-          currentList.splice(currentList.indexOf(item), 1);
-          ClueListService.saveList($scope.clueList);
-        };
+    $scope.deleteItem = function(item) {
+      var data = {fn: 'delclue', id : item.id};
 
-    }]);
+      $http({
+        method: 'POST',
+        url: "callbacks.php",
+        data: data,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }).
+      success(function(response) {
+        delete $scope.clueList[item.id];
+        ClueListService.setList($scope.clueList);
+      }).
+      error(function(response) {
+        console.log(response);
+      });
+    };
+}]);
 
