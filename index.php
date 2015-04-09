@@ -23,8 +23,8 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a ui-sref="clues">Clues</a></li>
-        <li><a ui-sref="answers">Answers</a></li>
+        <li><a ui-sref="clues" href="#">Clues</a></li>
+        <li><a ui-sref="answers" href="#">Answers</a></li>
 <!--                 <li><a href="#clue">Clue</a></li> -->
         <!--- <li><a href="#contact">Contact</a></li> --->
       </ul>

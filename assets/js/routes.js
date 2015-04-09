@@ -2,18 +2,18 @@ angular.module('scavengerApp', ['ui.router'])
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/clues');
 
   $stateProvider
 
-  .state('clue', {
-    url: '/',
+  .state('clues', {
+    url: '/clues',
     templateUrl: 'views/AddEditClue.php',
     controller: 'clueCtrl'
   })
 
-  .state('answer', {
-    url: '/answer',
+  .state('answers', {
+    url: '/answers',
     templateUrl: 'views/AddEditAnswer.php',
     controller: 'answerCtrl'
   })
