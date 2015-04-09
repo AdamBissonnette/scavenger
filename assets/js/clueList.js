@@ -1,9 +1,9 @@
 angular.module('scavengerApp')
 
-.service('ClueListService', ['$http', function($http) {
+.service('ClueListService', function() {
     this.clueList = {};
     this.getList = function() { 
         return this.clueList;
     };
     this.setList = function(list) { this.clueList = list; };
-}]);
+});

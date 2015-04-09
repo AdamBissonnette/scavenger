@@ -16,10 +16,10 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    $scope.ctrlFormData = {id : "-1", name: "", value : ""};
+    $scope.clueCtrlFormData = {id : "-1", name: "", value : ""};
 
-    $scope.ctrlFormData.submit = function(item, event) {
-      var data = {fn: "aeclue", id : $scope.ctrlFormData.id, name: $scope.ctrlFormData.name, value : $scope.ctrlFormData.value}
+    $scope.clueCtrlFormData.submit = function(item, event) {
+      var data = {fn: "aeclue", id : $scope.clueCtrlFormData.id, name: $scope.clueCtrlFormData.name, value : $scope.clueCtrlFormData.value}
 
       $http({
         method: 'POST',
@@ -36,19 +36,19 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-      $scope.ctrlFormData.reset();
+      $scope.clueCtrlFormData.reset();
     }
 
-     $scope.ctrlFormData.reset = function() {
-      $scope.ctrlFormData.id = -1;
-      $scope.ctrlFormData.name = "";
-      $scope.ctrlFormData.value = "";
+     $scope.clueCtrlFormData.reset = function() {
+      $scope.clueCtrlFormData.id = -1;
+      $scope.clueCtrlFormData.name = "";
+      $scope.clueCtrlFormData.value = "";
      }
 
      $scope.editItem = function(item) {
-      $scope.ctrlFormData.id = item.id;
-      $scope.ctrlFormData.name = item.name;
-      $scope.ctrlFormData.value = item.value;
+      $scope.clueCtrlFormData.id = item.id;
+      $scope.clueCtrlFormData.name = item.name;
+      $scope.clueCtrlFormData.value = item.value;
      }
 
     $scope.deleteItem = function(item) {
@@ -67,6 +67,10 @@ angular.module('scavengerApp')
       error(function(response) {
         console.log(response);
       });
+    };
+
+    $scope.changeState = function(stateName) {
+      $state.go(stateName);
     };
 }]);
 

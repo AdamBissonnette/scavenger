@@ -12,11 +12,11 @@ angular.module('scavengerApp', ['ui.router'])
     controller: 'clueCtrl'
   })
 
-  // .state('gallery', {
-  //   url: '/gallery',
-  //   templateUrl: 'gallery/gallery.html',
-  //   controller: 'galleryCtrl'
-  // })
+  .state('answer', {
+    url: '/answer',
+    templateUrl: 'views/AddEditAnswer.php',
+    controller: 'answerCtrl'
+  })
 
   // .state('github', {
   //   url: '/github',

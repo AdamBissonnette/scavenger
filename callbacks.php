@@ -7,6 +7,8 @@ if (isset($data))
 {
     require('bootstrap.php');
 
+    $json = "";
+
     switch ($data->fn) {
         case 'aeclue':
             $json = addEditClue($data, $entityManager);
@@ -67,6 +69,4 @@ function deleteClue($data, $entityManager)
         $entityManager->remove($clue);
         $entityManager->flush();
     }
-
-    return "";
 }
