@@ -18,7 +18,7 @@ class Hint implements JsonSerializable
     /**
      * @ManyToOne(targetEntity="Clue", inversedBy="hints")
      **/
-    protected $clue; //should be a reference to a Clue object
+    protected $clue;
     /**
      * @Column(type="integer")
      * @var int
@@ -57,12 +57,12 @@ class Hint implements JsonSerializable
         $this->clue = $clue;
     }
 
-        public function jsonSerialize()
+    public function jsonSerialize()
     {
         return array(
             'id' => $this->id,
             'value'=> $this->value,
-            'clue'=> $this->clue->jsonSerialize()
+            'clue'=> "-1"
         );
     }
 }

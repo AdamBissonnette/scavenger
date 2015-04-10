@@ -18,10 +18,10 @@ angular.module('scavengerApp', ['ui.router'])
     controller: 'answerCtrl'
   })
 
-  // .state('github', {
-  //   url: '/github',
-  //   templateUrl: 'github//github.html',
-  //   controller: 'githubCtrl'
-  // });
+  .state('hints', {
+    url: '/hints',
+    templateUrl: 'views/AddEditHint.php',
+    controller: 'hintCtrl'
+  });
 
 }]);

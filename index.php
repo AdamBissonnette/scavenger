@@ -25,6 +25,7 @@
       <ul class="nav navbar-nav">
         <li><a ui-sref="clues" href="#">Clues</a></li>
         <li><a ui-sref="answers" href="#">Answers</a></li>
+        <li><a ui-sref="hints" href="#">Hints</a></li>
 <!--                 <li><a href="#clue">Clue</a></li> -->
         <!--- <li><a href="#contact">Contact</a></li> --->
       </ul>
@@ -43,5 +44,7 @@
         <script src='assets/js/clueList.js'></script>
         <script src='assets/js/answerCtrl.js'></script>
         <script src='assets/js/answerList.js'></script>
+        <script src='assets/js/hintCtrl.js'></script>
+        <script src='assets/js/hintList.js'></script>
     </body>
 </html>

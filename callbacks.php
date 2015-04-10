@@ -14,25 +14,59 @@ if (isset($data))
             $json = addEditClue($data, $entityManager);
             break;
         case 'gclues':
-            $json = getClues($data, $entityManager);
+            $json = getEntities($data, $entityManager, "Clue");
             break;
         case 'delclue':
-            $json = deleteClue($data, $entityManager);
+            $json = deleteEntity($data, $entityManager, "Clue");
             break;
         case 'aeanswer':
             $json = addEditAnswer($data, $entityManager);
             break;
         case 'ganswers':
-            $json = getAnswers($data, $entityManager);
+            $json = getEntities($data, $entityManager, "Answer");
             break;
         case 'delanswer':
-            $json = deleteAnswer($data, $entityManager);
+            $json = deleteEntity($data, $entityManager, "Answer");
+            break;
+        case 'aehint':
+            $json = addEditHint($data, $entityManager);
+            break;
+        case 'ghints':
+            $json = getEntities($data, $entityManager, "Hint");
+            break;
+        case 'delhint':
+            $json = deleteEntity($data, $entityManager, "Hint");
             break;
         default:
             break;
     }
 
     echo $json;
+}
+
+function getEntities($data, $entityManager, $entityName)
+{
+    $repository = $entityManager->getRepository($entityName);
+    $entities = $repository->findAll();
+
+    $json = array();
+
+    foreach ($entities as $entity) {
+        $json[$entity->getId()] = $entity->jsonSerialize();
+    }
+
+    return json_encode($json);
+}
+
+function deleteEntity($data, $entityManager, $entityName)
+{
+    $id = $data->id;
+
+    $entity = $entityManager->find($entityName, $id);
+    if ($entity) {
+        $entityManager->remove($entity);
+        $entityManager->flush();
+    }
 }
 
 function addEditClue($data, $entityManager)
@@ -55,31 +89,6 @@ function addEditClue($data, $entityManager)
     return json_encode($clue->jsonSerialize());
 }
 
-function getClues($data, $entityManager)
-{
-    $repository = $entityManager->getRepository('Clue');
-    $clues = $repository->findAll();
-
-    $json = array();
-
-    foreach ($clues as $clue) {
-        $json[$clue->getId()] = $clue->jsonSerialize();
-    }
-
-    return json_encode($json);
-}
-
-function deleteClue($data, $entityManager)
-{
-    $id = $data->id;
-
-    $clue = $entityManager->find("Clue", $id);
-    if ($clue) {
-        $entityManager->remove($clue);
-        $entityManager->flush();
-    }
-}
-
 function addEditAnswer($data, $entityManager)
 {
     $id = $data->id;
@@ -98,27 +107,20 @@ function addEditAnswer($data, $entityManager)
     return json_encode($answer->jsonSerialize());
 }
 
-function getAnswers($data, $entityManager)
-{
-    $repository = $entityManager->getRepository('Answer');
-    $answers = $repository->findAll();
-
-    $json = array();
-
-    foreach ($answers as $answer) {
-        $json[$answer->getId()] = $answer->jsonSerialize();
-    }
-
-    return json_encode($json);
-}
-
-function deleteAnswer($data, $entityManager)
+function addEditHint($data, $entityManager)
 {
     $id = $data->id;
+    $value = $data->value;
 
-    $answer = $entityManager->find("Answer", $id);
-    if ($answer) {
-        $entityManager->remove($answer);
-        $entityManager->flush();
+    $hint = $entityManager->find("Hint", $id);
+    if (!$hint) {
+        $hint = new Hint();  
     }
+
+    $hint->setValue($value);
+
+    $entityManager->persist($hint);
+    $entityManager->flush();
+
+    return json_encode($hint->jsonSerialize());
 }
