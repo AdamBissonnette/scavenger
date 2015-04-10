@@ -19,6 +19,15 @@ if (isset($data))
         case 'delclue':
             $json = deleteClue($data, $entityManager);
             break;
+        case 'aeanswer':
+            $json = addEditAnswer($data, $entityManager);
+            break;
+        case 'ganswers':
+            $json = getAnswers($data, $entityManager);
+            break;
+        case 'delanswer':
+            $json = deleteAnswer($data, $entityManager);
+            break;
         default:
             break;
     }
@@ -67,6 +76,49 @@ function deleteClue($data, $entityManager)
     $clue = $entityManager->find("Clue", $id);
     if ($clue) {
         $entityManager->remove($clue);
+        $entityManager->flush();
+    }
+}
+
+function addEditAnswer($data, $entityManager)
+{
+    $id = $data->id;
+    $value = $data->value;
+
+    $answer = $entityManager->find("Answer", $id);
+    if (!$answer) {
+        $answer = new Answer();  
+    }
+
+    $answer->setValue($value);
+
+    $entityManager->persist($answer);
+    $entityManager->flush();
+
+    return json_encode($answer->jsonSerialize());
+}
+
+function getAnswers($data, $entityManager)
+{
+    $repository = $entityManager->getRepository('Answer');
+    $answers = $repository->findAll();
+
+    $json = array();
+
+    foreach ($answers as $answer) {
+        $json[$answer->getId()] = $answer->jsonSerialize();
+    }
+
+    return json_encode($json);
+}
+
+function deleteAnswer($data, $entityManager)
+{
+    $id = $data->id;
+
+    $answer = $entityManager->find("Answer", $id);
+    if ($answer) {
+        $entityManager->remove($answer);
         $entityManager->flush();
     }
 }
