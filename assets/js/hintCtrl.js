@@ -1,5 +1,5 @@
 angular.module('scavengerApp')
-  .controller('hintCtrl', ['$scope', '$rootScope', '$state', 'AnswerListService', '$http', function($scope, $rootScope, $state, AnswerListService, $http) {
+  .controller('hintCtrl', ['$scope', '$rootScope', '$state', 'HintListService', '$http', function($scope, $rootScope, $state, HintListService, $http) {
 
     $http({
         method: 'POST',
@@ -8,9 +8,9 @@ angular.module('scavengerApp')
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).
       success(function(response) {
-        AnswerListService.setList(response);
+        HintListService.setList(response);
         //console.log(response);
-        $scope.hintList = AnswerListService.getList();
+        $scope.hintList = HintListService.getList();
       }).
       error(function(response) {
         console.log(response);
@@ -30,7 +30,7 @@ angular.module('scavengerApp')
       success(function(response) {
         data.id = response.id;
         $scope.hintList[data.id] = data;
-        AnswerListService.setList($scope.hintList);
+        HintListService.setList($scope.hintList);
       }).
       error(function(response) {
         console.log(response);
@@ -62,7 +62,7 @@ angular.module('scavengerApp')
       }).
       success(function(response) {
         delete $scope.hintList[item.id];
-        AnswerListService.setList($scope.hintList);
+        HintListService.setList($scope.hintList);
       }).
       error(function(response) {
         console.log(response);
