@@ -23,12 +23,12 @@ class Hint implements JsonSerializable
      * @Column(type="integer")
      * @var int
      */
-    protected $order;
+    protected $priority = 5;
     /**
      * @Column(type="integer")
      * @var int
      */
-    protected $usesLifeline;
+    protected $usesLifeline = 1;
 
 
     public function getId()
@@ -46,6 +46,26 @@ class Hint implements JsonSerializable
         $this->value = $value;
     }
 
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+    }
+
+    public function getUsesLifeline()
+    {
+        return $this->usesLifeline;
+    }
+
+    public function setUsesLifeline($usesLifeline)
+    {
+        $this->usesLifeline = $usesLifeline;
+    }
+
     public function getClue()
     {
         return $this->clue;
@@ -55,6 +75,11 @@ class Hint implements JsonSerializable
     {
         $clue->addHint($this);
         $this->clue = $clue;
+    }
+
+    public function toString()
+    {
+        return $this->id . ", " . $this->value;
     }
 
     public function jsonSerialize()
