@@ -1,5 +1,6 @@
 <div class="col-sm-4">                    
     <h2>Add/Edit Answer</h2>
+        <i class='glyphicon-spinner glyphicon-spin glyphicon-large'></i>
         <form class="form-horizontal">
             <div class="form-group">
                 <label for="inputID" class="col-sm-2 control-label">ID</label>
@@ -37,7 +38,7 @@
 </div>
 <div class="col-sm-8">
     <h2>List Answers</h2>
-    <table class='table table-bordered table-striped lists'>
+    <table ng-show="loaded" class='table table-bordered table-striped lists'>
     <tr>
         <th>ID</th>
         <th>Value</th>
@@ -57,5 +58,7 @@
             </button>
         </td>
     </tr>
-    </ul>
+    </table>
+
+    <div class="loading-list" ng-hide="loaded"><i class="glyphicon glyphicon-refresh"></i></div>
 </div>

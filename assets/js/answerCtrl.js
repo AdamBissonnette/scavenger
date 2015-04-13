@@ -1,6 +1,8 @@
 angular.module('scavengerApp')
   .controller('answerCtrl', ['$scope', '$rootScope', '$state', 'AnswerListService', '$http', function($scope, $rootScope, $state, AnswerListService, $http) {
 
+    $scope.loaded = false;
+
     $http({
         method: 'POST',
         url: "callbacks.php",
@@ -11,6 +13,7 @@ angular.module('scavengerApp')
         AnswerListService.setList(response);
         //console.log(response);
         $scope.answerList = AnswerListService.getList();
+        $scope.loaded = true;
       }).
       error(function(response) {
         console.log(response);

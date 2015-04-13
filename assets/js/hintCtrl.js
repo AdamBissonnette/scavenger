@@ -1,5 +1,6 @@
 angular.module('scavengerApp')
   .controller('hintCtrl', ['$scope', '$rootScope', '$state', 'HintListService', '$http', function($scope, $rootScope, $state, HintListService, $http) {
+    $scope.loaded = false;
 
     $http({
         method: 'POST',
@@ -9,6 +10,7 @@ angular.module('scavengerApp')
       }).
       success(function(response) {
         HintListService.setList(response);
+        $scope.loaded = true;
         //console.log(response);
         $scope.hintList = HintListService.getList();
       }).

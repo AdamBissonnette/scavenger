@@ -1,6 +1,8 @@
 angular.module('scavengerApp')
   .controller('clueCtrl', ['$scope', '$rootScope', '$state', 'ClueListService', '$http', function($scope, $rootScope, $state, ClueListService, $http) {
 
+    $scope.loaded = false;
+
     $http({
         method: 'POST',
         url: "callbacks.php",
@@ -9,6 +11,7 @@ angular.module('scavengerApp')
       }).
       success(function(response) {
         ClueListService.setList(response);
+        $scope.loaded = true;
         //console.log(response);
         $scope.clueList = ClueListService.getList();
       }).

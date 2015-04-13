@@ -37,7 +37,7 @@
 </div>
 <div class="col-sm-8">
     <h2>List Hints</h2>
-    <table class='table table-bordered table-striped lists'>
+    <table ng-show="loaded" class='table table-bordered table-striped lists'>
     <tr>
         <th>ID</th>
         <th>Value</th>
@@ -57,5 +57,7 @@
             </button>
         </td>
     </tr>
-    </ul>
+    </table>
+
+    <div class="loading-list" ng-hide="loaded"><i class="glyphicon glyphicon-refresh"></i></div>
 </div>
