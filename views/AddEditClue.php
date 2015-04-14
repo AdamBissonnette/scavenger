@@ -52,6 +52,11 @@
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             </button>
+
+            <button class="btn btn-primary" ng-click='changeState("clueAssignments")' title="Assign Answers / Hints">
+                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+            </button>
+            
             <button class="btn btn-danger" ng-click='deleteItem(item)' title="Delete">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
             </button>

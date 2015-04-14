@@ -26,10 +26,8 @@
         <li><a ui-sref="clues" href="#">Clues</a></li>
         <li><a ui-sref="answers" href="#">Answers</a></li>
         <li><a ui-sref="hints" href="#">Hints</a></li>
-<!--                 <li><a href="#clue">Clue</a></li> -->
-        <!--- <li><a href="#contact">Contact</a></li> --->
       </ul>
-    </div><!--/.nav-collapse -->
+    </div>
   </div>
 </nav>
 
