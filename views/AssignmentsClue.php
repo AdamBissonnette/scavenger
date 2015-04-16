@@ -25,12 +25,6 @@
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                     Go Back
                 </button>
-
-
-                <button class="btn btn-primary" type="submit">
-                    <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-                    Save Assignments
-                </button>
             </div>
         </div>
     </form>
@@ -40,45 +34,47 @@
 <div class="col-sm-3">
     <h2>Accepted Answers</h2>
     <p>Are correct responses received to this Clue</p>
-    <div ng-show="aaloaded">
-        <select ng-model="clueAssignmentCtrlForm.taco" multiple class="form-control">
-            <option ng-click="console.log('rawr');">taco 1</option>
-            <option>taco 2</option>
-            <option>taco 3</option>
-        </select>
+    <div ng-show="aaLoaded">
+        <div ng-repeat="item in aaList">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
+              </label>
+            </div>
+        </div>
     </div>
 
-    <div>
-        {{$scope.clueAssignmentCtrlFrom.taco}}
-    </div>
-
-    <div class="loading-list" ng-hide="aaloaded"><i class="glyphicon glyphicon-refresh"></i></div>
+    <div class="loading-list" ng-hide="aaLoaded"><i class="glyphicon glyphicon-refresh"></i></div>
 </div>
 
 <div class="col-sm-3">
     <h2>Trailing Answers</h2>
     <p>Are received and this Clue is sent as a response</p>
-    <div ng-show="taloaded">
-        <select multiple class="form-control">
-            <option>taco</option>
-            <option>taco</option>
-            <option>taco</option>
-        </select>
+    <div ng-show="taLoaded">
+        <div ng-repeat="item in taList">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
+              </label>
+            </div>
+        </div>
     </div>
 
-    <div class="loading-list" ng-hide="taloaded"><i class="glyphicon glyphicon-refresh"></i></div>
+    <div class="loading-list" ng-hide="taLoaded"><i class="glyphicon glyphicon-refresh"></i></div>
 </div>
 
 <div class="col-sm-2">
     <h2>Hints</h2>
     <p>Are sent when receiving an incorrect Answer</p>
-    <div ng-show="hloaded">
-        <select multiple class="form-control">
-            <option>taco</option>
-            <option>taco</option>
-            <option>taco</option>
-        </select>
+    <div ng-show="hLoaded">
+        <div ng-repeat="item in hList">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
+              </label>
+            </div>
+        </div>
     </div>
 
-    <div class="loading-list" ng-hide="hloaded"><i class="glyphicon glyphicon-refresh"></i></div>
+    <div class="loading-list" ng-hide="hLoaded"><i class="glyphicon glyphicon-refresh"></i></div>
 </div>

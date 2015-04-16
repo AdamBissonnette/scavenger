@@ -14,6 +14,7 @@ angular.module('scavengerApp')
         $scope.loaded = true;
         //console.log(response);
         $scope.clueList = ListService.getList();
+        //console.log($scope.clueList);
       }).
       error(function(response) {
         console.log(response);
@@ -73,7 +74,7 @@ angular.module('scavengerApp')
     };
 
     $scope.changeState = function(stateName, item) {
-      $state.go(stateName, {"clue": item});
+      $state.go(stateName, {"clueid": item.id, "clue": item});
     };
 }]);
 
