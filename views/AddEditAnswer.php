@@ -39,25 +39,25 @@
 <div class="col-sm-8">
     <h2>List Answers</h2>
     <table ng-show="loaded" class='table table-bordered table-striped lists'>
-    <tr>
-        <th>ID</th>
-        <th>Value</th>
-        <!-- <th>Next Clue</th> -->
-        <th>Controls</th>
-    </tr>
-    <tr ng-repeat='item in answerList'>
-        <td> {{ item.id }} </td>
-        <td> {{ item.value }} </td>
-        <!-- <td> Next Clue </td> -->
-        <td class="controls">
-            <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-            </button>
-            <button class="btn btn-danger" ng-click='deleteItem(item)' title="Delete">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-            </button>
-        </td>
-    </tr>
+        <tr>
+            <th>ID</th>
+            <th>Value</th>
+            <!-- <th>Next Clue</th> -->
+            <th>Controls</th>
+        </tr>
+        <tr ng-repeat='item in answerList'>
+            <td> {{ item.id }} </td>
+            <td> {{ item.value }} </td>
+            <!-- <td> Next Clue </td> -->
+            <td class="controls">
+                <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </button>
+                <button class="btn btn-danger" ng-click='deleteItem(item)' title="Delete">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </button>
+            </td>
+        </tr>
     </table>
 
     <div class="loading-list" ng-hide="loaded"><i class="glyphicon glyphicon-refresh"></i></div>

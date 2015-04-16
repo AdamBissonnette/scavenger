@@ -55,6 +55,11 @@ function getEntities($data, $entityManager, $entityName)
         $json[$entity->getId()] = $entity->jsonSerialize();
     }
 
+    if (count($json) == 0)
+    {
+        $json = null;
+    }
+
     return json_encode($json);
 }
 

@@ -8,6 +8,10 @@
         <link rel="stylesheet" href="assets/css/main.css">
 
         <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js'></script>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     </head>
     <body ng-app="scavengerApp">
 <nav class="navbar navbar-inverse">
@@ -39,10 +43,9 @@
         <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js'></script>
         <script src='assets/js/routes.js'></script>
         <script src='assets/js/clueCtrl.js'></script>
-        <script src='assets/js/clueList.js'></script>
         <script src='assets/js/answerCtrl.js'></script>
-        <script src='assets/js/answerList.js'></script>
         <script src='assets/js/hintCtrl.js'></script>
-        <script src='assets/js/hintList.js'></script>
+        <script src='assets/js/listService.js'></script>
+        <script src='assets/js/clueAssignmentsCtrl.js'></script>        
     </body>
 </html>

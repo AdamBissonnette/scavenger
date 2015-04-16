@@ -28,7 +28,7 @@ angular.module('scavengerApp', ['ui.router'])
     url: '/clues/clueAssignments',
     templateUrl: 'views/AssignmentsClue.php',
     controller: 'clueAssignmentsCtrl',
-    data: {"clue" : -1}
+    params: {clue: null}
   });
 
 }]);

@@ -1,5 +1,5 @@
 angular.module('scavengerApp')
-  .controller('clueCtrl', ['$scope', '$rootScope', '$state', 'ClueListService', '$http', function($scope, $rootScope, $state, ClueListService, $http) {
+  .controller('clueCtrl', ['$scope', '$rootScope', '$state', 'ListService', '$http', function($scope, $rootScope, $state, ListService, $http) {
 
     $scope.loaded = false;
 
@@ -10,10 +10,10 @@ angular.module('scavengerApp')
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).
       success(function(response) {
-        ClueListService.setList(response);
+        ListService.setList(response);
         $scope.loaded = true;
         //console.log(response);
-        $scope.clueList = ClueListService.getList();
+        $scope.clueList = ListService.getList();
       }).
       error(function(response) {
         console.log(response);
@@ -33,7 +33,7 @@ angular.module('scavengerApp')
       success(function(response) {
         data.id = response.id;
         $scope.clueList[data.id] = data;
-        ClueListService.setList($scope.clueList);
+        ListService.setList($scope.clueList);
       }).
       error(function(response) {
         console.log(response);
@@ -65,15 +65,15 @@ angular.module('scavengerApp')
       }).
       success(function(response) {
         delete $scope.clueList[item.id];
-        ClueListService.setList($scope.clueList);
+        ListService.setList($scope.clueList);
       }).
       error(function(response) {
         console.log(response);
       });
     };
 
-    $scope.changeState = function(stateName) {
-      $state.go(stateName);
+    $scope.changeState = function(stateName, item) {
+      $state.go(stateName, {"clue": item});
     };
 }]);
 
