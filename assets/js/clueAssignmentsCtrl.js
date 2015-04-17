@@ -1,5 +1,9 @@
 angular.module('scavengerApp')
-  .controller('clueAssignmentsCtrl', ['$scope', '$rootScope', '$state', '$http', function($scope, $rootScope, $state, $http) {
+  .controller('clueAssignmentsCtrl', ['$scope', '$rootScope', '$state', '$http', 'ListService', function($scope, $rootScope, $state, $http, ListService) {
+
+    var aaList = ListService;
+    var taList = ListService;
+    var hList = ListService;
 
     $scope.aaLoaded = false;
     $scope.taLoaded = false;
@@ -18,64 +22,56 @@ angular.module('scavengerApp')
     else
     {
         //Get assignments for current clue              
-        $http({
-            method: 'POST',
-            url: "callbacks.php",
-            data: {fn : "ganswers"},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-          }).
-          success(function(response) {
-            $scope.aaList = response;
+        aaList.http({fn: "ganswers"},
+          function (response) {
+            aaList.setList(response);
+            $scope.aaList = aaList.getList();
             $scope.aaLoaded = true;
-          }).
-          error(function(response) {
+          },
+          function(response){
             console.log(response);
           });
 
-          $http({
-            method: 'POST',
-            url: "callbacks.php",
-            data: {fn : "ganswers"},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-          }).
-          success(function(response) {
-            $scope.taList = response;
+        taList.http({fn: "ganswers"},
+          function (response) {
+            taList.setList(response);
+            $scope.taList = taList.getList();
             $scope.taLoaded = true;
-          }).
-          error(function(response) {
+          },
+          function(response){
             console.log(response);
           });
 
-          $http({
-            method: 'POST',
-            url: "callbacks.php",
-            data: {fn : "ghints"},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-          }).
-          success(function(response) {
-            $scope.hList = response;
+        hList.http({fn: "ghints"},
+          function (response) {
+            hList.setList(response);
+            $scope.hList = hList.getList();
             $scope.hLoaded = true;
-          }).
-          error(function(response) {
+          },
+          function(response){
             console.log(response);
           });
     }
 
-    $scope.assignAA = function(item) {
-        var data = {fn: "assignAA", clueid: $state.params.clue.id, answerid: item.id}; 
+    $scope.assignAA = function(event, item) {
+        if (event.target.tagName == "INPUT")
+        {
+          var data = {fn: "assignAA", clueid: $state.params.clue.id, answerid: item.id}; 
 
-        $http({
-            method: 'POST',
-            url: "callbacks.php",
-            data: data,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-          }).
-          success(function(response) {
-            //derp
-          }).
-          error(function(response) {
-            console.log(response);
-          });
+          aaList.http(data, function(response) {console.log("success");}, function(response) {console.log(response);})
+          $http({
+              method: 'POST',
+              url: "callbacks.php",
+              data: data,
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).
+            success(function(response) {
+              //derp
+            }).
+            error(function(response) {
+              console.log(response);
+            });
+          }
      };
 
     $scope.assignTA = function(item) {
