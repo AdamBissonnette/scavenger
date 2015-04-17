@@ -4,18 +4,16 @@ angular.module('scavengerApp')
     var list = ListService;
     $scope.loaded = false;
 
-    var doSuccess = function (response) {
-        list.setList(response);
-        $scope.loaded = true;
-        //console.log(response);
-        $scope.clueList = list.list;
-    };
-
-    var doError = function(response){
-      console.log(response);
-    };
-
-    list.http({fn: "gclues"}, doSuccess, doError);
+    list.http({fn: "gclues"},
+      function (response) {
+          list.setList(response);
+          $scope.loaded = true;
+          //console.log(response);
+          $scope.clueList = list.getList();
+      },
+      function(response){
+        console.log(response);
+      });
 
     $scope.clueCtrlFormData = {id : "-1", name: "", value : ""};
 

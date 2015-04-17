@@ -37,6 +37,8 @@ if (isset($data))
         case 'delhint':
             $json = deleteEntity($data, $entityManager, "Hint");
             break;
+        case 'assignAA':
+            $json = assignAcceptableAnswer($data, $entityManager);
         default:
             break;
     }
@@ -128,4 +130,13 @@ function addEditHint($data, $entityManager)
     $entityManager->flush();
 
     return json_encode($hint->jsonSerialize());
+}
+
+function assignAcceptableAnswer($data, $entityManager)
+{
+    $clue = $entityManager->find("Clue", $data->clueid);
+    $answer = $entityManager->find("Answer", $data->answerid);
+
+    $clue->addAnswer($answer);
+    $entityManager->flush();
 }

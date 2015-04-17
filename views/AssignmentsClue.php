@@ -39,7 +39,7 @@
             <div ng-show="aaLoaded">
                 <div ng-repeat="item in aaList">
                     <div class="checkbox">
-                      <label ng-click="assignAA(item)">
+                      <label ng-click="assignAA($event, item)">
                         <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
                       </label>
                     </div>

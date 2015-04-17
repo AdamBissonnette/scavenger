@@ -73,7 +73,7 @@ class Clue implements JsonSerializable
 
     public function addAcceptedAnswer($acceptedAnswer)
     {
-        $this->acceptedAnswer = $acceptedAnswer;
+        $this->acceptedAnswers[] = $acceptedAnswer;
     }
 
     public function addAnswer($answer)
