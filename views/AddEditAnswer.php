@@ -1,4 +1,4 @@
-<div class="col-sm-4">                    
+<div class="col-sm-3">                    
     <h2>Add/Edit Answer</h2>
         <i class='glyphicon-spinner glyphicon-spin glyphicon-large'></i>
         <form class="form-horizontal">
@@ -36,7 +36,7 @@
             </div>
         </form>
 </div>
-<div class="col-sm-8">
+<div class="col-sm-9">
     <h2>List Answers</h2>
     <table ng-show="loaded" class='table table-bordered table-striped lists'>
         <tr>

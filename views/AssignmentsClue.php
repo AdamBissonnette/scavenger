@@ -1,4 +1,4 @@
-<div class="col-sm-4">
+<div class="col-sm-3">
     <h2>Clue Assignments</h2>
     <form class="form-horizontal">
         <div class="form-group">
@@ -33,13 +33,17 @@
 
 <div class="col-sm-3">
     <h2>Accepted Answers</h2>
-    <p>Are correct responses received to this Clue</p>
-    <div ng-show="aaLoaded">
-        <div ng-repeat="item in aaList">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
-              </label>
+    <div class="panel panel-success">
+        <div class="panel-heading">Are correct responses received to this Clue</div>
+        <div class="panel-body">
+            <div ng-show="aaLoaded">
+                <div ng-repeat="item in aaList">
+                    <div class="checkbox">
+                      <label ng-click="assignAA(item)">
+                        <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
+                      </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -49,13 +53,17 @@
 
 <div class="col-sm-3">
     <h2>Trailing Answers</h2>
-    <p>Are received and this Clue is sent as a response</p>
-    <div ng-show="taLoaded">
-        <div ng-repeat="item in taList">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
-              </label>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Are received and this Clue is sent as a response</div>
+        <div class="panel-body">
+            <div ng-show="taLoaded">
+                <div ng-repeat="item in taList">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
+                      </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -63,15 +71,19 @@
     <div class="loading-list" ng-hide="taLoaded"><i class="glyphicon glyphicon-refresh"></i></div>
 </div>
 
-<div class="col-sm-2">
+<div class="col-sm-3">
     <h2>Hints</h2>
-    <p>Are sent when receiving an incorrect Answer</p>
-    <div ng-show="hLoaded">
-        <div ng-repeat="item in hList">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
-              </label>
+    <div class="panel panel-warning">
+        <div class="panel-heading">Are sent when receiving an incorrect Answer</div>
+        <div class="panel-body">    
+            <div ng-show="hLoaded">
+                <div ng-repeat="item in hList">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
+                      </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

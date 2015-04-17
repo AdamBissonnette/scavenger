@@ -1,4 +1,4 @@
-<div class="col-sm-4">                    
+<div class="col-sm-3">                    
     <h2>Add/Edit Hint</h2>
         <form class="form-horizontal">
             <div class="form-group">
@@ -35,7 +35,7 @@
             </div>
         </form>
 </div>
-<div class="col-sm-8">
+<div class="col-sm-9">
     <h2>List Hints</h2>
     <table ng-show="loaded" class='table table-bordered table-striped lists'>
     <tr>

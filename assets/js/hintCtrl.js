@@ -1,5 +1,5 @@
 angular.module('scavengerApp')
-  .controller('hintCtrl', ['$scope', '$rootScope', '$state', 'ListService', '$http', function($scope, $rootScope, $state, ListService, $http) {
+  .controller('hintCtrl', ['$scope', '$rootScope', '$state', '$http', function($scope, $rootScope, $state, $http) {
     $scope.loaded = false;
 
     $http({
@@ -9,10 +9,9 @@ angular.module('scavengerApp')
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).
       success(function(response) {
-        ListService.setList(response);
         $scope.loaded = true;
         //console.log(response);
-        $scope.hintList = ListService.getList();
+        $scope.hintList = response;
       }).
       error(function(response) {
         console.log(response);
@@ -32,7 +31,6 @@ angular.module('scavengerApp')
       success(function(response) {
         data.id = response.id;
         $scope.hintList[data.id] = data;
-        ListService.setList($scope.hintList);
       }).
       error(function(response) {
         console.log(response);
@@ -64,7 +62,6 @@ angular.module('scavengerApp')
       }).
       success(function(response) {
         delete $scope.hintList[item.id];
-        ListService.setList($scope.hintList);
       }).
       error(function(response) {
         console.log(response);

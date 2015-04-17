@@ -1,5 +1,5 @@
 angular.module('scavengerApp')
-  .controller('clueAssignmentsCtrl', ['$scope', '$rootScope', '$state', 'ListService', '$http', function($scope, $rootScope, $state, ListService, $http) {
+  .controller('clueAssignmentsCtrl', ['$scope', '$rootScope', '$state', '$http', function($scope, $rootScope, $state, $http) {
 
     $scope.aaLoaded = false;
     $scope.taLoaded = false;
@@ -25,8 +25,7 @@ angular.module('scavengerApp')
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           }).
           success(function(response) {
-            ListService.setList(response);
-            $scope.aaList = ListService.getList();
+            $scope.aaList = response;
             $scope.aaLoaded = true;
           }).
           error(function(response) {
@@ -40,8 +39,7 @@ angular.module('scavengerApp')
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           }).
           success(function(response) {
-            ListService.setList(response);
-            $scope.taList = ListService.getList();
+            $scope.taList = response;
             $scope.taLoaded = true;
           }).
           error(function(response) {
@@ -55,12 +53,36 @@ angular.module('scavengerApp')
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           }).
           success(function(response) {
-            ListService.setList(response);
-            $scope.hList = ListService.getList();
+            $scope.hList = response;
             $scope.hLoaded = true;
           }).
           error(function(response) {
             console.log(response);
           });
     }
+
+    $scope.assignAA = function(item) {
+        var data = {fn: "assignAA", clueid: $state.params.clue.id, answerid: item.id}; 
+
+        $http({
+            method: 'POST',
+            url: "callbacks.php",
+            data: data,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          }).
+          success(function(response) {
+            //derp
+          }).
+          error(function(response) {
+            console.log(response);
+          });
+     };
+
+    $scope.assignTA = function(item) {
+
+     };
+
+    $scope.assignH = function(item) {
+
+     };
   }]);
