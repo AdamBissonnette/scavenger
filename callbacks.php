@@ -7,7 +7,7 @@ if (isset($data))
 {
     require('bootstrap.php');
 
-    $json = "";
+    $json = null;
 
     switch ($data->fn) {
         case 'aeclue':
@@ -37,8 +37,18 @@ if (isset($data))
         case 'delhint':
             $json = deleteEntity($data, $entityManager, "Hint");
             break;
-        case 'assignAA':
+        case 'assignAcceptableAnswer':
             $json = assignAcceptableAnswer($data, $entityManager);
+            break;
+        case 'assignNextClue':
+            $json = assignNextClue($data, $entityManager);
+            break;
+        case 'assignClueHint':
+            $json = assignAcceptableAnswer($data, $entityManager);
+            break;
+        case 'getAnswersByClue':
+            $json = getAnswersByClue($data, $entityManager);
+            break;
         default:
             break;
     }
@@ -132,11 +142,62 @@ function addEditHint($data, $entityManager)
     return json_encode($hint->jsonSerialize());
 }
 
+function getAnswersByClue($data, $entityManager)
+{
+    $clue = $entityManager->find("Clue", $data->clueid);
+
+    $repository = $entityManager->getRepository("Answer");
+    $answers = $repository->findAll();
+
+    $json = array();
+
+    foreach ($answers as $answer)
+    {
+        $curJSON = $answer->jsonSerialize();
+
+        $curJSON["checked"] = in_array($answer, $clue->getAnswers()->toArray());
+        
+        $json[$answer->getId()] = $curJSON;
+    }
+
+    return $json;
+}
+
 function assignAcceptableAnswer($data, $entityManager)
 {
     $clue = $entityManager->find("Clue", $data->clueid);
     $answer = $entityManager->find("Answer", $data->answerid);
 
-    $clue->addAnswer($answer);
+    if ($data->checked == 1)
+    {
+        $clue->removeAnswer($answer);
+    }
+    else
+    {
+        $clue->addAnswer($answer);
+    }
+
     $entityManager->flush();
+}
+
+function assignNextClue($data, $entityManager)
+{
+    $clue = $entityManager->find("Clue", $data->clueid);
+    $answer = $entityManager->find("Answer", $data->answerid);
+
+    if ($data->checked == 1)
+    {
+        $answer->setNextClue($clue);
+    }
+    else
+    {
+        $answer->setNextClue(null);
+    }
+
+    $entityManager->flush();   
+}
+
+function assignHint($data, $entityManager)
+{
+    return null;
 }

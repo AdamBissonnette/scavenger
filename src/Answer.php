@@ -58,7 +58,7 @@ class Answer implements JsonSerializable
         return array(
             'id' => $this->id,
             'value'=> $this->value,
-            'nextClue'=> "-1"
+            'nextClue'=> $this->nextClue
         );
     }
 }

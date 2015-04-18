@@ -81,6 +81,19 @@ class Clue implements JsonSerializable
         $this->answers[] = $answer;
     }
 
+    public function removeAnswer($answer)
+    {
+        if (!$this->answers->contains($answer)) {
+            return;
+        }    
+        $this->answers->removeElement($answer);
+    }
+
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
+
     public function addHint($hint)
     {
         $this->hints[] = $hint;
@@ -97,6 +110,9 @@ class Clue implements JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'value'=> $this->value,
+            'answers' => $this->answers->toArray(),
+            'acceptedAnswers' => $this->acceptedAnswers->toArray(),
+            'hints' => $this->hints->toArray()
         );
     }
 }

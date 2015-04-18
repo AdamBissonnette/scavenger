@@ -40,7 +40,7 @@
                 <div ng-repeat="item in aaList">
                     <div class="checkbox">
                       <label ng-click="assignAA($event, item)">
-                        <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
+                        <input type="checkbox" id="blankCheckbox" value="aa{{item.id}}" ng-checked="item.checked"> {id: {{item.id}}, value: {{item.value}}}
                       </label>
                     </div>
                 </div>
@@ -59,8 +59,8 @@
             <div ng-show="taLoaded">
                 <div ng-repeat="item in taList">
                     <div class="checkbox">
-                      <label>
-                        <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
+                      <label ng-click="assignTA($event, item)">
+                        <input type="checkbox" id="blankCheckbox" value="{{item.id}}" ng-checked="item.checked"> {id: {{item.id}}, value: {{item.value}}}
                       </label>
                     </div>
                 </div>
@@ -79,8 +79,8 @@
             <div ng-show="hLoaded">
                 <div ng-repeat="item in hList">
                     <div class="checkbox">
-                      <label>
-                        <input type="checkbox" id="blankCheckbox" value="{{item.id}}"> {id: {{item.id}}, value: {{item.value}}}
+                      <label ng-click="assignH($event, item)">
+                        <input type="checkbox" id="blankCheckbox" value="{{item.id}}" ng-checked="item.checked"> {id: {{item.id}}, value: {{item.value}}}
                       </label>
                     </div>
                 </div>

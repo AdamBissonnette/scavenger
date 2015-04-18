@@ -22,11 +22,23 @@ angular.module('scavengerApp')
     else
     {
         //Get assignments for current clue              
-        aaList.http({fn: "ganswers"},
+        aaList.http({fn: "ganswers", clueid: $state.params.clue.id},
           function (response) {
+            angular.forEach(response, function(item) {
+              item.checked = false;
+              angular.forEach($scope.clueAssignmentCtrlForm.acceptedAnswers, function (item) {
+                if(answer.id == item.id)
+                {
+                  item.checked = true;
+                  response[item.id] = item;
+                }
+                });
+            });
+
             aaList.setList(response);
             $scope.aaList = aaList.getList();
             $scope.aaLoaded = true;
+            console.log(response);
           },
           function(response){
             console.log(response);
@@ -34,6 +46,13 @@ angular.module('scavengerApp')
 
         taList.http({fn: "ganswers"},
           function (response) {
+            angular.forEach($scope.clueAssignmentCtrlForm.answers, function(answer) {
+              angular.forEach(response, function (item) {
+                if(answer.id == item.id)
+                  item.checked = true;
+                });
+            });
+
             taList.setList(response);
             $scope.taList = taList.getList();
             $scope.taLoaded = true;
@@ -44,6 +63,13 @@ angular.module('scavengerApp')
 
         hList.http({fn: "ghints"},
           function (response) {
+            angular.forEach($scope.clueAssignmentCtrlForm.hints, function(answer) {
+              angular.forEach(response, function (item) {
+                if(answer.id == item.id)
+                  item.checked = true;
+                });
+            });
+
             hList.setList(response);
             $scope.hList = hList.getList();
             $scope.hLoaded = true;
@@ -56,29 +82,33 @@ angular.module('scavengerApp')
     $scope.assignAA = function(event, item) {
         if (event.target.tagName == "INPUT")
         {
-          var data = {fn: "assignAA", clueid: $state.params.clue.id, answerid: item.id}; 
-
-          aaList.http(data, function(response) {console.log("success");}, function(response) {console.log(response);})
-          $http({
-              method: 'POST',
-              url: "callbacks.php",
-              data: data,
-              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).
-            success(function(response) {
-              //derp
-            }).
-            error(function(response) {
-              console.log(response);
-            });
-          }
+          var data = {fn: "assignAcceptableAnswer", clueid: $state.params.clue.id, answerid: item.id, checked: item.checked};
+          console.log(data);
+          aaList.http(data, function(response) {
+            //console.log("success");
+          }, function(response) {console.log(response);});
+        }
      };
 
     $scope.assignTA = function(item) {
-
+      if (event.target.tagName == "INPUT")
+      {
+        var data = {fn: "assignNextClue", clueid: $state.params.clue.id, answerid: item.id, checked: item.checked};
+        console.log(data);
+        taList.http(data, function(response) {
+          //console.log("success");
+        }, function(response) {console.log(response);});
+      }
      };
 
     $scope.assignH = function(item) {
-
+      if (event.target.tagName == "INPUT")
+      {
+        var data = {fn: "assignHint", clueid: $state.params.clue.id, answerid: item.id, checked: item.checked};
+        console.log(data);
+        hList.http(data, function(response) {
+          //console.log("success");
+        }, function(response) {console.log(response);});
+      }
      };
   }]);
