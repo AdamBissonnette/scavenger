@@ -44,7 +44,8 @@ angular.module('scavengerApp')
           function (response) {
             angular.forEach(response, function(item) {
               item.checked = false;
-              angular.forEach($scope.clueAssignmentCtrlForm.acceptedAnswers, function (answer) {
+              // if (item.clueID == $scope.clueAssignmentCtrlForm.id)
+              angular.forEach($scope.clueAssignmentCtrlForm.trailings, function (answer) {
                 if(answer.id == item.id)
                   item.checked = true;
                 });

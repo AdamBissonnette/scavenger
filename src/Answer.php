@@ -55,9 +55,7 @@ class Answer implements JsonSerializable
 
     public function setClue($clue)
     {
-        // echo "setting clue!";
-        // var_dump(json_encode($clue));
-        $this->$clue = $clue;
+        $this->clue = $clue;
     }
 
     public function __toString()

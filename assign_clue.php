@@ -7,8 +7,8 @@ $answerID = $argv[2];
 $clue = $entityManager->find("Clue", $clueID);
 $answer = $entityManager->find("Answer", $answerID);
 
-$clue->addTrailingAnswer($answer);
-//$answer->setNextClue(1);
+$clue->addTrailing($answer);
+$answer->setClue($clue);
 
 $entityManager->flush();
 
