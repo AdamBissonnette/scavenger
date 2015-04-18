@@ -24,8 +24,9 @@ angular.module('scavengerApp')
         //Get assignments for current clue              
         aaList.http({fn: "ganswers", clueid: $state.params.clue.id},
           function (response) {
-            angular.forEach($scope.clueAssignmentCtrlForm.answers, function(answer) {
-              angular.forEach(response, function (item) {
+            angular.forEach(response, function(item) {
+              item.checked = false;
+              angular.forEach($scope.clueAssignmentCtrlForm.answers, function (answer) {
                 if(answer.id == item.id)
                   item.checked = true;
                 });
@@ -34,7 +35,6 @@ angular.module('scavengerApp')
             aaList.setList(response);
             $scope.aaList = aaList.getList();
             $scope.aaLoaded = true;
-            console.log(response);
           },
           function(response){
             console.log(response);
@@ -42,8 +42,9 @@ angular.module('scavengerApp')
 
         taList.http({fn: "ganswers"},
           function (response) {
-            angular.forEach($scope.clueAssignmentCtrlForm.acceptedAnswers, function(answer) {
-              angular.forEach(response, function (item) {
+            angular.forEach(response, function(item) {
+              item.checked = false;
+              angular.forEach($scope.clueAssignmentCtrlForm.acceptedAnswers, function (answer) {
                 if(answer.id == item.id)
                   item.checked = true;
                 });
@@ -59,8 +60,9 @@ angular.module('scavengerApp')
 
         hList.http({fn: "ghints"},
           function (response) {
-            angular.forEach($scope.clueAssignmentCtrlForm.hints, function(answer) {
-              angular.forEach(response, function (item) {
+            angular.forEach(response, function(item) {
+              item.checked = false;
+              angular.forEach($scope.clueAssignmentCtrlForm.hints, function (answer) {
                 if(answer.id == item.id)
                   item.checked = true;
                 });
@@ -78,10 +80,11 @@ angular.module('scavengerApp')
     $scope.assignAA = function(event, item) {
         if (event.target.tagName == "INPUT")
         {
-          var data = {fn: "assignAcceptableAnswer", clueid: $state.params.clue.id, answerid: item.id, checked: item.checked};
+          //item.checked = !item.checked;
+          var data = {fn: "assignAnswer", clueid: $state.params.clue.id, answerid: item.id, checked: item.checked};
           console.log(data);
           aaList.http(data, function(response) {
-            //console.log("success");
+            //item.checked = !item.checked;
           }, function(response) {console.log(response);});
         }
      };
@@ -89,7 +92,9 @@ angular.module('scavengerApp')
     $scope.assignTA = function(event, item) {
       if (event.target.tagName == "INPUT")
       {
+        // item.checked = !item.checked;
         var data = {fn: "assignNextClue", clueid: $state.params.clue.id, answerid: item.id, checked: item.checked};
+        console.log(data);
         taList.http(data, function(response) {
           //console.log("success");
         }, function(response) {console.log(response);});
@@ -99,7 +104,8 @@ angular.module('scavengerApp')
     $scope.assignH = function(event, item) {
       if (event.target.tagName == "INPUT")
       {
-        var data = {fn: "assignHint", clueid: $state.params.clue.id, answerid: item.id, checked: item.checked};
+        // item.checked = !item.checked;
+        var data = {fn: "assignClueHint", clueid: $state.params.clue.id, hintid: item.id, checked: item.checked};
         console.log(data);
         hList.http(data, function(response) {
           //console.log("success");

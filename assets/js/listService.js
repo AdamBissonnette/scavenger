@@ -5,7 +5,7 @@ angular.module('scavengerApp')
         getList: function() {
             return this.list;
         },
-        setList: function(list) {  if (this.list != null ) { this.list = list; } else { this.list = {}; } },
+        setList: function(list) {  if (this.list != "" ) { this.list = list; } else { this.list = {}; } },
         http: function(data, doSuccess, doError) {
             $http({
                 method: 'POST',

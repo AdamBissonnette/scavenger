@@ -36,12 +36,12 @@ angular.module('scavengerApp')
      $scope.answerCtrlFormData.reset = function() {
       $scope.answerCtrlFormData.id = -1;
       $scope.answerCtrlFormData.value = "";
-      // $scope.answerCtrlFormData.nextClue = -1;
+      $scope.answerCtrlFormData.nextClue = -1;
      }
 
      $scope.editItem = function(item) {
       $scope.answerCtrlFormData.id = item.id;
-      // $scope.answerCtrlFormData.nextClue = item.nextClue;
+      $scope.answerCtrlFormData.nextClue = item.nextClue;
       $scope.answerCtrlFormData.value = item.value;
      }
 

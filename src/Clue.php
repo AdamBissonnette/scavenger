@@ -1,7 +1,7 @@
 <?php
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * @Entity(repositoryClass="ClueRepository") @Table(name="clue")
+ * @Entity @Table(name="clue")
  */
 class Clue implements JsonSerializable
 {
@@ -47,12 +47,6 @@ class Clue implements JsonSerializable
     }
 
     /**
-     * @OneToMany(targetEntity="Answer", mappedBy="nextClue")
-     * @var acceptedAnswers[]
-     **/
-    protected $acceptedAnswers = null;
-
-    /**
      * @ManyToMany(targetEntity="Answer")
      * @var answers[]
      **/
@@ -64,16 +58,39 @@ class Clue implements JsonSerializable
      **/
     protected $hints = null;
 
+    /**
+     * @OneToMany(targetEntity="Answer", mappedBy="clue")
+     * @var trailings[]
+     **/
+    protected $trailings = null;
+
     public function __construct()
     {
-        $this->acceptedAnswers = new ArrayCollection();
+        $this->trailings = new ArrayCollection();
         $this->answers = new ArrayCollection();
         $this->hints = new ArrayCollection();
     }
 
-    public function addAcceptedAnswer($acceptedAnswer)
+    public function addTrailing($trailing)
     {
-        $this->acceptedAnswers[] = $acceptedAnswer;
+        $this->trailings[] = $trailing;
+        $trailing->setClue($this);
+        // var_dump(json_encode($this->trailings->toArray()));
+        // var_dump(json_encode($trailing));
+    }
+
+    public function removeTrailing($trailing)
+    {
+        if (!$this->trailings->contains($trailing)) {
+            return;
+        }    
+        $this->trailings->removeElement($trailing);
+        $trailing->setClue(null);
+    }
+
+    public function getTrailings()
+    {
+        return $this->trailings;
     }
 
     public function addAnswer($answer)
@@ -89,19 +106,24 @@ class Clue implements JsonSerializable
         $this->answers->removeElement($answer);
     }
 
-    public function getAnswers()
-    {
-        return $this->answers;
-    }
-
     public function addHint($hint)
     {
+        $hint->setClue($this);
         $this->hints[] = $hint;
     }
 
-    public function toString()
+    public function removeHint($hint)
     {
-        return $this->id . ", " . $this->value;
+        if (!$this->hints->contains($hint)) {
+            return;
+        }    
+        $this->hints->removeElement($hint);
+        $hint->setClue(null);
+    }
+
+    public function __toString()
+    {
+        return strval($this->id);
     }
 
     public function jsonSerialize()
@@ -111,7 +133,7 @@ class Clue implements JsonSerializable
             'name' => $this->name,
             'value'=> $this->value,
             'answers' => $this->answers->toArray(),
-            'acceptedAnswers' => $this->acceptedAnswers->toArray(),
+            'trailings' => $this->trailings->toArray(),
             'hints' => $this->hints->toArray()
         );
     }

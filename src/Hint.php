@@ -71,15 +71,26 @@ class Hint implements JsonSerializable
         return $this->clue;
     }
 
+    public function getClueID()
+    {
+        $id = -1;
+
+        if ($this->clue != null)
+        {
+            $id = $this->clue->getId();
+        }
+
+        return $id;
+    }
+
     public function setClue($clue)
     {
-        $clue->addHint($this);
         $this->clue = $clue;
     }
 
-    public function toString()
+    public function __toString()
     {
-        return $this->id . ", " . $this->value;
+        return strval($this->id);
     }
 
     public function jsonSerialize()
@@ -87,7 +98,7 @@ class Hint implements JsonSerializable
         return array(
             'id' => $this->id,
             'value'=> $this->value,
-            'clue'=> "-1"
+            'clueID' => $this->getClueID()
         );
     }
 }

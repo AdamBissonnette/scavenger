@@ -1,17 +1,13 @@
 <div class="col-sm-3">                    
     <h2>Add/Edit Hint</h2>
-        <form class="form-horizontal">
+        <form class="form-horizontal col-sm-12">
             <div class="form-group">
-                <label for="inputID" class="col-sm-2 control-label">ID</label>
-                <div class="col-sm-10">
-                    <input ng-model="hintCtrlFormData.id" type="text" class="form-control" id="inputID" disabled="disabled" maxlength="10">
-                </div>
+                <label for="inputID" class="control-label">ID</label>
+                <input ng-model="hintCtrlFormData.id" type="text" class="form-control" id="inputID" disabled="disabled" maxlength="10">
             </div>
             <div class="form-group">
-                <label for="inputValue" class="col-sm-2 control-label">Value</label>
-                <div class="col-sm-10">
-                    <textarea ng-model="hintCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value" maxlength="255"></textarea>
-                </div>
+                <label for="inputValue" class="control-label">Value</label>
+                <textarea ng-model="hintCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value" maxlength="255"></textarea>
             </div>
 <!--             <div class="form-group">
                 <label for="inputClue" class="col-sm-2 control-label">Clue</label>
@@ -20,7 +16,7 @@
                 </div>
             </div> -->
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="">
                     <button ng-click="hintCtrlFormData.submit()" class="btn btn-primary" type="submit">
                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                         Save
@@ -37,6 +33,7 @@
 </div>
 <div class="col-sm-9">
     <h2>List Hints</h2>
+    <br />
     <table ng-show="loaded" class='table table-bordered table-striped lists'>
     <tr>
         <th>ID</th>

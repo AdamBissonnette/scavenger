@@ -1,27 +1,21 @@
 <div class="col-sm-3">                    
     <h2>Add/Edit Answer</h2>
         <i class='glyphicon-spinner glyphicon-spin glyphicon-large'></i>
-        <form class="form-horizontal">
+        <form class="form-horizontal col-sm-12">
             <div class="form-group">
-                <label for="inputID" class="col-sm-2 control-label">ID</label>
-                <div class="col-sm-10">
-                    <input ng-model="answerCtrlFormData.id" type="text" class="form-control" id="inputID" disabled="disabled" maxlength="10">
-                </div>
+                <label for="inputID" class="control-label">ID</label>
+                <input ng-model="answerCtrlFormData.id" type="text" class="form-control" id="inputID" disabled="disabled" maxlength="10">
             </div>
             <div class="form-group">
-                <label for="inputValue" class="col-sm-2 control-label">Value</label>
-                <div class="col-sm-10">
-                    <textarea ng-model="answerCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value" maxlength="255"></textarea>
-                </div>
+                <label for="inputNextClue" class="control-label">Next Clue ID</label>
+                <input ng-model="answerCtrlFormData.nextClue.id" type="text" class="form-control" id="inputNextClue" disabled="disabled" maxlength="255" />
             </div>
-<!--             <div class="form-group">
-                <label for="inputNextClue" class="col-sm-2 control-label">NextClue</label>
-                <div class="col-sm-10">
-                    <input ng-model="answerCtrlFormData.nextClue" type="text" class="form-control" id="inputNextClue" placeholder="Pick next clue id" maxlength="255" />
-                </div>
-            </div> -->
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <label for="inputValue" class="control-label">Value</label>                
+                <textarea ng-model="answerCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value" maxlength="255"></textarea>
+            </div>
+            <div class="form-group">
+                <div>
                     <button ng-click="answerCtrlFormData.submit()" class="btn btn-primary" type="submit">
                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                         Save
@@ -38,6 +32,7 @@
 </div>
 <div class="col-sm-9">
     <h2>List Answers</h2>
+    <br />
     <table ng-show="loaded" class='table table-bordered table-striped lists'>
         <tr>
             <th>ID</th>

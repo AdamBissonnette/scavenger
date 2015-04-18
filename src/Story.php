@@ -74,7 +74,7 @@ class Story implements JsonSerializable
         $this->clues[] = $clue;
     }
 
-    public function toString()
+    public function __toString()
     {
         return $this->id . ", " . $this->name . ", " . $this->description;
     }

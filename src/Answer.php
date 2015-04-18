@@ -17,10 +17,9 @@ class Answer implements JsonSerializable
      */
     protected $value;
     /**
-     * @ManyToOne(targetEntity="Clue", inversedBy="acceptedAnswers")
-     * @var nextClue
+     * @ManyToOne(targetEntity="Clue", inversedBy="trailings")
      **/
-    protected $nextClue; //should be a reference to a Clue object
+    protected $clue;
 
     public function getId()
     {
@@ -37,20 +36,33 @@ class Answer implements JsonSerializable
         $this->value = $value;
     }
 
-    public function getNextClue()
+    public function getClue()
     {
-        return $this->nextClue;
+        return $this->clue;
     }
 
-    public function setNextClue($nextClue)
+    public function getClueID()
     {
-        $nextClue->addAnswer($this);
-        $this->nextClue = $nextClue;
+        $id = -1;
+
+        if ($this->clue != null)
+        {
+            $id = $this->clue->getId();
+        }
+
+        return $id;
     }
 
-    public function toString()
+    public function setClue($clue)
     {
-        return $this->id . ", " . $this->value . ", (" . $this->nextClue->toString() . ")";
+        // echo "setting clue!";
+        // var_dump(json_encode($clue));
+        $this->$clue = $clue;
+    }
+
+    public function __toString()
+    {
+        return strval($this->id);
     }
 
     public function jsonSerialize()
@@ -58,7 +70,7 @@ class Answer implements JsonSerializable
         return array(
             'id' => $this->id,
             'value'=> $this->value,
-            'nextClue'=> $this->nextClue
+            'clueID' => $this->getClueID()
         );
     }
 }

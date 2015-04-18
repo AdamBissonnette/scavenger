@@ -19,3 +19,19 @@ $conn = array(
 
 // obtaining the entity manager
 $entityManager = EntityManager::create($conn, $config);
+
+function MakePrettyException(Exception $e) {
+$trace = $e->getTrace();
+
+$result = 'Exception: "';
+$result .= $e->getMessage();
+$result .= '" @ ';
+if($trace[0]['class'] != '') {
+  $result .= $trace[0]['class'];
+  $result .= '->';
+}
+$result .= $trace[0]['function'];
+$result .= '();<br />';
+
+return $result;
+}
