@@ -24,14 +24,10 @@ angular.module('scavengerApp')
         //Get assignments for current clue              
         aaList.http({fn: "ganswers", clueid: $state.params.clue.id},
           function (response) {
-            angular.forEach(response, function(item) {
-              item.checked = false;
-              angular.forEach($scope.clueAssignmentCtrlForm.acceptedAnswers, function (item) {
+            angular.forEach($scope.clueAssignmentCtrlForm.answers, function(answer) {
+              angular.forEach(response, function (item) {
                 if(answer.id == item.id)
-                {
                   item.checked = true;
-                  response[item.id] = item;
-                }
                 });
             });
 
@@ -46,7 +42,7 @@ angular.module('scavengerApp')
 
         taList.http({fn: "ganswers"},
           function (response) {
-            angular.forEach($scope.clueAssignmentCtrlForm.answers, function(answer) {
+            angular.forEach($scope.clueAssignmentCtrlForm.acceptedAnswers, function(answer) {
               angular.forEach(response, function (item) {
                 if(answer.id == item.id)
                   item.checked = true;
@@ -90,18 +86,17 @@ angular.module('scavengerApp')
         }
      };
 
-    $scope.assignTA = function(item) {
+    $scope.assignTA = function(event, item) {
       if (event.target.tagName == "INPUT")
       {
         var data = {fn: "assignNextClue", clueid: $state.params.clue.id, answerid: item.id, checked: item.checked};
-        console.log(data);
         taList.http(data, function(response) {
           //console.log("success");
         }, function(response) {console.log(response);});
       }
      };
 
-    $scope.assignH = function(item) {
+    $scope.assignH = function(event, item) {
       if (event.target.tagName == "INPUT")
       {
         var data = {fn: "assignHint", clueid: $state.params.clue.id, answerid: item.id, checked: item.checked};
