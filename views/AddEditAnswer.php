@@ -8,7 +8,9 @@
             </div>
             <div class="form-group">
                 <label for="inputNextClue" class="control-label">Next Clue ID</label>
-                <input ng-model="answerCtrlFormData.nextClue.id" type="text" class="form-control" id="inputNextClue" disabled="disabled" maxlength="255" />
+                <select class="form-control" id="inputNextClue" ng-model="answerCtrlFormData.clueid">
+                    <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="inputValue" class="control-label">Value</label>                
@@ -37,17 +39,22 @@
         <tr>
             <th>ID</th>
             <th>Value</th>
-            <!-- <th>Next Clue</th> -->
+            <th>Next Clue</th>
             <th>Controls</th>
         </tr>
         <tr ng-repeat='item in answerList'>
             <td> {{ item.id }} </td>
             <td> {{ item.value }} </td>
-            <!-- <td> Next Clue </td> -->
+            <td> {{ item.clueid }} </td>
             <td class="controls">
                 <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 </button>
+
+                <button class="btn btn-primary" ng-click='changeState("answerAssignments", item)' title="Assign Clues">
+                    <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                </button>
+
                 <button class="btn btn-danger" ng-click='deleteItem(item)' title="Delete">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                 </button>

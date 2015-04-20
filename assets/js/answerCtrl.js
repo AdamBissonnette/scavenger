@@ -2,8 +2,19 @@ angular.module('scavengerApp')
   .controller('answerCtrl', ['$scope', '$rootScope', '$state', '$http', 'ListService', function($scope, $rootScope, $state, $http, ListService) {
 
     $scope.loaded = false;
+    $scope.clues = {};
 
+    var cluesList = ListService;
     var list = ListService;
+
+    cluesList.http({fn: "gclues"},
+      function (response) {
+          cluesList.setList(response);
+          $scope.clues = cluesList.getList();
+      },
+      function(response){
+        console.log(response);
+      });
 
     list.http({fn: "ganswers"},
       function (response) {
@@ -16,10 +27,10 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    $scope.answerCtrlFormData = {id : "-1", value : "", nextClue: "-1"};
+    $scope.answerCtrlFormData = {id : "-1", value : "", clueid: "-1"};
 
     $scope.answerCtrlFormData.submit = function(item, event) {
-      var data = {fn: "aeanswer", id : $scope.answerCtrlFormData.id, value : $scope.answerCtrlFormData.value, nextClue: $scope.answerCtrlFormData.nextClue}
+      var data = {fn: "aeanswer", id : $scope.answerCtrlFormData.id, value : $scope.answerCtrlFormData.value, clueid: $scope.answerCtrlFormData.clueid}
 
       list.http(data,
           function (response) {
@@ -36,12 +47,12 @@ angular.module('scavengerApp')
      $scope.answerCtrlFormData.reset = function() {
       $scope.answerCtrlFormData.id = -1;
       $scope.answerCtrlFormData.value = "";
-      $scope.answerCtrlFormData.nextClue = -1;
+      $scope.answerCtrlFormData.clueid = -1;
      }
 
      $scope.editItem = function(item) {
       $scope.answerCtrlFormData.id = item.id;
-      $scope.answerCtrlFormData.nextClue = item.nextClue;
+      $scope.answerCtrlFormData.clueid = item.clueid;
       $scope.answerCtrlFormData.value = item.value;
      }
 
@@ -57,8 +68,8 @@ angular.module('scavengerApp')
           });
     };
 
-    $scope.changeState = function(stateName) {
-      $state.go(stateName);
+    $scope.changeState = function(stateName, item) {
+      $state.go(stateName, {"answerid": item.id, "answer": item});
     };
 }]);
 

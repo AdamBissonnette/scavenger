@@ -68,7 +68,7 @@ class Answer implements JsonSerializable
         return array(
             'id' => $this->id,
             'value'=> $this->value,
-            'clueID' => $this->getClueID()
+            'clueid' => $this->getClueID()
         );
     }
 }

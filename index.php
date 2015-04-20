@@ -46,6 +46,7 @@
         <script src='assets/js/answerCtrl.js'></script>
         <script src='assets/js/hintCtrl.js'></script>
         <script src='assets/js/listService.js'></script>
-        <script src='assets/js/clueAssignmentsCtrl.js'></script>        
+        <script src='assets/js/clueAssignmentsCtrl.js'></script>
+        <script src='assets/js/answerAssignmentCtrl.js'></script>
     </body>
 </html>

@@ -116,8 +116,13 @@ function addEditAnswer($data, $entityManager)
     }
 
     $answer->setValue($value);
+    $clue = $entityManager->find("Clue", $data->clueid);
+    $data->checked = ($clue != null)?1:0;
 
     $entityManager->persist($answer);
+
+    assignNextClue($data, $entityManager, $clue, $answer);
+
     $entityManager->flush();
 
     return json_encode($answer->jsonSerialize());
@@ -179,10 +184,17 @@ function assignAnswer($data, $entityManager)
     $entityManager->flush();
 }
 
-function assignNextClue($data, $entityManager)
+function assignNextClue($data, $entityManager, $clue = null, $answer = null)
 {
-    $clue = $entityManager->find("Clue", $data->clueid);
-    $answer = $entityManager->find("Answer", $data->answerid);
+    if ($clue == null)
+    {
+        $clue = $entityManager->find("Clue", $data->clueid);
+    }
+
+    if ($answer == null)
+    {
+        $answer = $entityManager->find("Answer", $data->answerid);
+    }
 
     if ($data->checked == 0)
     {

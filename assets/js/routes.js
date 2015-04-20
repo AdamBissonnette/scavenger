@@ -29,6 +29,13 @@ angular.module('scavengerApp', ['ui.router'])
     templateUrl: 'views/AssignmentsClue.php',
     controller: 'clueAssignmentsCtrl',
     params: {clueid: -1, clue: null}
+  })
+
+  .state('answerAssignments', {
+    url: '/answers/answerAssignments/',
+    templateUrl: 'views/AssignmentsAnswer.php',
+    controller: 'answerAssignmentsCtrl',
+    params: {answerid: -1, answer: null}
   });
 
 }]);
