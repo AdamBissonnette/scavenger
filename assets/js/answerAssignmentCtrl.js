@@ -7,6 +7,8 @@ angular.module('scavengerApp')
 
     $scope.answerAssignmentCtrlForm = $state.params.answer;
 
+    console.log
+
     $scope.changeState = function(stateName) {
       $state.go(stateName);
     };
@@ -20,12 +22,19 @@ angular.module('scavengerApp')
         //Get assignments for current clue              
         cList.http({fn: "gclues"},
           function (response) {
-            angular.forEach(response.answers, function(item) {
-              item.checked = false;
-              if (item.id == $state.params.answer.id)
-              {
-                item.checked = true;
-              }
+
+            angular.forEach(response, function(resp) {
+              resp.checked = false;
+
+              angular.forEach(resp.answers, function(item) {
+                console.log(item);
+                if($scope.answerAssignmentCtrlForm.id == item.id)
+                {
+                  resp.checked = true;
+                }
+    
+              });
+
             });
 
             cList.setList(response);
@@ -37,7 +46,7 @@ angular.module('scavengerApp')
           });
     }
 
-    $scope.assignC = function(event, item) {
+    $scope.assignAA = function(event, item) {
         if (event.target.tagName == "INPUT")
         {
           //item.checked = !item.checked;

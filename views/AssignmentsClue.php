@@ -1,5 +1,5 @@
 <div class="col-sm-3">
-    <h2>Clue Assignments</h2>
+    <h2>This Clue...</h2>
     <form class="form-horizontal col-sm-12">
         <div class="form-group">
             <label for="inputID" class="control-label">ID</label>
@@ -26,10 +26,10 @@
 </div>
 
 <div class="col-sm-3">
-    <h2>Accepted Answers</h2>
+    <h2>Accepts</h2>
     <br />
     <div class="panel panel-success">
-        <div class="panel-heading">Are correct responses received to this Clue</div>
+        <div class="panel-heading">The Answers selected here as correct</div>
         <div class="panel-body">
             <div ng-show="aaLoaded">
                 <div ng-repeat="item in aaList">
@@ -47,10 +47,10 @@
 </div>
 
 <div class="col-sm-3">
-    <h2>Trailing Answers</h2>
+    <h2>Is Arrived At By</h2>
     <br />
     <div class="panel panel-primary">
-        <div class="panel-heading">Are received and this Clue is sent as a response</div>
+        <div class="panel-heading">The Answers selected here when found to be correct by another clue</div>
         <div class="panel-body">
             <div ng-show="taLoaded">
                 <div ng-repeat="item in taList">
@@ -68,10 +68,10 @@
 </div>
 
 <div class="col-sm-3">
-    <h2>Hints</h2>
+    <h2>Gives Hints</h2>
     <br />
     <div class="panel panel-warning">
-        <div class="panel-heading">Are sent when receiving an incorrect Answer</div>
+        <div class="panel-heading">When it receives an incorrect Answer</div>
         <div class="panel-body">    
             <div ng-show="hLoaded">
                 <div ng-repeat="item in hList">

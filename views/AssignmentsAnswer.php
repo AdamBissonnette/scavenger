@@ -1,36 +1,37 @@
 <div class="col-sm-3">                    
-    <h2>Answer</h2>
+    <h2>This Answer...</h2>
         <i class='glyphicon-spinner glyphicon-spin glyphicon-large'></i>
         <form class="form-horizontal col-sm-12">
             <div class="form-group">
                 <label for="inputID" class="control-label">ID</label>
-                <input ng-model="answerCtrlFormData.id" type="text" class="form-control" id="inputID" disabled="disabled" maxlength="10">
+                <input ng-model="answerAssignmentCtrlForm.id" type="text" class="form-control" id="inputID" disabled="disabled" maxlength="10">
             </div>
             <div class="form-group">
                 <label for="inputNextClue" class="control-label">Next Clue ID</label>
-                <input ng-model="answerCtrlFormData.clueid" type="text" class="form-control" id="inputNextClue" disabled="disabled" maxlength="255" />
+                <input type="text" class="form-control" id="inputNextClue" ng-model="answerAssignmentCtrlForm.clueid" disabled="disabled">
             </div>
             <div class="form-group">
                 <label for="inputValue" class="control-label">Value</label>                
-                <textarea ng-model="answerCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value" maxlength="255"></textarea>
+                <textarea ng-model="answerAssignmentCtrlForm.value" type="text" class="form-control" id="inputValue" placeholder="Enter value" maxlength="255" disabled="disabled"></textarea>
             </div>
             <div class="form-group">
                 <div>
-                    <button class="btn btn-default" ng-click='changeState("answers")'>
-                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                        Go Back
+                    <button  ng-click='changeState("answers")' class="btn btn-default" type="submit">
+                        <span class="glyphicon glyphicon-floppy-remove" aria-hidden="true"></span>
+                        Back to Answers
                     </button>
-                    <!-- <pre>{{answerCtrlFormData}}</pre> -->
+
+                    <!-- <pre>{{answerAssignmentCtrlForm}}</pre> -->
                 </div>
             </div>
         </form>
 </div>
 
 <div class="col-sm-3">
-    <h2>Favorable To...</h2>
+    <h2>Is Acceptable To</h2>
     <br />
     <div class="panel panel-success">
-        <div class="panel-heading">These are clues that will accept this Answer as correct </div>
+        <div class="panel-heading">The clues selected here and will allow the user to continue to the Answers' "NextClue"</div>
         <div class="panel-body">
             <div ng-show="cLoaded">
                 <div ng-repeat="item in cList">
