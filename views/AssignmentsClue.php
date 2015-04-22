@@ -50,7 +50,7 @@
     <h2>Is Arrived At By</h2>
     <br />
     <div class="panel panel-primary">
-        <div class="panel-heading">The Answers selected here when found to be correct by another clue</div>
+        <div class="panel-heading">The Answers selected here when it is accepted by another clue</div>
         <div class="panel-body">
             <div ng-show="taLoaded">
                 <div ng-repeat="item in taList">

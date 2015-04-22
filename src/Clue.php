@@ -64,11 +64,33 @@ class Clue implements JsonSerializable
      **/
     protected $trailings = null;
 
+    /**
+     * @OneToMany(targetEntity="Answer", mappedBy="clue")
+     * @var beginnings[]
+     **/
+    protected $beginnings = null;
+
     public function __construct()
     {
+        $this->beginnings = new ArrayCollection();
         $this->trailings = new ArrayCollection();
         $this->answers = new ArrayCollection();
         $this->hints = new ArrayCollection();
+    }
+
+    public function addBeggining($beginning)
+    {
+        $this->beginnings[] = $beginning;
+        $beginning->setFirstClue($this);
+    }
+
+    public function removeBeggining($beginning)
+    {
+        if (!$this->beginnings->contains($beginning)) {
+            return;
+        }    
+        $this->beginnings->removeElement($beginning);
+        $beginning->setFirstClue(null);
     }
 
     public function addTrailing($trailing)

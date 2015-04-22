@@ -39,6 +39,15 @@ if (isset($data))
         case 'delhint':
             $json = deleteEntity($data, $entityManager, "Hint");
             break;
+        case 'aestory':
+            $json = addEditStory($data, $entityManager);
+            break;
+        case 'gstories':
+            $json = getEntities($data, $entityManager, "Story");
+            break;
+        case 'delstory':
+            $json = deleteEntity($data, $entityManager, "Story");
+            break;
         case 'assignAnswer':
             assignAnswer($data, $entityManager);
             break;
@@ -144,6 +153,34 @@ function addEditHint($data, $entityManager)
     $entityManager->flush();
 
     return json_encode($hint->jsonSerialize());
+}
+
+function addEditStory($data, $entityManager)
+{
+    $id = $data->id;
+    $name = $data->name;
+    $description = $data->description;
+    $clueid = $data->clueid;
+
+    $story = $entityManager->find("Story", $id);
+    if (!$story) {
+        $story = new Story();  
+    }
+
+    $story->setName($name);
+    $story->setDescription($description);
+
+    $entityManager->persist($story);
+
+    $clue = $entityManager->find("Clue", $data->clueid);
+    $data->checked = ($clue != null)?1:0;
+    // assignNextClue($data, $entityManager, $clue, $answer);
+
+    $story->setFirstClue($clue);
+
+    $entityManager->flush();
+
+    return json_encode($story->jsonSerialize());
 }
 
 function getAnswersByClue($data, $entityManager)

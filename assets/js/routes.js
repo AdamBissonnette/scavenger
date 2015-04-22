@@ -24,6 +24,12 @@ angular.module('scavengerApp', ['ui.router'])
     controller: 'hintCtrl'
   })
 
+  .state('stories', {
+    url: '/stories',
+    templateUrl: 'views/AddEditStory.php',
+    controller: 'storyCtrl'
+  })
+
   .state('clueAssignments', {
     url: '/clues/clueAssignments/',
     templateUrl: 'views/AssignmentsClue.php',

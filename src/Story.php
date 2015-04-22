@@ -21,6 +21,11 @@ class Story implements JsonSerializable
      */
     protected $description;
 
+    /**
+     * @ManyToOne(targetEntity="Clue", inversedBy="trailings")
+     **/
+    protected $firstClue;
+
     public function getId()
     {
         return $this->id;
@@ -44,6 +49,28 @@ class Story implements JsonSerializable
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function getFirstClue()
+    {
+        return $this->firstClue;
+    }
+
+    public function setFirstClue($clue)
+    {
+        $this->firstClue = $clue;
+    }
+
+    public function getFirstClueID()
+    {
+        $id = -1;
+
+        if ($this->firstClue != null)
+        {
+            $id = $this->firstClue->getId();
+        }
+
+        return $id;
     }
 
     /**
@@ -76,7 +103,7 @@ class Story implements JsonSerializable
 
     public function __toString()
     {
-        return $this->id . ", " . $this->name . ", " . $this->description;
+        return strval($this->id);
     }
 
     public function jsonSerialize()
@@ -85,6 +112,7 @@ class Story implements JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'description'=> $this->description,
+            'clueid'=> $this->getFirstClueID()
         );
     }
 }
