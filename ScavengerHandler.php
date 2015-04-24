@@ -46,8 +46,10 @@ class ScavengerHandler
         $body = $this->message["Body"];
         $fromPhone = $this->message["From"];
 
+        $user = _findUserByFrom($fromPhone);
+
         //check to make sure that they are a valid sender
-        if ($fromPhone == "(306) 370-4254")
+        if (isset($user))
         {
             //Get the clue that that user is on
             $curClue = null;
@@ -92,6 +94,12 @@ class ScavengerHandler
     }
 
     // function _checkNoAuthGlobals()
+}
+
+
+function _findUserByFrom($from)
+{
+    //$fromPhone == "(306) 370-4254"
 }
 
 function format_TwiML($sms_body="", $mms_uri="")

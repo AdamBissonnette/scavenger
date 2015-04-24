@@ -70,12 +70,34 @@ class Clue implements JsonSerializable
      **/
     protected $beginnings = null;
 
+    /**
+     * @OneToMany(targetEntity="Dummy", mappedBy="clue")
+     * @var huntLocations[]
+     **/
+    protected $huntLocations = null;
+
     public function __construct()
     {
+        $this->huntLocations = new ArrayCollection();
         $this->beginnings = new ArrayCollection();
         $this->trailings = new ArrayCollection();
         $this->answers = new ArrayCollection();
         $this->hints = new ArrayCollection();
+    }
+
+    public function addHuntLocation($huntLocation)
+    {
+        $this->huntLocations[] = $huntLocation;
+        $huntLocation->setClue($this);
+    }
+
+    public function removeHuntLocation($huntLocation)
+    {
+        if (!$this->huntLocations->contains($huntLocation)) {
+            return;
+        }    
+        $this->huntLocations->removeElement($huntLocation);
+        $huntLocation->setClue(null);
     }
 
     public function addBeggining($beginning)

@@ -23,7 +23,7 @@ class User implements JsonSerializable
      */
     protected $email;
 
-        /**
+    /**
      * @Column(type="string")
      * @var string
      */
@@ -86,12 +86,34 @@ class User implements JsonSerializable
      */
     //protected $parties = null;
 
+    /**
+     * @OneToMany(targetEntity="Dummy", mappedBy="clue")
+     * @var huntUser[]
+     **/
+    protected $huntUser = null;
+
     public function __construct()
     {
         //$this->parties = new ArrayCollection();
+        $this->huntUser = new ArrayCollection();
     }
 
-        public function jsonSerialize()
+    public function addHuntUser($huntUser)
+    {
+        $this->huntUsers[] = $huntUser;
+        $huntUser->setUser($this);
+    }
+
+    public function removeHuntUser($huntUser)
+    {
+        if (!$this->huntUsers->contains($huntUser)) {
+            return;
+        }    
+        $this->huntUsers->removeElement($huntUser);
+        $huntUser->setUser(null);
+    }
+
+    public function jsonSerialize()
     {
         return array(
             'id' => $this->id,
