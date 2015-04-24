@@ -42,6 +42,12 @@ angular.module('scavengerApp', ['ui.router'])
     templateUrl: 'views/AssignmentsAnswer.php',
     controller: 'answerAssignmentsCtrl',
     params: {answerid: -1, answer: null}
+  })
+
+  .state('twiMLTests', {
+    url: '/TwiMLTests/',
+    templateUrl: 'views/TwiMLTests.php',
+    controller: 'twiMLTests'
   });
 
 }]);

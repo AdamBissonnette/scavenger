@@ -31,6 +31,7 @@
         <li><a ui-sref="answers" href="#">Answers</a></li>
         <li><a ui-sref="hints" href="#">Hints</a></li>
         <li><a ui-sref="stories" href="#">Story</a></li>
+        <li><a ui-sref="twiMLTests" href="#">Testing</a></li>
       </ul>
     </div>
   </div>
@@ -50,5 +51,6 @@
         <script src='assets/js/listService.js'></script>
         <script src='assets/js/clueAssignmentsCtrl.js'></script>
         <script src='assets/js/answerAssignmentCtrl.js'></script>
+        <script src='assets/js/twiMLTests.js'></script>
     </body>
 </html>
