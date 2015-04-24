@@ -71,4 +71,15 @@ class Answer implements JsonSerializable
             'clueid' => $this->getClueID()
         );
     }
+
+    public function jsonProfile()
+    {
+        return array(
+            'id' => array("type" => "text", "value" => $this->id),
+            'value'=> array("type" => "textarea", "value" => $this->value),
+            'clueid' => array("type" => "select", "value" => $this->getClueID(),
+             "data" => array("fn" => "gclues", "format" => "{{item.id}} | {{item.name}}")
+             )
+        );
+    }
 }

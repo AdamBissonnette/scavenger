@@ -3,7 +3,7 @@ angular.module('scavengerApp')
     $scope.loaded = false;
     var list = ListService;
 
-    list.http({fn: "ghints"},
+    list.http({fn: "getEntities", entityName: "Hint"},
       function (response) {
           list.setList(response);
           $scope.loaded = true;
@@ -45,7 +45,7 @@ angular.module('scavengerApp')
      }
 
     $scope.deleteItem = function(item) {
-      var data = {fn: 'delhint', id : item.id};
+      var data = {fn: 'deleteEntity', id : item.id, entityName: "Hint"};
 
       list.http(data, 
           function (response) {

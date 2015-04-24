@@ -1,7 +1,6 @@
-<?php header("content-type: text/xml");
+<?php //header("content-type: text/xml");
+include_once('ScavengerHandler.php');
 echo '<?xml version="1.0" encoding="UTF-8"?>';
-require('bootstrap.php');
-import_once('ScavengerHandler.php');
 
 $message = $_GET;
 $Scavenger = new ScavengerHandler($message);

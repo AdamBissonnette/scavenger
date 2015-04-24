@@ -22,7 +22,7 @@ angular.module('scavengerApp')
     else
     {
         //Get assignments for current clue              
-        aaList.http({fn: "ganswers", clueid: $state.params.clue.id},
+        aaList.http({fn: "getEntities", entityName: "Answer"},
           function (response) {
             angular.forEach(response, function(item) {
               item.checked = false;
@@ -40,7 +40,7 @@ angular.module('scavengerApp')
             console.log(response);
           });
 
-        taList.http({fn: "ganswers"},
+        taList.http({fn: "getEntities", entityName: "Answer"},
           function (response) {
             angular.forEach(response, function(item) {
               item.checked = false;
@@ -59,7 +59,7 @@ angular.module('scavengerApp')
             console.log(response);
           });
 
-        hList.http({fn: "ghints"},
+        hList.http({fn: "getEntities", entityName: "Hint"},
           function (response) {
             angular.forEach(response, function(item) {
               item.checked = false;

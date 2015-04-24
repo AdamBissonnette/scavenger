@@ -20,7 +20,7 @@ angular.module('scavengerApp')
     else
     {
         //Get assignments for current clue              
-        cList.http({fn: "gclues"},
+        cList.http({fn: "getEntities", entityName: "Clue"},
           function (response) {
 
             angular.forEach(response, function(resp) {

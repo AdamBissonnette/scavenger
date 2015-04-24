@@ -7,7 +7,7 @@ angular.module('scavengerApp')
     var cluesList = ListService;
     var list = ListService;
 
-    cluesList.http({fn: "gclues"},
+    cluesList.http({fn: "getEntities", entityName: "Clue"},
       function (response) {
           cluesList.setList(response);
           $scope.clues = cluesList.getList();
@@ -16,7 +16,7 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    list.http({fn: "ganswers"},
+    list.http({fn: "getEntities", entityName: "Answer"},
       function (response) {
           list.setList(response);
           $scope.loaded = true;
@@ -57,7 +57,7 @@ angular.module('scavengerApp')
      }
 
     $scope.deleteItem = function(item) {
-      var data = {fn: 'delanswer', id : item.id};
+      var data = {fn: 'deleteEntity', id : item.id, entityName: "Answer"};
 
       list.http(data,
           function (response) {

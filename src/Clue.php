@@ -159,4 +159,16 @@ class Clue implements JsonSerializable
             'hints' => $this->hints->toArray()
         );
     }
+
+    public function jsonProfile()
+    {
+        $values = $this->jsonSerialize();
+
+        return array(
+            'id' => array("type" => "text", "value" => $values["id"]),
+            'name'=> array("type" => "text", "value" => $values["name"]),
+            'value'=> array("type" => "textarea", "value" => $values["value"]),
+            'answers' => array("type" => "list", "value" => $values["answers"])
+        );
+    }
 }

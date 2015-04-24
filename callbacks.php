@@ -12,41 +12,23 @@ if (isset($data))
     //var_dump($data);
 
     switch ($data->fn) {
+        case 'getEntities':
+            $json = getEntities($data, $entityManager);
+        break;
+        case 'deleteEntity':
+            $json = deleteEntity($data, $entityManager);
+        break;
         case 'aeclue':
             $json = addEditClue($data, $entityManager);
-            break;
-        case 'gclues':
-            $json = getEntities($data, $entityManager, "Clue");
-            break;
-        case 'delclue':
-            $json = deleteEntity($data, $entityManager, "Clue");
             break;
         case 'aeanswer':
             $json = addEditAnswer($data, $entityManager);
             break;
-        case 'ganswers':
-            $json = getEntities($data, $entityManager, "Answer");
-            break;
-        case 'delanswer':
-            $json = deleteEntity($data, $entityManager, "Answer");
-            break;
         case 'aehint':
             $json = addEditHint($data, $entityManager);
             break;
-        case 'ghints':
-            $json = getEntities($data, $entityManager, "Hint");
-            break;
-        case 'delhint':
-            $json = deleteEntity($data, $entityManager, "Hint");
-            break;
         case 'aestory':
             $json = addEditStory($data, $entityManager);
-            break;
-        case 'gstories':
-            $json = getEntities($data, $entityManager, "Story");
-            break;
-        case 'delstory':
-            $json = deleteEntity($data, $entityManager, "Story");
             break;
         case 'assignAnswer':
             assignAnswer($data, $entityManager);
@@ -64,8 +46,10 @@ if (isset($data))
     echo $json;
 }
 
-function getEntities($data, $entityManager, $entityName)
+function getEntities($data, $entityManager)
 {
+    $entityName = $data->entityName;
+
     $repository = $entityManager->getRepository($entityName);
     $entities = $repository->findAll();
 
@@ -83,9 +67,10 @@ function getEntities($data, $entityManager, $entityName)
     return json_encode($json);
 }
 
-function deleteEntity($data, $entityManager, $entityName)
+function deleteEntity($data, $entityManager)
 {
     $id = $data->id;
+    $entityName = $data->entityName;
 
     $entity = $entityManager->find($entityName, $id);
     if ($entity) {

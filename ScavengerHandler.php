@@ -1,4 +1,5 @@
 <?php
+require('bootstrap.php');
 
 class ScavengerHandler
 {
@@ -24,15 +25,17 @@ class ScavengerHandler
     MediaUrl0
     ApiVersion
     */
-    $message = null;
-    $globals = array('authGlobals' => array(
+    var $message = null;
+    var $globals = array('authGlobals' => array(
                             array("regex" => "/(start)/i", "smsresponse" => "Your adventure is now starting!", "mmsresponse" => null),
                             array("regex" => "/(time)/i", "smsresponse" => "The time is at hand!")
                             ),
-                     'noAuthGlobals' => array('regex' => ".*", "/(start)/i" => "You don't appear the be registered.")
+                        'noAuthGlobals' => array(
+                            array('regex' => ".*", "/(start)/i" => "You don't appear the be registered.")
+                            )
                      );
 
-    function __construct(incomingMessage)
+    function __construct($incomingMessage)
     {
         $this->message = $incomingMessage;
     }
@@ -49,35 +52,29 @@ class ScavengerHandler
             //Get the clue that that user is on
             $curClue = null;
 
-            if ($curClue == null)
+            if ($curClue != null)
             {
-                //send the first clue
-                $response_body = format_TwiML("first clue value");
+                
             }
             else
             {
-                //Evaluate their message
                 if (preg_match("/(start)/i", $body))
                 {
-                    
+                    //send the first clue
+                    $response_body = format_TwiML("first clue value");
+                }
+                elseif (preg_match("/(taco)/i", $body)) {
+                    $response_body = format_TwiML("", "http://dev.mediamanifesto.com/twilio/scavenger/tacotaco.m4a");
+                }
+                elseif (preg_match("/(picture)/i", $body)) {
+                    $response_body = format_TwiML("pretty pic", "http://dev.mediamanifesto.com/twilio/scavenger/webpage.png");
+                }
+                elseif (isset($_GET["MediaUrl0"]))
+                {
+                    $response_body = format_TwiML($_GET["MediaUrl0"]);
                 }
             }
-        }
-
-        if (preg_match("/(start)/i", $body))
-        {
-        $response_body = format_TwiML("Your adventure is now starting!");
-        }
-        elseif (preg_match("/(taco)/i", $body)) {
-            $response_body = format_TwiML("", "http://dev.mediamanifesto.com/twilio/scavenger/tacotaco.m4a");
-        }
-        elseif (preg_match("/(picture)/i", $body)) {
-            $response_body = format_TwiML("pretty pic", "http://dev.mediamanifesto.com/twilio/scavenger/webpage.png");
-        }
-        elseif (isset($_GET["MediaUrl0"]))
-        {
-            $response_body = format_TwiML($_GET["MediaUrl0"]);
-        }
+        }        
 
         return $response_body;
     }
