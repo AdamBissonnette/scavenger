@@ -27,10 +27,10 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    $scope.answerCtrlFormData = {id : "-1", value : "", clueid: "-1"};
+    $scope.answerCtrlFormData = {id : "-1", name : "", value : "", clueid: "-1"};
 
     $scope.answerCtrlFormData.submit = function(item, event) {
-      var data = {fn: "aeanswer", id : $scope.answerCtrlFormData.id, value : $scope.answerCtrlFormData.value, clueid: $scope.answerCtrlFormData.clueid}
+      var data = {fn: "aeanswer", id : $scope.answerCtrlFormData.id, name : $scope.answerCtrlFormData.name, value : $scope.answerCtrlFormData.value, clueid: $scope.answerCtrlFormData.clueid}
 
       list.http(data,
           function (response) {
@@ -46,12 +46,14 @@ angular.module('scavengerApp')
 
      $scope.answerCtrlFormData.reset = function() {
       $scope.answerCtrlFormData.id = -1;
+      $scope.answerCtrlFormData.name = "";
       $scope.answerCtrlFormData.value = "";
       $scope.answerCtrlFormData.clueid = -1;
      }
 
      $scope.editItem = function(item) {
       $scope.answerCtrlFormData.id = item.id;
+      $scope.answerCtrlFormData.name = item.name;
       $scope.answerCtrlFormData.clueid = item.clueid;
       $scope.answerCtrlFormData.value = item.value;
      }

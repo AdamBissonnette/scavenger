@@ -51,7 +51,7 @@ function getEntities($data, $entityManager)
     $entityName = $data->entityName;
 
     $repository = $entityManager->getRepository($entityName);
-    $entities = $repository->findAll();
+    $entities = $repository->findBy(array("state" => 1));
 
     $json = array();
 
@@ -74,7 +74,8 @@ function deleteEntity($data, $entityManager)
 
     $entity = $entityManager->find($entityName, $id);
     if ($entity) {
-        $entityManager->remove($entity);
+        //$entityManager->remove($entity);
+        $entity->setState(0);
         $entityManager->flush();
     }
 }
@@ -102,6 +103,7 @@ function addEditClue($data, $entityManager)
 function addEditAnswer($data, $entityManager)
 {
     $id = $data->id;
+    $name = $data->name;
     $value = $data->value;
 
     $answer = $entityManager->find("Answer", $id);
@@ -109,13 +111,17 @@ function addEditAnswer($data, $entityManager)
         $answer = new Answer();  
     }
 
+    $answer->setName($name);
     $answer->setValue($value);
     $clue = $entityManager->find("Clue", $data->clueid);
     $data->checked = ($clue != null)?1:0;
 
     $entityManager->persist($answer);
 
-    assignNextClue($data, $entityManager, $clue, $answer);
+    if ($clue != null)
+    {
+        assignNextClue($data, $entityManager, $clue, $answer);
+    }
 
     $entityManager->flush();
 
@@ -125,6 +131,7 @@ function addEditAnswer($data, $entityManager)
 function addEditHint($data, $entityManager)
 {
     $id = $data->id;
+    $name = $data->name;
     $value = $data->value;
 
     $hint = $entityManager->find("Hint", $id);
@@ -132,6 +139,7 @@ function addEditHint($data, $entityManager)
         $hint = new Hint();  
     }
 
+    $hint->setName($value);
     $hint->setValue($value);
 
     $entityManager->persist($hint);

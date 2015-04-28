@@ -44,7 +44,7 @@ angular.module('scavengerApp')
      }
 
     $scope.deleteItem = function(item) {
-      var data = {fn: 'deleteEntityt', id : item.id, entityName: "Clue"};
+      var data = {fn: 'deleteEntity', id : item.id, entityName: "Clue"};
 
       list.http(data,
         function(response) {

@@ -13,6 +13,10 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="inputName" class="control-label">Name</label>
+                <input ng-model="answerCtrlFormData.name" type="text" class="form-control" id="inputName" placeholder="Enter name" maxlength="255">
+            </div>
+            <div class="form-group">
                 <label for="inputValue" class="control-label">Value</label>                
                 <textarea ng-model="answerCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value" maxlength="255"></textarea>
             </div>
@@ -38,12 +42,14 @@
     <table ng-show="loaded" class='table table-bordered table-striped lists'>
         <tr>
             <th>ID</th>
+            <th>Name</th>
             <th>Value</th>
             <th>Next Clue</th>
             <th>Controls</th>
         </tr>
         <tr ng-repeat='item in answerList'>
             <td> {{ item.id }} </td>
+            <td> {{ item.name }} </td>
             <td> {{ item.value }} </td>
             <td> {{ item.clueid }} </td>
             <td class="controls">

@@ -20,6 +20,11 @@ class Clue implements JsonSerializable
      * @var string
      */
     protected $value;
+    /**
+     * @Column(type="integer")    
+     * @var string
+     */
+    protected $state=1;
 
     public function getId()
     {
@@ -46,6 +51,15 @@ class Clue implements JsonSerializable
         $this->value = $value;
     }
 
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
     /**
      * @ManyToMany(targetEntity="Answer")
      * @var answers[]

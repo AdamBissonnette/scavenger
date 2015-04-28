@@ -20,11 +20,15 @@ class Story implements JsonSerializable
      * @var string
      */
     protected $description;
-
     /**
      * @ManyToOne(targetEntity="Clue", inversedBy="trailings")
      **/
     protected $firstClue;
+    /**
+     * @Column(type="integer")    
+     * @var string
+     */
+    protected $state=1;
 
     public function getId()
     {
@@ -49,6 +53,16 @@ class Story implements JsonSerializable
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
     }
 
     public function getFirstClue()

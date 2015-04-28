@@ -15,15 +15,35 @@ class Answer implements JsonSerializable
      * @Column(type="string")    
      * @var string
      */
+    protected $name;
+    /**
+     * @Column(type="string")    
+     * @var string
+     */
     protected $value;
     /**
      * @ManyToOne(targetEntity="Clue", inversedBy="trailings")
      **/
     protected $clue;
+    /**
+     * @Column(type="integer")    
+     * @var string
+     */
+    protected $state=1;
 
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     public function getValue()
@@ -34,6 +54,16 @@ class Answer implements JsonSerializable
     public function setValue($value)
     {
         $this->value = $value;
+    }
+
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
     }
 
     public function getClue()
@@ -67,6 +97,7 @@ class Answer implements JsonSerializable
     {
         return array(
             'id' => $this->id,
+            'name' => $this->name,
             'value'=> $this->value,
             'clueid' => $this->getClueID()
         );
@@ -76,6 +107,7 @@ class Answer implements JsonSerializable
     {
         return array(
             'id' => array("type" => "text", "value" => $this->id),
+            'name' => array("type" => "text", "value" => $this->name),
             'value'=> array("type" => "textarea", "value" => $this->value),
             'clueid' => array("type" => "select", "value" => $this->getClueID(),
              "data" => array("fn" => "gclues", "format" => "{{item.id}} | {{item.name}}")
