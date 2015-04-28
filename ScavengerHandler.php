@@ -28,11 +28,11 @@ class ScavengerHandler
     var $entityManager = null;
     var $message = null;
     var $globals = array('authGlobals' => array(
-                            array("regex" => "/(start)/i", "smsresponse" => "Your adventure is now starting!", "mmsresponse" => null),
+                            array("regex" => "/(start)/i", "smsresponse" => "Your adventure is now starting!", "startedresponse" => "You have already started your adventure!", "mmsresponse" => null),
                             array("regex" => "/(time)/i", "smsresponse" => "The time is at hand!")
                             ),
                         'noAuthGlobals' => array(
-                            array('regex' => ".*", "/(start)/i" => "You don't appear the be registered.")
+                            array('regex' => "/.*/", "smsresponse" => "You don't appear the be registered.")
                             )
                      );
 
@@ -54,7 +54,12 @@ class ScavengerHandler
         if (isset($user))
         {
             //Get the clue that that user is on
-            $curClue = $this->_findCurrentClueByUser($user);
+            $dummy = $this->_findCurrentClueByUser($user);
+
+            if (isset($dummy))
+            {
+                $curClue = $dummy->getClue();
+            }
 
             if (isset($curClue))
             {
@@ -69,7 +74,10 @@ class ScavengerHandler
                     if (isset($nextClue))
                     {
                         //Send the next clue
+                        //Update the currentClue
                         $response_body = $nextClue->getValue();
+                        $dummy->setClue($nextClue);
+                        $this->entityManager->flush();
                     }
                     else
                     {
@@ -78,25 +86,16 @@ class ScavengerHandler
                 }
                 else
                 {
-                    if (preg_match("/(start)/i", $body))
+                    $global_result = $this->_checkGlobals($body, true, true);
+
+                    //Check for global commands
+                    if ($global_result != "")
                     {
-                        //send the first clue
-                        $response_body = format_TwiML("Your adventure is now starting!");
-                    }
-                    elseif (preg_match("/(taco)/i", $body)) {
-                        $response_body = format_TwiML("", "http://dev.mediamanifesto.com/twilio/scavenger/tacotaco.m4a");
-                    }
-                    elseif (preg_match("/(picture)/i", $body)) {
-                        $response_body = format_TwiML("pretty pic", "http://dev.mediamanifesto.com/twilio/scavenger/webpage.png");
-                    }
-                    elseif (isset($_GET["MediaUrl0"]))
-                    {
-                        $response_body = format_TwiML($_GET["MediaUrl0"]);
+                        $response_body = $global_result;
                     }
                     else
                     {
                         //They got the answer wrong - send them a hint
-                        //Do global commands for registered users
                         //If we don't have hints then suggest that they skip the question and message Adam / Berkley that shits going down
                         $response_body = "You got the answer wrong, oh no!";
                     }
@@ -104,54 +103,57 @@ class ScavengerHandler
             }
             else
             {
-                //Do global commands for registered users
-                if (preg_match("/(start)/i", $body))
-                {
-                    //send the first clue
-                    $response_body = format_TwiML("first clue value");
-                }
-                elseif (preg_match("/(taco)/i", $body)) {
-                    $response_body = format_TwiML("", "http://dev.mediamanifesto.com/twilio/scavenger/tacotaco.m4a");
-                }
-                elseif (preg_match("/(picture)/i", $body)) {
-                    $response_body = format_TwiML("pretty pic", "http://dev.mediamanifesto.com/twilio/scavenger/webpage.png");
-                }
-                elseif (isset($_GET["MediaUrl0"]))
-                {
-                    $response_body = format_TwiML($_GET["MediaUrl0"]);
-                }
+                $response_body = $this->_checkGlobals($body, true);
             }
         }
         else
         {
             //Do global commands for unregistered users
+            $response_body = $this->_checkGlobals($body);
         }
 
         return $response_body;
     }
 
-    function _checkGlobals($isAuthenticated)
+    function _checkGlobals($body, $isAuthenticated=false, $hasStarted=false)
     {
         $responseToGlobal = "";
 
-        if (preg_match("/(start)/i", $body["Body"]))
+        if ($isAuthenticated)
         {
-            $response_body = format_TwiML("Your adventure is now starting!");
+            foreach ($this->globals["authGlobals"] as $command) {
+                if (preg_match($command["regex"], $body))
+                {
+                    if ($hasStarted)
+                    {
+                        if (isset($command["startedresponse"]))
+                        {
+                            return $command["startedresponse"];                            
+                        }
+                    }
+
+                    return $command["smsresponse"];
+                }
+            }
+        }
+        else
+        {
+            foreach ($this->globals["noAuthGlobals"] as $command) {
+                if (preg_match($command["regex"], $body))
+                {
+                    return $command["smsresponse"];
+                }
+            }
         }
 
-        return $response_body;
+        return $responseToGlobal;
     }
-
-    // function _checkNoAuthGlobals()
 
     function _findUserByFrom($from)
     {
         $repository = $this->entityManager->getRepository("User");
 
         $user = $repository->findOneBy(array('phone' => $from));
-        if (!$user) {
-            $user = new User();  
-        }
 
         return $user;
     }
@@ -160,26 +162,30 @@ class ScavengerHandler
     {
         $repository = $this->entityManager->getRepository("Dummy");
 
-        $clue = $repository->findOneBy(array('user' => $user->getId()));
-        if (!$clue) {
-            $clue = new Clue();  
+        $dummy = $repository->findOneBy(array('user' => $user->getId()));
+        if (isset($dummy))
+        {
+            $clue = $dummy->getClue();
         }
 
-        return $clue;
+
+        return $dummy;
     }
 
     function _findAnswerForClueByValue($clue, $sms_value=null, $mms_value=null)
     {
-        $answer = null;
+        $curAnswer = null;
+        $acceptableAnswers = $clue->getAnswers();
 
-        if (preg_match("/(taco)/i", $sms_value)) {
-            $answer = $this->entityManager->find("Answer", 1);
-            if (!$answer) {
-                $answer = new Answer();  
+        foreach ($acceptableAnswers as $answer) {
+            if (preg_match($answer->getValue(), $sms_value)) {
+                $curAnswer = $answer;
+                break;
             }
+
         }
 
-        return $answer;
+        return $curAnswer;
     }
 }
 

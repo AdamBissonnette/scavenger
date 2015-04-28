@@ -150,6 +150,11 @@ class Clue implements JsonSerializable
         $this->answers->removeElement($answer);
     }
 
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
+
     public function addHint($hint)
     {
         $hint->setClue($this);
