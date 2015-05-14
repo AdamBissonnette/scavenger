@@ -206,10 +206,10 @@ class Clue implements JsonSerializable
         $values = $this->jsonSerialize();
 
         return array(
-            'id' => array("type" => "text", "value" => $values["id"]),
-            'name'=> array("type" => "text", "value" => $values["name"]),
-            'value'=> array("type" => "textarea", "value" => $values["value"]),
-            'answers' => array("type" => "list", "value" => $values["answers"])
+            'id' => array("label" => "ID", "disabled" => true, "type" => "text", "value" => $values["id"]),
+            'name'=> array("label" => "Name", "disabled" => false, "type" => "text", "value" => $values["name"]),
+            'value'=> array("label" => "Description", "disabled" => false, "type" => "textarea", "value" => $values["value"]),
+            // 'answers' => array("label" => "Answers", "disabled" => false, "type" => "list", "value" => $values["answers"])
         );
     }
 }
