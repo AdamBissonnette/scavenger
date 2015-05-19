@@ -1,4 +1,0 @@
-{
-    input: "<div class='form-group'><label for='inp{{content.label}}' class='control-label'>{{content.label}}</label><input ng-model='content' class='form-control' id='inputID' maxlength='10'></div>",
-    textarea: "<div class='form-group'><label for='txt{{content.label}}' class='control-label'>{{content.label}}</label> <textarea ng-model='content' type='text' class='form-control'></textarea></div>",
-}
