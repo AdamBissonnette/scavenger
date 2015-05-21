@@ -63,35 +63,48 @@ class ScavengerHandler
 
             if (isset($curClue))
             {
+                //Check for global commands then the correct answer
+
                 //Check if they sent a correct Answer
-                $answer = $this->_findAnswerForClueByValue($curClue, $body, null); //clue, sms, mms
-
-                if (isset($answer))
-                {
-                    //Get the next clue from the answer and format that as a 
-                    $nextClue = $answer->getClue();
-
-                    if (isset($nextClue))
-                    {
-                        //Send the next clue
-                        //Update the currentClue
-                        $response_body = $nextClue->getValue();
-                        $dummy->setClue($nextClue);
+                // $global_result = $this->_checkGlobals($body, true, true, $curClue);
+                $responseFound = false;
+                switch ($body) {
+                    case preg_match("/clue/i", $body)?true:false:
+                        $responseFound = true;
+                        return $curClue->getValue();
+                    break;
+                    case preg_match("/restart/i", $body)?true:false:
+                        $responseFound = true;
+                        $clue = $this->_getFirstClue();
+                        $response_body = $clue->getValue();
+                        $dummy->setClue($clue);
                         $this->entityManager->flush();
-                    }
-                    else
-                    {
-                        $response_body = "You've completed the adventure";
-                    }
+                    break;
                 }
-                else
-                {
-                    $global_result = $this->_checkGlobals($body, true, true);
 
-                    //Check for global commands
-                    if ($global_result != "")
+                if (!$responseFound)
+                {
+                    $answer = $this->_findAnswerForClueByValue($curClue, $body, null); //clue, sms, mms
+
+                    if (isset($answer))
                     {
-                        $response_body = $global_result;
+                        //Get the next clue from the answer and format that as a 
+                        $nextClue = $answer->getClue();
+
+                        if (isset($nextClue))
+                        {
+                            //Send the next clue
+                            //Update the currentClue
+                            $response_body = $nextClue->getValue();
+                            $dummy->setClue($nextClue);
+                            $this->entityManager->flush();
+                        }
+                        else
+                        {
+                            $response_body = "You've completed the adventure. Text 'start' to being again.";
+                            $dummy->setClue(null);
+                            $this->entityManager->flush();
+                        }
                     }
                     else
                     {
@@ -103,7 +116,22 @@ class ScavengerHandler
             }
             else
             {
-                $response_body = $this->_checkGlobals($body, true);
+                $responseFound = false;
+                switch ($body) {
+                    case preg_match("/start/i", $body)?true:false:
+                        //Send first clue
+                        $response_body = true;
+                        $clue = $this->_getFirstClue();
+                        $response_body = $clue->getValue();
+                        $dummy->setClue($clue);
+                        $this->entityManager->flush();
+                    break;
+                }
+
+                if (!$responseFound)
+                {
+                    $response_body = $this->_checkGlobals($body, true);
+                }
             }
         }
         else
@@ -115,26 +143,21 @@ class ScavengerHandler
         return $response_body;
     }
 
-    function _checkGlobals($body, $isAuthenticated=false, $hasStarted=false)
+    function _checkGlobals($body, $isAuthenticated=false, $hasStarted=false, $curClue=null)
     {
         $responseToGlobal = "";
 
         if ($isAuthenticated)
         {
-            foreach ($this->globals["authGlobals"] as $command) {
-                if (preg_match($command["regex"], $body))
-                {
-                    if ($hasStarted)
-                    {
-                        if (isset($command["startedresponse"]))
-                        {
-                            return $command["startedresponse"];                            
-                        }
-                    }
-
-                    return $command["smsresponse"];
-                }
-            }
+            $responseFound = false;
+                // switch ($body) {
+                //     case preg_match("/clue/i", $body)?true:false:
+                //         return $curClue->getValue();
+                //     break;
+                //     case preg_match("/restart/i", $body)?true:false:
+                //         return $curClue->getValue();
+                //     break;
+                // }
         }
         else
         {
@@ -186,6 +209,13 @@ class ScavengerHandler
         }
 
         return $curAnswer;
+    }
+
+    function _getFirstClue($storyID=1)
+    {
+        $story = $this->entityManager->find("Story", $storyID);
+
+        return $story->getFirstClue();
     }
 }
 
