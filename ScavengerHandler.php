@@ -136,7 +136,7 @@ class ScavengerHandler
                 switch ($body) {
                     case preg_match("/start/i", $body)?true:false:
                         //Send first clue
-                        $response_body = true;
+                        $responseFound = true;
                         $clue = $this->_getFirstClue();
                         $response_body = $clue->getValue();
                         $dummy->setClue($clue);
