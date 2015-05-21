@@ -127,8 +127,9 @@ class Hint implements JsonSerializable
     {
         return array(
             'id' => $this->id,
+            'name' => $this->name,
             'value'=> $this->value,
-            'clueID' => $this->getClueID()
+            'clue' => $this->getClueID()
         );
     }
 }

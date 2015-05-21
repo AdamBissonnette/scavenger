@@ -139,10 +139,18 @@ function addEditHint($data, $entityManager)
         $hint = new Hint();  
     }
 
-    $hint->setName($value);
+    $hint->setName($name);
     $hint->setValue($value);
+    $clue = $entityManager->find("Clue", $data->clue);
+    $data->checked = ($clue != null)?1:0;
 
     $entityManager->persist($hint);
+
+    if ($clue != null)
+    {
+        assignClueHint($data, $entityManager, $clue, $hint);
+    }
+
     $entityManager->flush();
 
     return json_encode($hint->jsonSerialize());
@@ -238,10 +246,17 @@ function assignNextClue($data, $entityManager, $clue = null, $answer = null)
     $entityManager->flush();
 }
 
-function assignClueHint($data, $entityManager)
+function assignClueHint($data, $entityManager, $clue=null, $hint=null)
 {
-    $clue = $entityManager->find("Clue", $data->clueid);
-    $hint = $entityManager->find("Hint", $data->hintid);
+    if ($clue == null)
+    {
+        $clue = $entityManager->find("Clue", $data->clue);
+    }
+
+    if ($hint == null)
+    {
+        $hint = $entityManager->find("Hint", $data->hintid);
+    }    
 
     if ($data->checked == 0)
     {

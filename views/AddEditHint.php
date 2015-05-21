@@ -7,11 +7,11 @@
             </div>
             <div class="form-group">
                 <label for="inputName" class="control-label">Name</label>
-                <input ng-model="answerCtrlFormData.name" type="text" class="form-control" id="inputName" placeholder="Enter name" maxlength="255">
+                <input ng-model="hintCtrlFormData.name" type="text" class="form-control" id="inputName" placeholder="Enter name" maxlength="255">
             </div>
             <div class="form-group">
                 <label for="inputClue" class="control-label">Clue ID</label>
-                <select class="form-control" id="inputClue" ng-model="answerCtrlFormData.clueid">
+                <select class="form-control" id="inputClue" ng-model="hintCtrlFormData.clue">
                     <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
             </div>
@@ -50,7 +50,7 @@
         <td> {{ item.id }} </td>
         <td> {{ item.name }} </td>
         <td> {{ item.value }} </td>
-        <td> item.clue </td>
+        <td> {{ item.clue }} </td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

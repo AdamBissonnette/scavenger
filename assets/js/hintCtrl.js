@@ -3,6 +3,18 @@ angular.module('scavengerApp')
     $scope.loaded = false;
     var list = ListService;
 
+    $scope.clues = {};
+    var cluesList = ListService;
+
+    cluesList.http({fn: "getEntities", entityName: "Clue"},
+      function (response) {
+          cluesList.setList(response);
+          $scope.clues = cluesList.getList();
+      },
+      function(response){
+        console.log(response);
+      });
+
     list.http({fn: "getEntities", entityName: "Hint"},
       function (response) {
           list.setList(response);
@@ -14,10 +26,10 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    $scope.hintCtrlFormData = {id : "-1", value : "", clue: "-1"};
+    $scope.hintCtrlFormData = {id : "-1", name: "", value : "", clue: "-1"};
 
     $scope.hintCtrlFormData.submit = function(item, event) {
-      var data = {fn: "aehint", id : $scope.hintCtrlFormData.id, value : $scope.hintCtrlFormData.value, clue: $scope.hintCtrlFormData.clue}
+      var data = {fn: "aehint", id : $scope.hintCtrlFormData.id, name: $scope.hintCtrlFormData.name, value : $scope.hintCtrlFormData.value, clue: $scope.hintCtrlFormData.clue}
 
       list.http(data, 
           function (response) {
@@ -34,14 +46,16 @@ angular.module('scavengerApp')
 
      $scope.hintCtrlFormData.reset = function() {
       $scope.hintCtrlFormData.id = -1;
+      $scope.hintCtrlFormData.name = "";
       $scope.hintCtrlFormData.value = "";
-      // $scope.hintCtrlFormData.clue = -1;
+      $scope.hintCtrlFormData.clue = -1;
      }
 
      $scope.editItem = function(item) {
       $scope.hintCtrlFormData.id = item.id;
-      // $scope.hintCtrlFormData.clue = item.clue;
+      $scope.hintCtrlFormData.name = item.name;
       $scope.hintCtrlFormData.value = item.value;
+      $scope.hintCtrlFormData.clue = item.clue;
      }
 
     $scope.deleteItem = function(item) {
