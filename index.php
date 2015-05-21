@@ -31,6 +31,7 @@
         <li><a ui-sref="answers" href="#">Answers</a></li>
         <li><a ui-sref="hints" href="#">Hints</a></li>
         <li><a ui-sref="stories" href="#">Story</a></li>
+        <li><a ui-sref="users" href="#">User</a></li>
         <li><a ui-sref="twiMLTests" href="#">Testing</a></li>
       </ul>
     </div>
@@ -48,6 +49,7 @@
         <script src='assets/js/answerCtrl.js'></script>
         <script src='assets/js/hintCtrl.js'></script>
         <script src='assets/js/storyCtrl.js'></script>
+        <script src='assets/js/userCtrl.js'></script>
         <script src='assets/js/listService.js'></script>
         <script src='assets/js/clueAssignmentsCtrl.js'></script>
         <script src='assets/js/answerAssignmentCtrl.js'></script>

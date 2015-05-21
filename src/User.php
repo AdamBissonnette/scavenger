@@ -34,6 +34,11 @@ class User implements JsonSerializable
      * @var DateTime
      */
     protected $registrationDate;
+    /**
+     * @Column(type="integer")    
+     * @var string
+     */
+    protected $state=1;
 
     public function getId()
     {
@@ -80,46 +85,30 @@ class User implements JsonSerializable
         $this->registrationDate = $registrationDate;
     }
 
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
     /**
      * @//ManyToMany(targetEntity="Party", mappedBy="users")
      * @//var parties[]
      */
     //protected $parties = null;
 
-    /**
-     * @OneToMany(targetEntity="Dummy", mappedBy="clue")
-     * @var huntUser[]
-     **/
-    protected $huntUser = null;
-
-    public function __construct()
-    {
-        //$this->parties = new ArrayCollection();
-        $this->huntUser = new ArrayCollection();
-    }
-
-    public function addHuntUser($huntUser)
-    {
-        $this->huntUsers[] = $huntUser;
-        $huntUser->setUser($this);
-    }
-
-    public function removeHuntUser($huntUser)
-    {
-        if (!$this->huntUsers->contains($huntUser)) {
-            return;
-        }    
-        $this->huntUsers->removeElement($huntUser);
-        $huntUser->setUser(null);
-    }
-
     public function jsonSerialize()
     {
         return array(
             'id' => $this->id,
             'name'=> $this->name,
+            'email'=> $this->email,
             'phone'=> $this->phone,
-            'registrationDate'=> $this->registrationDate,
+            'date'=> $this->registrationDate
         );
     }
 }

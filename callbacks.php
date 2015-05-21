@@ -30,6 +30,9 @@ if (isset($data))
         case 'aestory':
             $json = addEditStory($data, $entityManager);
             break;
+        case 'aeuser':
+            $json = addEditUser($data, $entityManager);
+            break;
         case 'assignAnswer':
             assignAnswer($data, $entityManager);
             break;
@@ -175,13 +178,58 @@ function addEditStory($data, $entityManager)
 
     $clue = $entityManager->find("Clue", $data->clueid);
     $data->checked = ($clue != null)?1:0;
-    // assignNextClue($data, $entityManager, $clue, $answer);
 
     $story->setFirstClue($clue);
 
     $entityManager->flush();
 
     return json_encode($story->jsonSerialize());
+}
+
+function addEditUser($data, $entityManager)
+{
+    $id = $data->id;
+    $name = $data->name;
+    $email = $data->email;
+    $phone = $data->phone;
+
+    if (isset($data->clueid))
+    {
+        $clue = $entityManager->find("Clue", $data->clueid);
+    }
+    else
+    {
+        $clue = null;
+    }
+    
+
+    $user = $entityManager->find("User", $id);
+    if (!$user) {
+        $user = new User();  
+        $user->setRegistrationDate(new DateTime());
+    }
+
+    $user->setName($name);
+    $user->setEmail($email);
+    $user->setPhone($phone);
+
+    $entityManager->persist($user);
+
+    $repository = $entityManager->getRepository("Dummy");
+    $dummy = $repository->findOneBy(array('user' => $user->getId()));
+
+    if (!isset($dummy))
+    {
+        $dummy = new Dummy();
+        $dummy->setUser($user);
+        $entityManager->persist($dummy);
+    }
+
+    $dummy->setClue($clue);
+
+    $entityManager->flush();
+
+    return json_encode($user->jsonSerialize());
 }
 
 function getAnswersByClue($data, $entityManager)

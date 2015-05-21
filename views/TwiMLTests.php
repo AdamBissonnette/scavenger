@@ -29,10 +29,10 @@
 
     <h4>Preset Tests</h4>
     <ul>
-        <li><a target="resultsFrame" href="PhpHandler.php?Body=start&From=(306)%20370-4254">Sent SMS "Start" - SMS Reply</a></li>
-        <li><a target="resultsFrame" href="PhpHandler.php?Body=restart&From=(306)%20370-4254">Sent SMS "Restart" - SMS Reply</a></li>
-        <li><a target="resultsFrame" href="PhpHandler.php?Body=clue&From=(306)%20370-4254">Sent SMS "Clue" - MMS Reply</a></li>
-        <li><a target="resultsFrame" href="PhpHandler.php?Body=aaa&From=(306)%20999-9999">Unregistered messages the app</a></li>
+        <li><a target="resultsFrame" href="PhpHandler.php?Body=start&From=(306)%20370-4254&To=(306)%20tst-test">Sent SMS "Start" - SMS Reply</a></li>
+        <li><a target="resultsFrame" href="PhpHandler.php?Body=restart&From=(306)%20370-4254&To=(306)%20tst-test">Sent SMS "Restart" - SMS Reply</a></li>
+        <li><a target="resultsFrame" href="PhpHandler.php?Body=clue&From=(306)%20370-4254&To=(306)%20tst-test">Sent SMS "Clue" - MMS Reply</a></li>
+        <li><a target="resultsFrame" href="PhpHandler.php?Body=aaa&From=(306)%20999-9999&To=(306)%20tst-test">Unregistered messages the app</a></li>
     </ul>
 </div>
 <div class="col-sm-9">

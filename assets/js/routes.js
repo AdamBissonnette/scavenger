@@ -48,6 +48,12 @@ angular.module('scavengerApp', ['ui.router'])
     url: '/TwiMLTests/',
     templateUrl: 'views/TwiMLTests.php',
     controller: 'twiMLTests'
+  })
+
+  .state('users', {
+    url: '/users/',
+    templateUrl: 'views/AddEditUser.php',
+    controller: 'userCtrl'
   });
 
 }]);
