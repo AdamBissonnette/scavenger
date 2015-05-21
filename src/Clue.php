@@ -169,6 +169,11 @@ class Clue implements JsonSerializable
         return $this->answers;
     }
 
+    public function getHints()
+    {
+        return $this->hints;
+    }
+
     public function addHint($hint)
     {
         $hint->setClue($this);

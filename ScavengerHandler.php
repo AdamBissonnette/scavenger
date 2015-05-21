@@ -110,7 +110,19 @@ class ScavengerHandler
                     {
                         //They got the answer wrong - send them a hint
                         //If we don't have hints then suggest that they skip the question and message Adam / Berkley that shits going down
-                        $response_body = "You got the answer wrong, oh no!";
+
+                        $hintFound = false;
+
+                        $hint = $this->_findHintsForClue($curClue);
+
+                        if ($hint != null)
+                        {
+                            $response_body = $hint->getValue();
+                        }
+                        else
+                        {
+                            $response_body = "You got the answer wrong, oh no!";
+                        }
                     }
                 }
             }
@@ -216,6 +228,19 @@ class ScavengerHandler
         $story = $this->entityManager->find("Story", $storyID);
 
         return $story->getFirstClue();
+    }
+
+    function _findHintsForClue($curClue)
+    {
+        $curHint = null;
+        $hints = $curClue->getHints();
+
+        foreach ($hints as $hint) {
+            $curHint = $hint;
+            break;
+        }
+
+        return $curHint;
     }
 }
 
