@@ -14,11 +14,11 @@
             </div>
             <div class="form-group">
                 <label for="inputName" class="control-label">Name</label>
-                <input ng-model="answerCtrlFormData.name" type="text" class="form-control" id="inputName" placeholder="Enter name" maxlength="255">
+                <input ng-model="answerCtrlFormData.name" type="text" class="form-control" id="inputName" placeholder="Enter name">
             </div>
             <div class="form-group">
                 <label for="inputValue" class="control-label">Value</label>                
-                <textarea ng-model="answerCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value" maxlength="255"></textarea>
+                <textarea ng-model="answerCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value"></textarea>
             </div>
             <div class="form-group">
                 <div>
