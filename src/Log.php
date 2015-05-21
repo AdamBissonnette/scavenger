@@ -14,12 +14,12 @@ class Log implements JsonSerializable
      * @Column(type="string")
      * @var string
      */
-    protected $from;
+    protected $fromNumber;
     /**
      * @Column(type="string")
      * @var string
      */
-    protected $to;
+    protected $toNumber;
     /**
      * @Column(type="string")
      * @var string
@@ -38,47 +38,47 @@ class Log implements JsonSerializable
 
     public function getFrom()
     {
-        return $this->from;
+        return $this->fromNumber;
     }
 
-    public function setFrom($from)
+    public function setFrom($fromIn)
     {
-        $this->from = $from;
+        $this->fromNumber = $fromIn;
     }
     public function getTo()
     {
-        return $this->to;
+        return $this->toNumber;
     }
 
-    public function setTo($to)
+    public function setTo($toIn)
     {
-        $this->to = $to;
+        $this->toNumber = $toIn;
     }
     public function getValue()
     {
         return $this->value;
     }
 
-    public function setValue($value)
+    public function setValue($valueIn)
     {
-        $this->value = $value;
+        $this->value = $valueIn;
     }
     public function getDate()
     {
         return $this->date;
     }
 
-    public function setDate($date)
+    public function setDate($dateIn)
     {
-        $this->date = $date;
+        $this->date = $dateIn;
     }
 
     public function jsonSerialize()
     {
         return array(
             'id' => $this->id,
-            'to'=> $this->to,
-            'from'=> $this->from,
+            'to'=> $this->toNumber,
+            'from'=> $this->fromNumber,
             'value'=> $this->value,
             'date'=> $this->date,
         );

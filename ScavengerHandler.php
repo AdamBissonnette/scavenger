@@ -40,6 +40,9 @@ class ScavengerHandler
     {
         $this->message = $incomingMessage;
         $this->entityManager = $em;
+
+        $data = array('from' => $this->message["From"], 'to' => $this->message["To"], 'value' => $this->message["Body"]);
+        LogMessage($data, $em);
     }
 
     public function CreateResponse()
@@ -56,6 +59,7 @@ class ScavengerHandler
             //Get the clue that that user is on
             $dummy = $this->_findCurrentClueByUser($user);
 
+            $curClue = null;
             if (isset($dummy))
             {
                 $curClue = $dummy->getClue();
@@ -71,7 +75,7 @@ class ScavengerHandler
                 switch ($body) {
                     case preg_match("/clue/i", $body)?true:false:
                         $responseFound = true;
-                        return $curClue->getValue();
+                        $response_body = $curClue->getValue();
                     break;
                     case preg_match("/restart/i", $body)?true:false:
                         $responseFound = true;
@@ -151,6 +155,9 @@ class ScavengerHandler
             //Do global commands for unregistered users
             $response_body = $this->_checkGlobals($body);
         }
+
+        $data = array('from' => $this->message["To"], 'to' => $this->message["From"], 'value' => $response_body);
+        LogMessage($data, $this->entityManager);
 
         return $response_body;
     }

@@ -20,6 +20,20 @@ $conn = array(
 // obtaining the entity manager
 $entityManager = EntityManager::create($conn, $config);
 
+function LogMessage($data, $em)
+{
+    // var_dump($data);
+    $log = new Log();
+
+    $log->setFrom($data["from"]);
+    $log->setTo($data["to"]);
+    $log->setValue($data["value"]);
+    $log->setDate(new DateTime());
+
+    $em->persist($log);
+    $em->flush();
+}
+
 function MakePrettyException(Exception $e) {
 $trace = $e->getTrace();
 

@@ -10,6 +10,7 @@
             <label for="Body" class="control-label">Message</label>
             <textarea id="Body" name="Body" class="form-control"></textarea>
         </div>
+        <input type="hidden" name="To" value="(306) tst-test" />
         <div class="form-group">
             <div>
                 <input type="submit" class="btn btn-primary" />
