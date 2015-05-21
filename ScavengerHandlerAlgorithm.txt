@@ -8,23 +8,24 @@ We check the message to see if we can find a registered User from the sending Ph
 If we can get a user then
     - We check to see which clue they're on
         If we find a clue then
-            - We check to see if the answer they sent matches an Accepted Answer for that clue
-                If the Answer is Accepted for that clue then
-                    - We check that Answer to see which clue to send next
-                        If we find a clue then
-                            - We send that clue as a response
-                        Else (No more clues, it's over or broken)
-                            - We send a response that the hunt is over and there are no more clues
-                Else (Check global commands then hints)
-                    - We check to see if they sent a global command (e.g. Quit, Time, Help, etc...)
-                        If we find a global command then
-                            - We respond with the results of that command function
+            - We check to see if they sent a global command (e.g. Quit, Time, Help, etc...)
+                If we find a global command then
+                    - We respond with the results of that command function
+            Else (they must have sent an answer)                   
+                - We check to see if sent a match to an Accepted Answer for that clue
+                    If the Answer is Accepted for that clue then
+                        - We check that Answer to see which clue to send next
+                            If we find a clue then
+                                - We send that clue as a response
+                            Else (No more clues, it's over or broken)
+                                - We send a response that the hunt is over and there are no more clues
+                    Else (Check global commands then hints)
                         Else (Send em' Hints)
-                            - We check to see if they have hints available for that clue
-                                If there are hints available then
-                                    - We send them the hint
-                                Else (Things are too hard or they are bad?)
-                                    - We recommend they skip and message admins to let them know the hunt is too hard
+                                - We check to see if they have hints available for that clue
+                                    If there are hints available then
+                                        - We send them the hint
+                                    Else (Things are too hard or they are bad?)
+                                        - We recommend they skip and message admins to let them know the hunt is too hard
         Else (They haven't started yet)
             - We send them the first clue for the adventure
             
