@@ -1,12 +1,17 @@
 <?php
 require('ScavengerHandler.php');
 
-//header("content-type: text/xml");
-echo '<?xml version="1.0" encoding="UTF-8"?>';
+// header("content-type: text/xml");
 
 $message = $_GET;
 $Scavenger = new ScavengerHandler($message, $entityManager);
 $response_body = $Scavenger->CreateResponse($message);
 
-echo format_twiML($response_body);
+//$tidy = new tidy();
+$xml = format_TwiML($response_body);
+$xmlDoc = new DOMDocument();
+$xmlDoc->loadXML($xml);
+$xmlDoc->formatOutput=true;
+
+echo "<pre style='white-space: pre-wrap'>" . htmlentities($xmlDoc->saveXML()) . "</pre>";
 ?>
