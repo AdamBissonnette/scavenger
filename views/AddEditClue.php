@@ -44,8 +44,8 @@
         <th>ID</th>
         <th>Name</th>
         <th>Value</th>
-        <th>Arrived At By</th>
-        <th>Correct Answers</th>
+        <th>Arrived At By (Answer IDs)</th>
+        <th>Accepts (Answer IDs)</th>
         <th>Controls</th>
     </tr>
     <tr ng-repeat='item in clueList'>
