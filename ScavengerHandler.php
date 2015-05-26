@@ -220,7 +220,15 @@ class ScavengerHandler
         $acceptableAnswers = $clue->getAnswers();
 
         foreach ($acceptableAnswers as $answer) {
-            if (preg_match($answer->getValue(), $sms_value)) {
+            if ($answer->getValue() == "/media/")
+            {
+                if ($this->message["NumMedia"] >= 1)
+                {
+                    $curAnswer = $answer;
+                    break;
+                }
+            }
+            else if (preg_match($answer->getValue(), $sms_value)) {
                 $curAnswer = $answer;
                 break;
             }
@@ -260,8 +268,9 @@ function format_TwiML($message)
 
     if (count($messages) > 1)
     {
-        for ($i = 1; $i <= count($messages); $i++) {
-            $response .= format_Message_Service($messages[$i]);
+        array_shift($messages);
+        foreach ($messages as $cur_message) {
+            $response .= format_Message_Service($cur_message);
         }
     }
     else
@@ -284,11 +293,11 @@ function format_Message_Service($message_in)
     $message_out = "";
     if (count($mms) > 1)
     {
-        $message_out = sprintf($mms_template, str_replace($mms_code, "", $message_in));
+        $message_out = sprintf($mms_template, str_replace($mms_code, "", trim($message_in)));
     }
     else
     {
-        $message_out = sprintf($sms_template, $message_in);
+        $message_out = sprintf($sms_template, trim($message_in));
     }
 
     return sprintf($message_template, trim($message_out));
