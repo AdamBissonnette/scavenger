@@ -251,21 +251,46 @@ class ScavengerHandler
     }
 }
 
-function format_TwiML($sms_body="", $mms_uri="")
+function format_TwiML($message)
 {
-    $response_template = "<Response><Message>%s%s</Message></Response>";
-    $sms_template = "<Body>$sms_body</Body>";
-    $mms_template = "<Media>$mms_uri</Media>";
+    $response_template = "<Response>%s</Response>";
 
-    if ($sms_body == "")
+    $response = "";
+    $messages = explode("^", $message);
+
+    if (count($messages) > 1)
     {
-        $sms_template = "";
+        for ($i = 1; $i <= count($messages); $i++) {
+            $response .= format_Message_Service($messages[$i]);
+        }
+    }
+    else
+    {
+        $response = format_Message_Service($message);
     }
 
-    if ($mms_uri == "")
-    {
-        $mms_template = "";
-    } 
+    return sprintf($response_template, $response);
+}
 
-    return sprintf($response_template, $sms_template, $mms_template);
+function format_Message_Service($message_in)
+{
+    $mms_code = "Ø";
+    $message_template = "<Message>%s</Message>";
+    $sms_template = "<Body>%s</Body>";
+    $mms_template = "<Media>%s</Media>";
+
+    $mms = explode("Ø", $message_in);
+
+    $message_out = "";
+    if (count($mms) > 1)
+    {
+        $message_out = sprintf($mms_template, str_replace($mms_code, "", $message_in));
+    }
+    else
+    {
+        $message_out = sprintf($sms_template, $message_in);
+    }
+
+    return sprintf($message_template, trim($message_out));
+
 }
