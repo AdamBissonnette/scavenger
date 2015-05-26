@@ -35,6 +35,15 @@
                 </div>
             </div>
         </form>
+
+    <hr />
+    <h4>Regex Tips</h4>
+    <ul>
+        <li><a href="https://www.regex101.com" target="_blank">https://www.regex101.com</a></li>
+        <li>Any text response == /.*/</li>
+    </ul>
+
+
 </div>
 <div class="col-sm-9">
     <h2>List Answers</h2>

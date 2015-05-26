@@ -40,3 +40,5 @@
     -webkit-transform:rotate(360deg);
   }
 }
+
+.value {white-space: pre-wrap;}

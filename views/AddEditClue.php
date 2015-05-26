@@ -28,6 +28,13 @@
                 </div>
             </div>
         </form>
+
+        <hr />
+        <h4>Secret Codes</h4>
+        <ul>
+            <li>^ == SMS</li>
+            <li>^Ø == MMS</li>
+        </ul>
 </div>
 <div class="col-sm-9">
     <h2>List Clues</h2>
@@ -40,9 +47,9 @@
         <th>Controls</th>
     </tr>
     <tr ng-repeat='item in clueList'>
-        <td> {{ item.id }} </td>
-        <td> {{ item.name }} </td>
-        <td> {{ item.value }} </td>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td class="value">{{ item.value }}</td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
