@@ -77,7 +77,6 @@ class ScavengerHandler
                 {
                     $responseFound = true;
                     $response_body = $curClue->getValue();
-                    var_dump($response_body);
                 }
                 elseif (preg_match("/^restart/i", trim($body))) {
                     $responseFound = true;
