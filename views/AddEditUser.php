@@ -15,7 +15,7 @@
             </div>
             <div class="form-group">
                 <label for="inputPhone" class="control-label">Phone</label>
-                <input ng-model="userCtrlFormData.phone" type="text" class="form-control" id="inputPhone" placeholder="Format like: (306) 370-4254" maxlength="255">
+                <input ng-model="userCtrlFormData.phone" type="text" class="form-control" id="inputPhone" placeholder="Format like: +13063704254" maxlength="255">
             </div>
 
             <div class="form-group">

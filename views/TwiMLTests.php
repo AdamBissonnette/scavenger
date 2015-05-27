@@ -4,11 +4,15 @@
     <form action="PhpHandler.php" method="get" target="resultsFrame">
         <div class="form-group">
             <label for="From" class="control-label">Phone</label>
-            <input type="text" class="form-control" id="From" name="From" value="(306) 370-4254">
+            <input type="text" class="form-control" id="From" name="From" value="+13063704254">
         </div>
         <div class="form-group">
             <label for="Body" class="control-label">Message</label>
             <textarea id="Body" name="Body" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="NumMedia" class="control-label">Num Media</label>
+            <input type="text" class="form-control" id="NumMedia" name="NumMedia" value="0" />
         </div>
         <input type="hidden" name="To" value="(306) tst-test" />
         <div class="form-group">

@@ -7,7 +7,6 @@ $message = $_GET;
 $Scavenger = new ScavengerHandler($message, $entityManager);
 $response_body = $Scavenger->CreateResponse($message);
 
-//$tidy = new tidy();
 $xml = format_TwiML($response_body);
 $xmlDoc = new DOMDocument();
 $xmlDoc->loadXML($xml);
