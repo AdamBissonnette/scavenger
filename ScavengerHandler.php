@@ -72,18 +72,19 @@ class ScavengerHandler
                 //Check if they sent a correct Answer
                 // $global_result = $this->_checkGlobals($body, true, true, $curClue);
                 $responseFound = false;
-                switch ($body) {
-                    case preg_match("/clue/i", $body)?true:false:
-                        $responseFound = true;
-                        $response_body = $curClue->getValue();
-                    break;
-                    case preg_match("/restart/i", $body)?true:false:
-                        $responseFound = true;
-                        $clue = $this->_getFirstClue();
-                        $response_body = $clue->getValue();
-                        $dummy->setClue($clue);
-                        $this->entityManager->flush();
-                    break;
+
+                if (preg_match("/^clue/i", trim($body)))
+                {
+                    $responseFound = true;
+                    $response_body = $curClue->getValue();
+                    var_dump($response_body);
+                }
+                elseif (preg_match("/^restart/i", trim($body))) {
+                    $responseFound = true;
+                    $clue = $this->_getFirstClue();
+                    $response_body = $clue->getValue();
+                    $dummy->setClue($clue);
+                    $this->entityManager->flush();
                 }
 
                 if (!$responseFound)
@@ -105,7 +106,7 @@ class ScavengerHandler
                         }
                         else
                         {
-                            $response_body = "You've completed the adventure. Text 'start' to being again.";
+                            $response_body = "You've completed the shareware version of our adventure.  Tell Adam and Berkley your feedback!";
                             $dummy->setClue(null);
                             $this->entityManager->flush();
                         }
@@ -125,7 +126,7 @@ class ScavengerHandler
                         }
                         else
                         {
-                            $response_body = "You got the answer wrong, oh no!";
+                            $response_body = "Oops - I think we're off track and I don't have any hints for you on this one.";
                         }
                     }
                 }
@@ -168,15 +169,7 @@ class ScavengerHandler
 
         if ($isAuthenticated)
         {
-            $responseFound = false;
-                // switch ($body) {
-                //     case preg_match("/clue/i", $body)?true:false:
-                //         return $curClue->getValue();
-                //     break;
-                //     case preg_match("/restart/i", $body)?true:false:
-                //         return $curClue->getValue();
-                //     break;
-                // }
+            //Derp
         }
         else
         {
