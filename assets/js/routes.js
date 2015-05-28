@@ -5,52 +5,58 @@ angular.module('scavengerApp', ['ui.router'])
   $urlRouterProvider.otherwise('/clues');
 
   $stateProvider
-
-  .state('clues', {
+  .state('app', {
+    abstract: true,
+    url: '',
+    templateUrl: 'views/Container.php'
+  })
+  .state('app.clues', {
     url: '/clues',
     templateUrl: 'views/AddEditClue.php',
     controller: 'clueCtrl'
   })
 
-  .state('answers', {
+  .state('app.answers', {
     url: '/answers',
     templateUrl: 'views/AddEditAnswer.php',
     controller: 'answerCtrl'
   })
 
-  .state('hints', {
+  .state('app.hints', {
     url: '/hints',
     templateUrl: 'views/AddEditHint.php',
     controller: 'hintCtrl'
   })
 
-  .state('stories', {
+  .state('app.stories', {
     url: '/stories',
     templateUrl: 'views/AddEditStory.php',
     controller: 'storyCtrl'
   })
 
-  .state('clueAssignments', {
-    url: '/clues/clueAssignments/',
+  .state('app.clueAssignments', {
+    url: '/clues/:clueid/clueAssignments/',
     templateUrl: 'views/AssignmentsClue.php',
     controller: 'clueAssignmentsCtrl',
     params: {clueid: -1, clue: null}
+    
+    
   })
 
-  .state('answerAssignments', {
+  .state('app.answerAssignments', {
     url: '/answers/answerAssignments/',
     templateUrl: 'views/AssignmentsAnswer.php',
     controller: 'answerAssignmentsCtrl',
     params: {answerid: -1, answer: null}
   })
 
-  .state('twiMLTests', {
+  .state('app.twiMLTests', {
     url: '/TwiMLTests/',
     templateUrl: 'views/TwiMLTests.php',
     controller: 'twiMLTests'
   })
 
-  .state('users', {
+  .state('app.users', {
     url: '/users/',
     templateUrl: 'views/AddEditUser.php',
     controller: 'userCtrl'

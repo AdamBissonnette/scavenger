@@ -9,74 +9,79 @@ angular.module('scavengerApp')
     $scope.taLoaded = false;
     $scope.hLoaded = false;
 
-    $scope.clueAssignmentCtrlForm = $state.params.clue;
 
     $scope.changeState = function(stateName) {
       $state.go(stateName);
     };
 
-    if ($scope.clueAssignmentCtrlForm == null)
-    {
-        $scope.changeState("clues");
-    }
-    else
-    {
-        //Get assignments for current clue              
-        aaList.http({fn: "getEntities", entityName: "Answer"},
-          function (response) {
-            angular.forEach(response, function(item) {
-              item.checked = false;
-              angular.forEach($scope.clueAssignmentCtrlForm.answers, function (answer) {
-                if(answer.id == item.id)
-                  item.checked = true;
+    aaList.http({fn: "getEntities", entityName: "Clue"},
+      function (response) {
+        $scope.clueAssignmentCtrlForm = response[$state.params.clueid];
+      
+
+        if ($scope.clueAssignmentCtrlForm === null)
+        {
+            $scope.changeState("app.clues");
+        }
+        else
+        {
+            //Get assignments for current clue              
+            aaList.http({fn: "getEntities", entityName: "Answer"},
+              function (response) {
+                angular.forEach(response, function(item) {
+                  item.checked = false;
+                  angular.forEach($scope.clueAssignmentCtrlForm.answers, function (answer) {
+                    if(answer.id == item.id)
+                      item.checked = true;
+                    });
                 });
-            });
 
-            aaList.setList(response);
-            $scope.aaList = aaList.getList();
-            $scope.aaLoaded = true;
-          },
-          function(response){
-            console.log(response);
-          });
+                aaList.setList(response);
+                $scope.aaList = aaList.getList();
+                $scope.aaLoaded = true;
+              },
+              function(response){
+                console.log(response);
+              });
 
-        taList.http({fn: "getEntities", entityName: "Answer"},
-          function (response) {
-            angular.forEach(response, function(item) {
-              item.checked = false;
-              // if (item.clueID == $scope.clueAssignmentCtrlForm.id)
-              angular.forEach($scope.clueAssignmentCtrlForm.trailings, function (answer) {
-                if(answer.id == item.id)
-                  item.checked = true;
+            taList.http({fn: "getEntities", entityName: "Answer"},
+              function (response) {
+                angular.forEach(response, function(item) {
+                  item.checked = false;
+                  // if (item.clueID == $scope.clueAssignmentCtrlForm.id)
+                  angular.forEach($scope.clueAssignmentCtrlForm.trailings, function (answer) {
+                    if(answer.id == item.id)
+                      item.checked = true;
+                    });
                 });
-            });
 
-            taList.setList(response);
-            $scope.taList = taList.getList();
-            $scope.taLoaded = true;
-          },
-          function(response){
-            console.log(response);
-          });
+                taList.setList(response);
+                $scope.taList = taList.getList();
+                $scope.taLoaded = true;
+              },
+              function(response){
+                console.log(response);
+              });
 
-        hList.http({fn: "getEntities", entityName: "Hint"},
-          function (response) {
-            angular.forEach(response, function(item) {
-              item.checked = false;
-              angular.forEach($scope.clueAssignmentCtrlForm.hints, function (answer) {
-                if(answer.id == item.id)
-                  item.checked = true;
+            hList.http({fn: "getEntities", entityName: "Hint"},
+              function (response) {
+                angular.forEach(response, function(item) {
+                  item.checked = false;
+                  angular.forEach($scope.clueAssignmentCtrlForm.hints, function (answer) {
+                    if(answer.id == item.id)
+                      item.checked = true;
+                    });
                 });
-            });
 
-            hList.setList(response);
-            $scope.hList = hList.getList();
-            $scope.hLoaded = true;
-          },
-          function(response){
-            console.log(response);
-          });
-    }
+                hList.setList(response);
+                $scope.hList = hList.getList();
+                $scope.hLoaded = true;
+              },
+              function(response){
+                console.log(response);
+              });
+        }
+      });
 
     $scope.assignAA = function(event, item) {
         if (event.target.tagName == "INPUT")

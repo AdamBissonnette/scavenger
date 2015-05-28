@@ -66,7 +66,7 @@
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 </button>
 
-                <button class="btn btn-primary" ng-click='changeState("answerAssignments", item)' title="Assign Clues">
+                <button class="btn btn-primary" ng-click='changeState("app.answerAssignments", item)' title="Assign Clues">
                     <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
                 </button>
 

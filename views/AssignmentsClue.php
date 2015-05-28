@@ -15,7 +15,7 @@
         </div>
         <div class="form-group">
             <div class="">
-                <button class="btn btn-default" ng-click='changeState("clues")'>
+                <button class="btn btn-default" ng-click='changeState("app.clues")'>
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                     Go Back
                 </button>
