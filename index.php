@@ -23,7 +23,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" ui-sref="clues" href="#">Scavenger Backend</a>
+      <a class="navbar-brand" ui-sref="app.clues" href="#">Scavenger Backend</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">

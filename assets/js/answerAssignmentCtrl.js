@@ -15,7 +15,7 @@ angular.module('scavengerApp')
 
     if ($scope.answerAssignmentCtrlForm == null)
     {
-        $scope.changeState("answers");
+        $scope.changeState("app.answers");
     }
     else
     {

@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <div>
-                    <button  ng-click='changeState("answers")' class="btn btn-default" type="submit">
+                    <button  ng-click='changeState("app.answers")' class="btn btn-default" type="submit">
                         <span class="glyphicon glyphicon-floppy-remove" aria-hidden="true"></span>
                         Back to Answers
                     </button>
