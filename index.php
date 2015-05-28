@@ -27,12 +27,12 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a ui-sref="clues" href="#">Clues</a></li>
-        <li><a ui-sref="answers" href="#">Answers</a></li>
-        <li><a ui-sref="hints" href="#">Hints</a></li>
-        <li><a ui-sref="stories" href="#">Story</a></li>
-        <li><a ui-sref="users" href="#">User</a></li>
-        <li><a ui-sref="twiMLTests" href="#">Testing</a></li>
+        <li><a ui-sref="app.clues" href="#">Clues</a></li>
+        <li><a ui-sref="app.answers" href="#">Answers</a></li>
+        <li><a ui-sref="app.hints" href="#">Hints</a></li>
+        <li><a ui-sref="app.stories" href="#">Story</a></li>
+        <li><a ui-sref="app.users" href="#">User</a></li>
+        <li><a ui-sref="app.twiMLTests" href="#">Testing</a></li>
       </ul>
     </div>
   </div>
