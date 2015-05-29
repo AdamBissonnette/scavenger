@@ -33,6 +33,7 @@
         <li><a ui-sref="app.stories" href="#">Story</a></li>
         <li><a ui-sref="app.users" href="#">User</a></li>
         <li><a ui-sref="app.twiMLTests" href="#">Testing</a></li>
+        <li><a ui-sref="app.log" href="#">Log</a></li>
       </ul>
     </div>
   </div>
@@ -54,5 +55,6 @@
         <script src='assets/js/clueAssignmentsCtrl.js'></script>
         <script src='assets/js/answerAssignmentCtrl.js'></script>
         <script src='assets/js/twiMLTests.js'></script>
+        <script src='assets/js/logCtrl.js'></script>
     </body>
 </html>

@@ -197,6 +197,9 @@ class Log implements JsonSerializable
             'from'=> $this->fromNumber,
             'value'=> $this->value,
             'date'=> $this->date,
+            'direction'=>$this->direction,
+            'type' => $this->type,
+            'data' => $this->data
         );
     }
 }

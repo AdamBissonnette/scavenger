@@ -50,6 +50,12 @@ angular.module('scavengerApp', ['ui.router'])
     params: {answerid: -1, answer: null}
   })
 
+  .state('app.log', {
+    url: '/log',
+    templateUrl: 'views/ViewLog.php',
+    controller: 'logCtrl'
+  })
+
   .state('app.twiMLTests', {
     url: '/TwiMLTests/',
     templateUrl: 'views/TwiMLTests.php',

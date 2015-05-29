@@ -11,15 +11,20 @@
         <th>Direction</th>
         <th>Type</th>
         <th>Data</th>
+        <th>Controls</th>
     </tr>
-    <tr ng-repeat='item in hintList'>
+    <tr ng-repeat='item in list'>
         <td> {{ item.id }} </td>
         <td> {{ item.from }} </td>
         <td> {{ item.to }} </td>
-        <td> {{ item.clue }} </td>
+        <td> {{ item.value }} </td>
+        <td> {{ item.date }} </td>
+        <td> {{ item.direction }} </td>
+        <td> {{ item.type }} </td>
+        <td> data </td>
         <td class="controls">
-            <button class="btn btn-danger" ng-click='deleteItem(item)' title="Delete">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <button class="btn btn-default" ng-click='deleteItem(item)' title="Archive">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
             </button>
         </td>
     </tr>
