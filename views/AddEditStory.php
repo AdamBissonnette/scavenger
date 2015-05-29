@@ -46,7 +46,7 @@
             <th>First Clue</th>
             <th>Controls</th>
         </tr>
-        <tr ng-repeat='item in storyList'>
+        <tr ng-repeat='item in storyList' | orderObjectBy: "id">
             <td> {{ item.id }} </td>
             <td> {{ item.name }} </td>
             <td> {{ item.clueid }} </td>

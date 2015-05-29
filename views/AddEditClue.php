@@ -48,7 +48,7 @@
         <th>Accepts (Answer IDs)</th>
         <th>Controls</th>
     </tr>
-    <tr ng-repeat='item in clueList'>
+    <tr ng-repeat='item in clueList | orderObjectBy: "id"'>
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td class="value">{{ item.value }}</td>

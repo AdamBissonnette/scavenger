@@ -55,7 +55,7 @@
         <th>Current Clue</th>
         <th>Controls</th>
     </tr>
-    <tr ng-repeat='item in userList'>
+    <tr ng-repeat='item in userList' | orderObjectBy: "id">
         <td> {{ item.id }} </td>
         <td> {{ item.name }} </td>
         <td> {{ item.email }} </td>

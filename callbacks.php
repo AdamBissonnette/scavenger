@@ -59,7 +59,7 @@ function getEntities($data, $entityManager)
     $json = array();
 
     foreach ($entities as $entity) {
-        $json[$entity->getId()] = $entity->jsonSerialize();
+        $json[json_encode($entity->getId())] = $entity->jsonSerialize();
     }
 
     if (count($json) == 0)

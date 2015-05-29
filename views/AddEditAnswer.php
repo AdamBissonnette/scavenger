@@ -56,7 +56,7 @@
             <th>Next Clue</th>
             <th>Controls</th>
         </tr>
-        <tr ng-repeat='item in answerList'>
+        <tr ng-repeat='item in answerList | orderObjectBy: "id"'>
             <td> {{ item.id }} </td>
             <td> {{ item.name }} </td>
             <td> {{ item.value }} </td>

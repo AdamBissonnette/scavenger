@@ -46,7 +46,7 @@
         <th>Clue</th>
         <th>Controls</th>
     </tr>
-    <tr ng-repeat='item in hintList'>
+    <tr ng-repeat='item in hintList | orderObjectBy: "id"'>
         <td> {{ item.id }} </td>
         <td> {{ item.name }} </td>
         <td> {{ item.value }} </td>

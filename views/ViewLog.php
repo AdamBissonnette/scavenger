@@ -13,7 +13,7 @@
         <th>Data</th>
         <th>Controls</th>
     </tr>
-    <tr ng-repeat='item in list'>
+    <tr ng-repeat='item in list | orderObjectBy: "id"'>
         <td> {{ item.id }} </td>
         <td> {{ item.from }} </td>
         <td> {{ item.to }} </td>
