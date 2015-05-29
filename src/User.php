@@ -108,7 +108,7 @@ class User implements JsonSerializable
             'name'=> $this->name,
             'email'=> $this->email,
             'phone'=> $this->phone,
-            'date'=> $this->registrationDate
+            'date'=> $this->registrationDate->getTimestamp() * 1000
         );
     }
 }

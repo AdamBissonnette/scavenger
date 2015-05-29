@@ -60,7 +60,7 @@
         <td> {{ item.name }} </td>
         <td> {{ item.email }} </td>
         <td> {{ item.phone }} </td>
-        <td> Derp date field </td>
+        <td> {{ item.date | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
         <td> {{ item.clueid}} </td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">

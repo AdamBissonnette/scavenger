@@ -18,7 +18,7 @@
         <td> {{ item.from }} </td>
         <td> {{ item.to }} </td>
         <td> {{ item.value }} </td>
-        <td> {{ item.date }} </td>
+        <td> {{ item.date | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
         <td> {{ item.direction }} </td>
         <td> {{ item.type }} </td>
         <td> data </td>
