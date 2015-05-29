@@ -32,8 +32,9 @@
         <hr />
         <h4>Secret Codes</h4>
         <ul>
-            <li>^ == SMS</li>
-            <li>^Ø == MMS</li>
+            <li>^texty text == SMS Only</li>
+            <li>^Øurl.jpg == MMS Only </li>
+            <li>^texty textØurl.jpg == MMS & SMS</li>
         </ul>
 </div>
 <div class="col-sm-9">
