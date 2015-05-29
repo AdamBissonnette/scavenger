@@ -32,13 +32,13 @@ class Log implements JsonSerializable
     protected $date;
 
     /**
-     * @Id @Column(type="integer")
+     * @Column(type="integer")
      * @var int
      */
     protected $direction = 1; //Incoming / Outgoing
 
     /**
-     * @Id @Column(type="integer")
+     * @Column(type="integer")
      * @var int
      */
     protected $type = 1; // clue, answer, hint, global ...
