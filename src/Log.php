@@ -31,6 +31,40 @@ class Log implements JsonSerializable
      */
     protected $date;
 
+    /**
+     * @Id @Column(type="integer")
+     * @var int
+     */
+    protected $direction = 1; //Incoming / Outgoing
+
+    /**
+     * @Id @Column(type="integer")
+     * @var int
+     */
+    protected $type = 1; // clue, answer, hint, global ...
+
+    /**
+     * @ManyToOne(targetEntity="User")
+     **/
+    protected $user;
+
+    /**
+     * @ManyToOne(targetEntity="Hunt")
+     **/
+    protected $hunt;
+
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $data = "";
+
+    /**
+     * @Column(type="integer")    
+     * @var string
+     */
+    protected $state=1;
+
     public function getId()
     {
         return $this->id;
@@ -71,6 +105,88 @@ class Log implements JsonSerializable
     public function setDate($dateIn)
     {
         $this->date = $dateIn;
+    }
+
+    public function getDirection()
+    {
+        return $this->direction;
+    }
+
+    public function setDirection($directionIn)
+    {
+        $this->direction = $directionIn;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($typeIn)
+    {
+        $this->type = $typeIn;
+    }
+
+    public function getClue()
+    {
+        return $this->clue;
+    }
+
+    public function getClueID()
+    {
+        $id = -1;
+
+        if ($this->clue != null)
+        {
+            $id = $this->clue->getId();
+        }
+
+        return $id;
+    }
+
+    public function setClue($clue)
+    {
+        $this->clue = $clue;
+    }
+
+    public function getHunt()
+    {
+        return $this->hunt;
+    }
+
+    public function setHunt($huntIn)
+    {
+        $this->hunt = $huntIn;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser($userIn)
+    {
+        $this->user = $userIn;
+    }
+
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    public function setData($dataIn)
+    {
+        $this->data = $dataIn;
+    }
+
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
     }
 
     public function jsonSerialize()
