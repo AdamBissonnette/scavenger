@@ -1,5 +1,9 @@
 <div class="col-sm-12">
     <h2>Log</h2>
+    <p>
+        <strong>Direction</strong> (2 = Incoming, 3 = Outgoing) |
+        <strong>Type</strong> (2 = Clue, 3 = Answer, 4 = Hint, 5 = Global, 6 = Start, 7 = End)
+    </p>
     <br />
     <table ng-show="loaded" class='table table-bordered table-striped lists'>
     <tr>
