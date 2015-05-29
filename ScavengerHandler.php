@@ -293,7 +293,10 @@ function format_TwiML($message)
 
     if (count($messages) > 1)
     {
-        array_shift($messages);
+        if ($messages[0] == "")
+        {
+            array_shift($messages);
+        }
         foreach ($messages as $cur_message) {
             $response .= format_Message_Service($cur_message);
         }
@@ -313,12 +316,20 @@ function format_Message_Service($message_in)
     $sms_template = "<Body>%s</Body>";
     $mms_template = "<Media>%s</Media>";
 
-    $mms = explode("Ø", $message_in);
+    $message = split($mms_code, $message_in);
 
     $message_out = "";
-    if (count($mms) > 1)
+    if (count($message) > 1)
     {
-        $message_out = sprintf($mms_template, str_replace($mms_code, "", trim($message_in)));
+        if ($message[0] != "")
+        {
+            $message_out = sprintf($sms_template, trim($message[0]));
+        }
+
+        for ($i = 1; $i < (count($message)); $i++)
+        {
+            $message_out .= sprintf($mms_template, trim($message[$i]));
+        }
     }
     else
     {
