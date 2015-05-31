@@ -32,6 +32,7 @@
         <li><a ui-sref="app.hints" href="#">Hints</a></li>
         <li><a ui-sref="app.stories" href="#">Story</a></li>
         <li><a ui-sref="app.users" href="#">User</a></li>
+        <li><a ui-sref="app.parties" href="#">Parties</a></li>
         <li><a ui-sref="app.hunts" href="#">Hunt</a></li>
         <li><a ui-sref="app.twiMLTests" href="#">Testing</a></li>
         <li><a ui-sref="app.log" href="#">Log</a></li>
@@ -53,6 +54,7 @@
         <script src='assets/js/huntCtrl.js'></script>
         <script src='assets/js/storyCtrl.js'></script>
         <script src='assets/js/userCtrl.js'></script>
+        <script src='assets/js/partyCtrl.js'></script>
         <script src='assets/js/listService.js'></script>
         <script src='assets/js/clueAssignmentsCtrl.js'></script>
         <script src='assets/js/answerAssignmentCtrl.js'></script>

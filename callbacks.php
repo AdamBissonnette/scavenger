@@ -33,6 +33,9 @@ if (isset($data))
         case 'aestory':
             $json = addEditStory($data, $entityManager);
             break;
+        case 'aeparty':
+            $json = addEditParty($data, $entityManager);
+            break;
         case 'aeuser':
             $json = addEditUser($data, $entityManager);
             break;
@@ -187,6 +190,23 @@ function addEditStory($data, $entityManager)
     $entityManager->flush();
 
     return json_encode($story->jsonSerialize());
+}
+
+function addEditParty($data, $entityManager)
+{
+    $id = $data->id;
+    $name = $data->name;
+
+    $party = $entityManager->find("Party", $id);
+    if (!$party) {
+        $party = new Party();  
+    }
+
+    $party->setName($name);
+    $entityManager->persist($party);
+    $entityManager->flush();
+
+    return json_encode($party->jsonSerialize());
 }
 
 function addEditHunt($data, $entityManager)

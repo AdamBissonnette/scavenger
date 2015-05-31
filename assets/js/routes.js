@@ -40,6 +40,12 @@ angular.module('scavengerApp', ['ui.router'])
     controller: 'huntCtrl'
   })
 
+  .state('app.parties', {
+    url: '/parties',
+    templateUrl: 'views/AddEditParty.php',
+    controller: 'partyCtrl'
+  })
+
   .state('app.clueAssignments', {
     url: '/clues/:clueid/clueAssignments/',
     templateUrl: 'views/AssignmentsClue.php',
