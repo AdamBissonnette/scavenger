@@ -17,6 +17,12 @@ class Party implements JsonSerializable
      */
     protected $name;
 
+    /**
+     * @Column(type="integer")    
+     * @var string
+     */
+    protected $state=1;
+
     public function getId()
     {
         return $this->id;
@@ -32,6 +38,16 @@ class Party implements JsonSerializable
         $this->name = $name;
     }
 
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
     /**
      * @ManyToMany(targetEntity="User")
      * @var users[]
@@ -39,7 +55,7 @@ class Party implements JsonSerializable
     protected $users = null;
 
     /**
-     * @ManyToMany(targetEntity="Hunt")
+     * @OneToMany(targetEntity="Hunt", mappedBy="party")
      * @var hunts[]
      */
     protected $hunts = null;
