@@ -18,4 +18,4 @@ This is a simple project to create and run sms/mms based scavenger hunts with Tw
 * Delete DB: vendor/bin/doctrine orm:schema-tool:drop --force (Note: this won't actually delete your sqlite.db file!)
 
 #DB Diagram
-* ![alt tag](https://raw.githubusercontent.com/j--w/scavenger/master/db.png)
+* ![alt tag](https://raw.githubusercontent.com/MManifesto/scavenger/master/db.png)
