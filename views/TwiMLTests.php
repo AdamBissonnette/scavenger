@@ -14,7 +14,14 @@
             <label for="NumMedia" class="control-label">Num Media</label>
             <input type="text" class="form-control" id="NumMedia" name="NumMedia" value="0" />
         </div>
-        <input type="hidden" name="To" value="(306) tst-test" />
+        <div class="form-group">
+            <label for="format" class="control-label">Output Format</label>
+            <select class="form-control"  id="format" name="format">
+                <option value="text">Text</option>
+                <option value="xml">XML</option>
+            </select>
+        </div>
+        <input type="hidden" name="To" value="TwiMLTest" />
         <div class="form-group">
             <div>
                 <input type="submit" class="btn btn-primary" />
@@ -31,13 +38,13 @@
         <li><strong>Clue</strong> - will output the value of the current clue</li>
     </ul>
 
-    <h4>Preset Tests</h4>
+<!--     <h4>Preset Tests</h4>
     <ul>
-        <li><a target="resultsFrame" href="PhpHandler.php?Body=start&From=(306)%20370-4254&To=(306)%20tst-test">Sent SMS "Start" - SMS Reply</a></li>
+        <li><a target="resultsFrame" href="PhpHandler.php?Body=start&From=(306)%20370-4254&To=(306)%20tst-test&xml">Sent SMS "Start" - SMS Reply</a></li>
         <li><a target="resultsFrame" href="PhpHandler.php?Body=restart&From=(306)%20370-4254&To=(306)%20tst-test">Sent SMS "Restart" - SMS Reply</a></li>
         <li><a target="resultsFrame" href="PhpHandler.php?Body=clue&From=(306)%20370-4254&To=(306)%20tst-test">Sent SMS "Clue" - MMS Reply</a></li>
         <li><a target="resultsFrame" href="PhpHandler.php?Body=aaa&From=(306)%20999-9999&To=(306)%20tst-test">Unregistered messages the app</a></li>
-    </ul>
+    </ul> -->
 </div>
 <div class="col-sm-9">
     <h2>Results</h2>
