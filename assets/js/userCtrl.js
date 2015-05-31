@@ -5,7 +5,7 @@ angular.module('scavengerApp')
     $scope.clues = {};
 
     var list = ListService;
-    var cluesList = ListService;
+    var partyList = ListService;
 
     list.http({fn: "getEntities", entityName: "User"},
       function (response) {
@@ -17,19 +17,19 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    cluesList.http({fn: "getEntities", entityName: "Clue"},
+    partyList.http({fn: "getEntities", entityName: "Party"},
       function (response) {
-          cluesList.setList(response);
-          $scope.clues = cluesList.getList();
+          partyList.setList(response);
+          $scope.parties = partyList.getList();
       },
       function(response){
         console.log(response);
       });
 
-    $scope.userCtrlFormData = {id : "-1", name : "", email : "", phone: "", date: "", clueid: -1};
+    $scope.userCtrlFormData = {id : "-1", name : "", email : "", phone: "", date: "", party: -1};
 
     $scope.userCtrlFormData.submit = function(item, event) {
-      var data = {fn: "aeuser", id : $scope.userCtrlFormData.id, name : $scope.userCtrlFormData.name, email : $scope.userCtrlFormData.email, phone: $scope.userCtrlFormData.phone, clueid: $scope.userCtrlFormData.clueid}
+      var data = {fn: "aeuser", id : $scope.userCtrlFormData.id, name : $scope.userCtrlFormData.name, email : $scope.userCtrlFormData.email, phone: $scope.userCtrlFormData.phone, party: $scope.userCtrlFormData.party}
 
       list.http(data,
           function (response) {
@@ -49,7 +49,7 @@ angular.module('scavengerApp')
       $scope.userCtrlFormData.email = "";
       $scope.userCtrlFormData.phone = "";
       $scope.userCtrlFormData.date = "";
-      $scope.userCtrlFormData.clueid = -1;
+      $scope.userCtrlFormData.party = -1;
      }
 
      $scope.editItem = function(item) {
@@ -58,7 +58,7 @@ angular.module('scavengerApp')
       $scope.userCtrlFormData.email = item.email;
       $scope.userCtrlFormData.phone = item.phone;
       $scope.userCtrlFormData.date = item.date;
-      $scope.userCtrlFormData.clueid = item.clueid;
+      $scope.userCtrlFormData.party = item.party;
      }
 
     $scope.deleteItem = function(item) {

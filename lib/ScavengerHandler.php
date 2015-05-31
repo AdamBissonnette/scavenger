@@ -48,6 +48,12 @@ class ScavengerHandler
                             )
                      );
 
+    var $user = null;
+    var $party = null;
+    var $hunt = null;
+    var $clue = null;
+    var $answer = null;
+
     function __construct($incomingMessage, $em)
     {
         $this->message = $incomingMessage;
@@ -63,64 +69,70 @@ class ScavengerHandler
         $body = $this->message["Body"];
         $fromPhone = $this->message["From"];
 
-        $user = $this->_findUserByFrom($fromPhone);
+        $response_to = array();
+
+        $this->user = ScavengerHandler::FindUserByFrom($fromPhone, $this->entityManager);
+
+        if (isset($this->user))
+        {
+            $this->party = $this->user->getParty();
+        }
 
         //check to make sure that they are a valid sender
-        if (isset($user))
+        if (isset($this->party))
         {
             //Get the clue that that user is on
-            $dummy = $this->_findCurrentClueByUser($user);
+            $this->hunt = ScavengerHandler::FindHuntByParty($this->party, $this->entityManager);
 
-            $curClue = null;
-            if (isset($dummy))
+            if (isset($this->hunt))
             {
-                $curClue = $dummy->getClue();
+                $this->clue = $this->hunt->getCurrentClue();
             }
 
-            if (isset($curClue))
+            if (isset($this->clue))
             {
                 //Check for global commands then the correct answer
 
                 //Check if they sent a correct Answer
-                // $global_result = $this->_checkGlobals($body, true, true, $curClue);
+                // $global_result = $this->_checkGlobals($body, true, true, $this->clue);
                 $responseFound = false;
 
                 if (preg_match("/^clue/i", trim($body)))
                 {
                     $responseFound = true;
-                    $response_body = $curClue->getValue();
+                    $response_body = $this->clue->getValue();
                 }
                 elseif (preg_match("/^restart/i", trim($body))) {
                     $responseFound = true;
-                    $clue = $this->_getFirstClue();
-                    $response_body = $clue->getValue();
-                    $dummy->setClue($clue);
+                    $this->clue = ScavengerHandler::GetFirstClue(1, $this->entityManager);
+                    $response_body = $this->clue->getValue();
+                    $this->hunt->setCurrentClue($this->clue);
                     $this->entityManager->flush();
                 }
 
                 if (!$responseFound)
                 {
-                    $answer = $this->_findAnswerForClueByValue($curClue, $body, null); //clue, sms, mms
+                    $this->answer = ScavengerHandler::FindAnswerForClueByValue($this->clue, $this->message, $this->entityManager); //clue, sms, mms
                     $incoming_message_type = self::TYPE_ANSWER;
 
-                    if (isset($answer))
+                    if (isset($this->answer))
                     {
                         //Get the next clue from the answer and format that as a 
-                        $nextClue = $answer->getClue();
+                        $nextClue = $this->answer->getClue();
 
                         if (isset($nextClue))
                         {
                             //Send the next clue
                             //Update the currentClue
                             $response_body = $nextClue->getValue();
-                            $dummy->setClue($nextClue);
+                            $this->hunt->setCurrentClue($nextClue);
                             $this->entityManager->flush();
                             $outgoing_message_type = self::TYPE_CLUE;
                         }
                         else
                         {
                             $response_body = "You've completed the shareware version of our adventure.  Tell Adam and Berkley your feedback!";
-                            $dummy->setClue(null);
+                            $this->hunt->setCurrentClue(null);
                             $this->entityManager->flush();
                             $outgoing_message_type = self::TYPE_END;
                         }
@@ -133,7 +145,7 @@ class ScavengerHandler
                         $hintFound = false;
 
                         $outgoing_message_type = self::TYPE_HINT;
-                        $hint = $this->_findHintsForClue($curClue);
+                        $hint = ScavengerHandler::FindHintsForClue($this->clue, $this->entityManager);
 
                         if ($hint != null)
                         {
@@ -161,9 +173,9 @@ class ScavengerHandler
                     case preg_match("/start/i", $body)?true:false:
                         //Send first clue
                         $responseFound = true;
-                        $clue = $this->_getFirstClue();
-                        $response_body = $clue->getValue();
-                        $dummy->setClue($clue);
+                        $this->clue = ScavengerHandler::GetFirstClue(1, $this->entityManager);
+                        $response_body = $this->clue->getValue();
+                        $this->hunt->setCurrentClue($this->clue);
                         $this->entityManager->flush();
                         $incoming_message_type = self::TYPE_START;
                         $outgoing_message_type = self::TYPE_START;
@@ -186,13 +198,16 @@ class ScavengerHandler
 
         //Log Incoming Message
         $data = array('from' => $this->message["From"], 'to' => $this->message["To"], 'value' => $this->message["Body"], 'data' => json_encode($this->message), 'direction' => self::DIRECTION_INCOMING, 'type' => $incoming_message_type);
-        LogMessage($data, $this->entityManager, $user);
+        LogMessage($data, $this->entityManager, $this->user, $this->hunt);
 
         //Log Outgoing Message
         $data = array('from' => $this->message["To"], 'to' => $this->message["From"], 'value' => $response_body, 'data' => format_TwiML($response_body), 'direction' => self::DIRECTION_OUTGOING, 'type' => $outgoing_message_type);
-        LogMessage($data, $this->entityManager, $user);
+        LogMessage($data, $this->entityManager, $this->user, $this->hunt);
 
-        return $response_body;
+        $response_to[] .= $this->message["From"];
+        $response = array("body" => $response_body, "recipients" => $response_to);
+
+        return $response;
     }
 
     function _checkGlobals($body, $isAuthenticated=false, $hasStarted=false, $curClue=null)
@@ -216,30 +231,34 @@ class ScavengerHandler
         return $responseToGlobal;
     }
 
-    function _findUserByFrom($from)
+    static function FindUserByFrom($from, $entityManager)
     {
-        $repository = $this->entityManager->getRepository("User");
+        $repository = $entityManager->getRepository("User");
 
         $user = $repository->findOneBy(array('phone' => $from, 'state' => 1));
 
         return $user;
     }
 
-    function _findCurrentClueByUser($user)
+    static function FindCurrentClueByUser($user, $entityManager)
     {
-        $repository = $this->entityManager->getRepository("Dummy");
+        $repository = $entityManager->getRepository("Dummy");
 
         $dummy = $repository->findOneBy(array('user' => $user->getId()));
-        if (isset($dummy))
-        {
-            $clue = $dummy->getClue();
-        }
-
 
         return $dummy;
     }
 
-    function _findAnswerForClueByValue($clue, $sms_value=null, $mms_value=null)
+    static function FindHuntByParty($party, $entityManager)
+    {
+        $repository = $entityManager->getRepository("Hunt");
+
+        $hunt = $repository->findOneBy(array('party' => $party, 'end' => null));
+
+        return $hunt;
+    }
+
+    static function FindAnswerForClueByValue($clue, $message=null)
     {
         $curAnswer = null;
         $acceptableAnswers = $clue->getAnswers();
@@ -247,13 +266,13 @@ class ScavengerHandler
         foreach ($acceptableAnswers as $answer) {
             if ($answer->getValue() == "/media/")
             {
-                if ($this->message["NumMedia"] >= 1)
+                if ($message["NumMedia"] >= 1)
                 {
                     $curAnswer = $answer;
                     break;
                 }
             }
-            else if (preg_match($answer->getValue(), $sms_value)) {
+            else if (preg_match($answer->getValue(), $message["Body"])) {
                 $curAnswer = $answer;
                 break;
             }
@@ -263,14 +282,14 @@ class ScavengerHandler
         return $curAnswer;
     }
 
-    function _getFirstClue($storyID=1)
+    static function GetFirstClue($storyID=1, $entityManager)
     {
-        $story = $this->entityManager->find("Story", $storyID);
+        $story = $entityManager->find("Story", $storyID);
 
         return $story->getFirstClue();
     }
 
-    function _findHintsForClue($curClue)
+    static function FindHintsForClue($curClue)
     {
         $curHint = null;
         $hints = $curClue->getHints();

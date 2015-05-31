@@ -16,7 +16,7 @@ class Hunt implements JsonSerializable
      **/
     protected $story;
     /**
-     * @Column(type="datetime")
+     * @Column(type="datetime", nullable=true)
      * @var DateTime
      */
     protected $start;
@@ -28,7 +28,7 @@ class Hunt implements JsonSerializable
     protected $hintsUsed;
 
     /**
-     * @Column(type="datetime")
+     * @Column(type="datetime", nullable=true)
      * @var DateTime
      */
     protected $end;
@@ -63,7 +63,6 @@ class Hunt implements JsonSerializable
 
     public function setStory($story)
     {
-        $story->addHunt($this);
         $this->story = $story;
     }
 
@@ -131,12 +130,11 @@ class Hunt implements JsonSerializable
     {
         return array(
              'id' => $this->id,
-             'story'=> $this->story->jsonSerialize(),
+             'story'=> ($this->story != null)?$this->story->jsonSerialize():null,
              'start'=> $this->start,
              'end'=> $this->end,
-             'clue'=> $this->currentClue->jsonSerialize(),
-             'story'=>$this->story->jsonSerialize(),
-             'party'=>$this->party->jsonSerialize(),
+             'clue'=> ($this->currentClue != null)?$this->currentClue->jsonSerialize():null,
+             'party'=>($this->party != null)?$this->party->jsonSerialize():null,
              'hintsUsed'=>$this->hintsUsed
         );
     }

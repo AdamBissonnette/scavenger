@@ -30,10 +30,17 @@ class User implements JsonSerializable
     protected $phone;
 
     /**
+     * @ManyToOne(targetEntity="Party", inversedBy="hunts")
+     * @var party
+     */
+    protected $party;
+
+    /**
      * @Column(type="datetime")
      * @var DateTime
      */
     protected $registrationDate;
+
     /**
      * @Column(type="integer")    
      * @var string
@@ -85,6 +92,16 @@ class User implements JsonSerializable
         $this->registrationDate = $registrationDate;
     }
 
+    public function getParty()
+    {
+        return $this->party;
+    }
+
+    public function setParty($partyIn)
+    {
+        $this->party = $partyIn;
+    }
+
     public function getState()
     {
         return $this->state;
@@ -108,7 +125,8 @@ class User implements JsonSerializable
             'name'=> $this->name,
             'email'=> $this->email,
             'phone'=> $this->phone,
-            'date'=> $this->registrationDate->getTimestamp() * 1000
+            'date'=> $this->registrationDate->getTimestamp() * 1000,
+            'party'=>($this->party != null)?$this->party->jsonSerialize():null
         );
     }
 }

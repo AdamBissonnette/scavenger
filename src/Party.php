@@ -49,7 +49,7 @@ class Party implements JsonSerializable
     }
 
     /**
-     * @ManyToMany(targetEntity="User")
+     * @OneToMany(targetEntity="User", mappedBy="party")
      * @var users[]
      */
     protected $users = null;
@@ -60,21 +60,31 @@ class Party implements JsonSerializable
      */
     protected $hunts = null;
 
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-        $this->hunts = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->users = new ArrayCollection();
+    //     $this->hunts = new ArrayCollection();
+    // }
 
-    public function addHunt($hunt)
-    {
-        $this->hunts[] = $hunt;
-    }
+    // public function addHunt($hunt)
+    // {
+    //     $this->hunts[] = $hunt;
+    // }
 
-    public function addUser($user)
-    {
-        $this->users[] = $user;
-    }
+    // public function addUser($user)
+    // {
+    //     $this->users[] = $user;
+    // }
+
+    // public function getHunts()
+    // {
+    //     return $this->hunts;
+    // }
+
+    // public function getUsers()
+    // {
+    //     return $this->users;
+    // }
 
     public function jsonSerialize()
     {

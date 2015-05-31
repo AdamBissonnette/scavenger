@@ -28,7 +28,7 @@ if (isset($data))
             $json = addEditHint($data, $entityManager);
             break;
         case 'aehunt':
-            $json = addEditHint($data, $entityManager);
+            $json = addEditHunt($data, $entityManager);
             break;
         case 'aestory':
             $json = addEditStory($data, $entityManager);
@@ -212,38 +212,53 @@ function addEditParty($data, $entityManager)
 function addEditHunt($data, $entityManager)
 {
     $id = $data->id;
-    $start = $data->start;
-    $end = $data->end;
+
+    $start = null;
+    if ($data->start != "")
+    {
+        $start = $data->start;
+    }
+
+    $end = null;
+    if ($data->end != "")
+    {
+        $end = $data->end;
+    }
+
     $hintsUsed = $data->hintsUsed;
+
+    $clue = $data->clue;
+    $party = $data->party;
+    $story = $data->story;
 
     $hunt = $entityManager->find("Hunt", $id);
     if (!$hunt) {
         $hunt = new Hunt();  
     }
 
-    $hunt->setStart($name);
+    $hunt->setStart($start);
     $hunt->setEnd($end);
-    $hunt->setEnd($hintsUsed);
-    $clue = $entityManager->find("Clue", $data->clue);
-    $party = $entityManager->find("Party", $data->party);
-    $story = $entityManager->find("Story", $data->story);
-    $entityManager->persist($hunt);
+    $hunt->setHintsUsed($hintsUsed);
 
     if ($clue != null)
     {
+        $clue = $entityManager->find("Clue", $clue);
         $hunt->setCurrentClue($clue);
     }
 
     if ($party != null)
     {
-        $hunt->setCurrentClue($clue);
+        $party = $entityManager->find("Party", $party);
+        $hunt->setParty($party);
     }
 
     if ($story != null)
     {
-        $hunt->setCurrentClue($clue);
+        $story = $entityManager->find("Story", $story);
+        $hunt->setStory($story);
     }
 
+    $entityManager->persist($hunt);
     $entityManager->flush();
 
     return json_encode($hunt->jsonSerialize());
@@ -255,14 +270,15 @@ function addEditUser($data, $entityManager)
     $name = $data->name;
     $email = $data->email;
     $phone = $data->phone;
+    $party = $data->party;
 
-    if (isset($data->clueid))
+    if (isset($data->party))
     {
-        $clue = $entityManager->find("Clue", $data->clueid);
+        $party = $entityManager->find("Party", $party);
     }
     else
     {
-        $clue = null;
+        $party = null;
     }
     
 
@@ -275,21 +291,9 @@ function addEditUser($data, $entityManager)
     $user->setName($name);
     $user->setEmail($email);
     $user->setPhone($phone);
-
+    $user->setParty($party);
+    
     $entityManager->persist($user);
-
-    $repository = $entityManager->getRepository("Dummy");
-    $dummy = $repository->findOneBy(array('user' => $user->getId()));
-
-    if (!isset($dummy))
-    {
-        $dummy = new Dummy();
-        $dummy->setUser($user);
-        $entityManager->persist($dummy);
-    }
-
-    $dummy->setClue($clue);
-
     $entityManager->flush();
 
     return json_encode($user->jsonSerialize());

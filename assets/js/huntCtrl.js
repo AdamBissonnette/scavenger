@@ -20,7 +20,7 @@ angular.module('scavengerApp')
     partyList.http({fn: "getEntities", entityName: "Party"},
       function (response) {
           partyList.setList(response);
-          $scope.users = partyList.getList();
+          $scope.parties = partyList.getList();
       },
       function(response){
         console.log(response);
@@ -46,11 +46,11 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    $scope.huntCtrlFormData = {id : "-1", start: "", end : "", story: "-1", party: "-1", clue: "-1", hintsUsed: "0"};
+    $scope.huntCtrlFormData = {id : "-1", start: "", end : "", story: "-1", party: "-1", clue: "-1", hintsUsed: 0};
 
     $scope.huntCtrlFormData.submit = function(item, event) {
       var data = {fn: "aehunt", id : $scope.huntCtrlFormData.id,
-                   start: $scope.huntCtrlFormData.name, 
+                   start: $scope.huntCtrlFormData.start, 
                    end : $scope.huntCtrlFormData.end,
                    story: $scope.huntCtrlFormData.story,
                    party: $scope.huntCtrlFormData.party,
@@ -77,7 +77,7 @@ angular.module('scavengerApp')
       $scope.huntCtrlFormData.story = -1;
       $scope.huntCtrlFormData.party = -1;
       $scope.huntCtrlFormData.clue = -1;
-      $scope.huntCtrlFormData.hintsUsed = "0";
+      $scope.huntCtrlFormData.hintsUsed = 0;
      }
 
      $scope.editItem = function(item) {

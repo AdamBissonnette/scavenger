@@ -1,10 +1,23 @@
 <?php
 
-function format_TwiML($message)
+function format_TwiML($response)
 {
+    $message = "";
+    $recipients = "";
+    
+    if (isset($response["body"]))
+    {
+        $message = $response["body"];
+    }
+
+    if (isset($response["recipients"]))
+    {
+        $recipients = $response["recipients"];
+    }
+
     $response_template = "<Response>%s</Response>";
 
-    $response = "";
+    $response_body = "";
     $messages = explode("^", $message);
 
     if (count($messages) > 1)
@@ -14,13 +27,27 @@ function format_TwiML($message)
             array_shift($messages);
         }
         foreach ($messages as $cur_message) {
-            $response .= format_Message_Service($cur_message);
+            $response_body .= format_Message_Service($cur_message);
         }
     }
     else
     {
-        $response = format_Message_Service($message);
+        $response_body = format_Message_Service($message);
     }
+
+    $to_template = 'to="%s"';
+    $response = "";
+
+    if ($recipients != "")
+    {
+        foreach ($recipients as $recipient) {
+            $response .= str_replace("@to", sprintf($to_template, $recipient), $response_body);
+        }
+    }
+    else
+    {
+        $response .= str_replace("@to", "", $response_body);
+    }   
 
     return sprintf($response_template, $response);
 }
@@ -28,11 +55,11 @@ function format_TwiML($message)
 function format_Message_Service($message_in)
 {
     $mms_code = "Ø";
-    $message_template = "<Message>%s</Message>";
+    $message_template = "<Message @to>%s</Message>";
     $sms_template = "<Body>%s</Body>";
     $mms_template = "<Media>%s</Media>";
 
-    $message = split($mms_code, $message_in);
+    $message = explode($mms_code, $message_in);
 
     $message_out = "";
     if (count($message) > 1)

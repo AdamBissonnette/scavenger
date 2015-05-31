@@ -19,10 +19,10 @@
             </div>
 
             <div class="form-group">
-                <label for="inputCurClue" class="control-label">Next Clue ID</label>
-                <select class="form-control" id="inputCurClue" ng-model="userCtrlFormData.clueid">
+                <label for="inputCurClue" class="control-label">Party</label>
+                <select class="form-control" id="inputCurClue" ng-model="userCtrlFormData.party">
                     <option></option>
-                    <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
+                    <option ng-repeat="party in parties" value="{{party.id}}">{{party.id}} | {{party.name}}</option>
                 </select>
             </div>
 
@@ -61,7 +61,7 @@
         <td> {{ item.email }} </td>
         <td> {{ item.phone }} </td>
         <td> {{ item.date | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
-        <td> {{ item.clueid}} </td>
+        <td> {{ item.party}} </td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
