@@ -204,7 +204,17 @@ class ScavengerHandler
         $data = array('from' => $this->message["To"], 'to' => $this->message["From"], 'value' => $response_body, 'data' => format_TwiML($response_body), 'direction' => self::DIRECTION_OUTGOING, 'type' => $outgoing_message_type);
         LogMessage($data, $this->entityManager, $this->user, $this->hunt);
 
-        $response_to[] .= $this->message["From"];
+        if ($this->party != null)
+        {
+            foreach ($this->party->getUsers() as $user) {
+                $response_to[] .= $user->getPhone();
+            }
+        }
+        else
+        {
+            $response_to[] .= $this->message["From"];
+        }
+
         $response = array("body" => $response_body, "recipients" => $response_to);
 
         return $response;
