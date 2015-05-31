@@ -27,6 +27,9 @@ if (isset($data))
         case 'aehint':
             $json = addEditHint($data, $entityManager);
             break;
+        case 'aehunt':
+            $json = addEditHint($data, $entityManager);
+            break;
         case 'aestory':
             $json = addEditStory($data, $entityManager);
             break;
@@ -184,6 +187,46 @@ function addEditStory($data, $entityManager)
     $entityManager->flush();
 
     return json_encode($story->jsonSerialize());
+}
+
+function addEditHunt($data, $entityManager)
+{
+    $id = $data->id;
+    $start = $data->start;
+    $end = $data->end;
+    $hintsUsed = $data->hintsUsed;
+
+    $hunt = $entityManager->find("Hunt", $id);
+    if (!$hunt) {
+        $hunt = new Hunt();  
+    }
+
+    $hunt->setStart($name);
+    $hunt->setEnd($end);
+    $hunt->setEnd($hintsUsed);
+    $clue = $entityManager->find("Clue", $data->clue);
+    $party = $entityManager->find("Party", $data->party);
+    $story = $entityManager->find("Story", $data->story);
+    $entityManager->persist($hunt);
+
+    if ($clue != null)
+    {
+        $hunt->setCurrentClue($clue);
+    }
+
+    if ($party != null)
+    {
+        $hunt->setCurrentClue($clue);
+    }
+
+    if ($story != null)
+    {
+        $hunt->setCurrentClue($clue);
+    }
+
+    $entityManager->flush();
+
+    return json_encode($hunt->jsonSerialize());
 }
 
 function addEditUser($data, $entityManager)

@@ -26,10 +26,14 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="inputClue" class="control-label">Party ID</label>
+                <label for="inputClue" class="control-label">Clue ID</label>
                 <select class="form-control" id="inputClue" ng-model="huntCtrlFormData.clue">
                     <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
+            </div>
+            <div class="form-group">
+               <label for="inputHintsUsed" class="control-label">Hints Used</label>
+                <input ng-model="huntCtrlFormData.hintsUsed" type="text" class="form-control" id="inputHintsUsed" placeholder="Hints Used" maxlength="255">
             </div>
             <div class="form-group">
                 <div class="">
@@ -61,7 +65,7 @@
         <th>Hints Used</th>
         <th>Controls</th>
     </tr>
-    <tr ng-repeat='item in hintList'>
+    <tr ng-repeat='item in huntList | orderObjectBy: "id"'>
         <td> {{ item.id }} </td>
         <td> {{ item.start }} </td>
         <td> {{ item.end }} </td>
