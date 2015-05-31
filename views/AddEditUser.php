@@ -52,7 +52,7 @@
         <th>Email</th>
         <th>Phone</th>
         <th>Registration Date</th>
-        <th>Current Clue</th>
+        <th>Party</th>
         <th>Controls</th>
     </tr>
     <tr ng-repeat='item in userList' | orderObjectBy: "id">
