@@ -6,11 +6,10 @@ $data = json_decode(file_get_contents("php://input"));
 
 if (isset($data))
 {
-    if (isset($data["fn"]) && isset($data["entityName"]))
+    if (isset($data->fn) && isset($data->entityName))
     {
         require('bootstrap.php');
         require('lib/EntityHelper.php');
-        require('lib/ClientHelper.php');
 
         $json = "{}";
 
@@ -21,13 +20,13 @@ if (isset($data))
             case 'put':
             case 'post':
                  switch($data->entityName) {
-                    case 'party':
+                    case 'Party':
                         $json = addEditParty($data, $entityManager);
                     break;
-                    case 'user':
+                    case 'User':
                         $json = addEditUser($data, $entityManager);
                     break;
-                    case 'hunt':
+                    case 'Hunt':
                         $json = addEditUser($data, $entityManager);
                     break;
                     default:

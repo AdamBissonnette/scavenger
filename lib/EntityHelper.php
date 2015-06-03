@@ -28,7 +28,7 @@ function getEntity($data, $entityManager)
 
     $entity = $entityManager->find($entityName, $id);
 
-    return $entity->jsonSerialize();
+    return json_encode($entity->jsonSerialize());
 }
 
 function deleteEntity($data, $entityManager)
