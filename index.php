@@ -60,6 +60,5 @@
         <script src='assets/js/answerAssignmentCtrl.js'></script>
         <script src='assets/js/twiMLTests.js'></script>
         <script src='assets/js/logCtrl.js'></script>
-        <script src='assets/js/app.js'></script>
     </body>
 </html>
