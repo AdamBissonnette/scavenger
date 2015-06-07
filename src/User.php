@@ -129,4 +129,16 @@ class User implements JsonSerializable
             'party'=>($this->party != null)?$this->party->jsonSerialize():null
         );
     }
+
+    public function jsonSerializeShallow()
+    {
+        return array(
+            'id' => $this->id,
+            'name'=> $this->name,
+            'email'=> $this->email,
+            'phone'=> $this->phone,
+            'date'=> $this->registrationDate->getTimestamp() * 1000,
+            'party'=>json_encode(($this->party != null)?$this->party->getId():null)
+        );
+    }
 }

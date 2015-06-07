@@ -88,9 +88,15 @@ class Party implements JsonSerializable
 
     public function jsonSerialize()
     {
+        $users_json = "";
+        foreach ($this->users as $user) {
+            $users_json[$user->getId()] = $user->jsonSerializeShallow();
+        }
+
         return array(
             'id' => $this->id,
-            'name' => $this->name
+            'name' => $this->name,
+            'users' => $users_json
         );
     }
 }

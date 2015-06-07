@@ -14,11 +14,11 @@ if (isset($data))
         $json = "{}";
 
         switch ($data->fn) {
-            case 'get':
+            case 'GET':
                 $json = getEntity($data, $entityManager);
             break;
-            case 'put':
-            case 'post':
+            case 'PUT':
+            case 'POST':
                  switch($data->entityName) {
                     case 'Party':
                         $json = addEditParty($data, $entityManager);
@@ -34,7 +34,7 @@ if (isset($data))
                     break;
                 }
             break;
-            case 'delete':
+            case 'DELETE':
                 $json = deleteEntity($data, $entityManager);
             break;
             default:

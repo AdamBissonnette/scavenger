@@ -227,9 +227,16 @@ function addEditUser($data, $entityManager)
     $phone = $data->phone;
     $party = $data->party;
 
+
     if (isset($data->party))
     {
         $party = $entityManager->find("Party", $party);
+    }
+    elseif(isset($data->party_name))
+    {
+        $party = new Party();
+        $party->setName($data->party_name);
+        $entityManager->persist($party);
     }
     else
     {

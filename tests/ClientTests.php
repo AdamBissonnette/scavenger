@@ -1,6 +1,6 @@
 <?php
 
-    $data = array("fn" => "post", "entityName" => "Party", "id" => -1,"name" => "steve");
+    $data = array("fn" => "get", "entityName" => "Party", "id" => 1,"name" => "steve");
     $json = json_encode($data);
 
     $ch = curl_init('http://sandbox:1234/scavenger/webhooks.php');                                                                      
