@@ -225,24 +225,23 @@ function addEditUser($data, $entityManager)
     $name = $data->name;
     $email = $data->email;
     $phone = $data->phone;
-    $party = $data->party;
-
+    $party = null;
 
     if (isset($data->party))
     {
-        $party = $entityManager->find("Party", $party);
-    }
-    elseif(isset($data->party_name))
-    {
-        $party = new Party();
-        $party->setName($data->party_name);
-        $entityManager->persist($party);
-    }
-    else
-    {
-        $party = null;
+        $party = $entityManager->find("Party", $data->party);
     }
     
+    if(isset($data->party_name))
+    {
+        if (!isset($party))
+        {
+            $party = new Party();
+        }
+
+        $party->setName($data->party_name);
+        $entityManager->persist($party);
+    }    
 
     $user = $entityManager->find("User", $id);
     if (!$user) {

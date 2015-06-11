@@ -90,7 +90,10 @@ class Party implements JsonSerializable
     {
         $users_json = "";
         foreach ($this->users as $user) {
-            $users_json[$user->getId()] = $user->jsonSerializeShallow();
+            if ($user->getState() == 1)
+            {
+                $users_json[$user->getId()] = $user->jsonSerializeShallow();
+            }
         }
 
         return array(

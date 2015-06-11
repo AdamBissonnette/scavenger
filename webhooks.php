@@ -17,7 +17,6 @@ if (isset($data))
             case 'GET':
                 $json = getEntity($data, $entityManager);
             break;
-            case 'PUT':
             case 'POST':
                  switch($data->entityName) {
                     case 'Party':
