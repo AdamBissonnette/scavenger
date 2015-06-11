@@ -20,6 +20,10 @@
                 <textarea ng-model="hintCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value" maxlength="255"></textarea>
             </div>
             <div class="form-group">
+                <label for="inputPriority" class="control-label">Priority</label>
+                <input ng-model="hintCtrlFormData.priority" type="text" class="form-control" id="inputPriority" placeholder="Enter priority" maxlength="255">
+            </div>
+            <div class="form-group">
                 <div class="">
                     <button ng-click="hintCtrlFormData.submit()" class="btn btn-primary" type="submit">
                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
@@ -44,6 +48,7 @@
         <th>Name</th>
         <th>Value</th>
         <th>Clue</th>
+        <th>Priority</th>
         <th>Controls</th>
     </tr>
     <tr ng-repeat='item in hintList | orderObjectBy: "id"'>
@@ -51,6 +56,7 @@
         <td> {{ item.name }} </td>
         <td> {{ item.value }} </td>
         <td> {{ item.clue }} </td>
+        <td> {{ item.priority }} </td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

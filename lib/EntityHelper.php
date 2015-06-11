@@ -97,6 +97,7 @@ function addEditHint($data, $entityManager)
     $id = $data->id;
     $name = $data->name;
     $value = $data->value;
+    $priority = $data->priority;
 
     $hint = $entityManager->find("Hint", $id);
     if (!$hint) {
@@ -105,6 +106,7 @@ function addEditHint($data, $entityManager)
 
     $hint->setName($name);
     $hint->setValue($value);
+    $hint->setPriority($priority);
     $clue = $entityManager->find("Clue", $data->clue);
     $data->checked = ($clue != null)?1:0;
 

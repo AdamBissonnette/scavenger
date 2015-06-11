@@ -129,7 +129,8 @@ class Hint implements JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'value'=> $this->value,
-            'clue' => $this->getClueID()
+            'clue' => $this->getClueID(),
+            'priority' => $this->priority
         );
     }
 }
