@@ -70,8 +70,8 @@
         <td> {{ item.start }} </td>
         <td> {{ item.end }} </td>
         <td> {{ item.story.id }} </td>
-        <td> {{ item.party }} </td>
-        <td> {{ item.clue }} </td>
+        <td> {{ item.party.id }} </td>
+        <td> {{ item.clue.id }} </td>
         <td> {{ item.hintsUsed }} </td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">

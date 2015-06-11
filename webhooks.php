@@ -26,7 +26,7 @@ if (isset($data))
                         $json = addEditUser($data, $entityManager);
                     break;
                     case 'Hunt':
-                        $json = addEditUser($data, $entityManager);
+                        $json = addEditHunt($data, $entityManager);
                     break;
                     default:
                         exit(0);
