@@ -3,6 +3,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 require_once "vendor/autoload.php";
+include_once "lib/LogTypes.php";
 
 // Create a simple "default" Doctrine ORM configuration for Annotations
 $isDevMode = true;
@@ -37,6 +38,7 @@ function LogMessage($data, $em, $user=null, $hunt=null)
 
     $em->persist($log);
     $em->flush();
+    return $log;
 }
 
 function MakePrettyException(Exception $e) {

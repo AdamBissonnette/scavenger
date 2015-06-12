@@ -221,13 +221,36 @@ function addEditHunt($data, $entityManager)
     return json_encode($hunt->jsonSerialize());
 }
 
+function FindUserByFrom($from, $entityManager)
+{
+    $repository = $entityManager->getRepository("User");
+
+    $user = $repository->findOneBy(array('phone' => $from, 'state' => 1));
+
+    return $user;
+}
+
 function addEditUser($data, $entityManager)
 {
     $id = $data->id;
     $name = $data->name;
     $email = $data->email;
     $phone = $data->phone;
-    $party = null;
+    $party = null;   
+
+    $user = $entityManager->find("User", $id);
+    if (!$user) {
+        //check for a matching phone number
+        if (FindUserByFrom($phone, $entityManager) != null)
+        {
+            throw new Exception("That phone number is already registered in our system.");
+        }
+        else
+        {
+            $user = new User();  
+            $user->setRegistrationDate(new DateTime());
+        }
+    }
 
     if (isset($data->party))
     {
@@ -243,12 +266,6 @@ function addEditUser($data, $entityManager)
 
         $party->setName($data->party_name);
         $entityManager->persist($party);
-    }    
-
-    $user = $entityManager->find("User", $id);
-    if (!$user) {
-        $user = new User();  
-        $user->setRegistrationDate(new DateTime());
     }
 
     $user->setName($name);
