@@ -48,7 +48,7 @@ if (isset($data))
             break;
         }
 
-        $json = json_encode(LogMessage($logdata, $entityManager, null, null));
+        $json = json_encode(LogMessage($logdata, $entityManager, null, null)->jsonSerialize());
 
         echo $json;
     }

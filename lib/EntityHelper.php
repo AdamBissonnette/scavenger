@@ -238,10 +238,13 @@ function addEditUser($data, $entityManager)
     $phone = $data->phone;
     $party = null;   
 
+    $userByFrom = FindUserByFrom($phone, $entityManager);
+
     $user = $entityManager->find("User", $id);
+
     if (!$user) {
         //check for a matching phone number
-        if (FindUserByFrom($phone, $entityManager) != null)
+        if ($userByFrom != null)
         {
             throw new Exception("That phone number is already registered in our system.");
         }
@@ -249,6 +252,17 @@ function addEditUser($data, $entityManager)
         {
             $user = new User();  
             $user->setRegistrationDate(new DateTime());
+        }
+    }
+    else
+    {
+        //check for changed phone number
+        if ($userByFrom != null)
+        {
+            if ($userByFrom->getId() != $user->getId())
+            {
+                throw new Exception("That phone number is already registered in our system.");
+            }
         }
     }
 
