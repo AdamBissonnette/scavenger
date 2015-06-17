@@ -42,3 +42,9 @@
 }
 
 .value {white-space: pre-wrap;}
+
+.sidebar-wrapper {position: fixed;}
+
+@media screen and (max-width: 1000px) {
+    .sidebar-wrapper {position: static;}
+}

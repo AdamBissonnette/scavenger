@@ -1,4 +1,5 @@
-<div class="col-sm-3">                    
+<div class="col-sm-3">
+    <div class="sidebar-wrapper">                   
     <h2>Add/Edit Clue</h2>
         <form class="form-horizontal col-sm-12">
             <div class="form-group">
@@ -36,6 +37,7 @@
             <li>^Øurl.jpg == MMS Only </li>
             <li>^texty textØurl.jpg == MMS & SMS</li>
         </ul>
+    </div>
 </div>
 <div class="col-sm-9">
     <h2>List Clues</h2>

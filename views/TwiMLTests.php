@@ -1,4 +1,5 @@
-<div class="col-sm-3">                    
+<div class="col-sm-3">
+    <div class="sidebar-wrapper">
     <h2>Tests</h2>
 
     <form action="PhpHandler.php" method="get" target="resultsFrame">
@@ -45,6 +46,7 @@
         <li><a target="resultsFrame" href="PhpHandler.php?Body=clue&From=(306)%20370-4254&To=(306)%20tst-test">Sent SMS "Clue" - MMS Reply</a></li>
         <li><a target="resultsFrame" href="PhpHandler.php?Body=aaa&From=(306)%20999-9999&To=(306)%20tst-test">Unregistered messages the app</a></li>
     </ul> -->
+    </div>
 </div>
 <div class="col-sm-9">
     <h2>Results</h2>

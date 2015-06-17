@@ -1,4 +1,5 @@
 <div class="col-sm-3">                    
+    <div class="sidebar-wrapper">
     <h2>Add/Edit Story</h2>
         <i class='glyphicon-spinner glyphicon-spin glyphicon-large'></i>
         <form class="form-horizontal col-sm-12">
@@ -35,6 +36,7 @@
                 </div>
             </div>
         </form>
+    </div>
 </div>
 <div class="col-sm-9">
     <h2>List Stories</h2>
