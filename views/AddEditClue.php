@@ -55,8 +55,8 @@
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td class="value">{{ item.value }}</td>
-        <td><span ng-repeat="answer in item.trailings">{{answer.id}} </span></td>
-        <td><span ng-repeat="answer in item.answers">{{answer.id}} </span></td>
+        <td><span ng-repeat="answer in item.trailings">{{answer.id}} - {{answer.name}} </span></td>
+        <td><span ng-repeat="answer in item.answers">[{{answer.id}} - {{answer.name}}]</span></td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

@@ -1,5 +1,5 @@
 <div class="col-sm-3">
-    <div class="sidebar-wrapper">
+    <div>
     <h2>Tests</h2>
 
     <form action="PhpHandler.php" method="get" target="resultsFrame">
