@@ -9,7 +9,6 @@ if (isset($data))
     if (isset($data->fn) && isset($data->entityName))
     {
         require('bootstrap.php');
-        require('lib/EntityHelper.php');
 
         $json = "{}";
         $entity = "";

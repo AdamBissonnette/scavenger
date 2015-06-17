@@ -1,6 +1,6 @@
 <?php
-require('lib/ScavengerHandler.php');
-require('lib/TwiMlHelper.php');
+require_once('lib/ScavengerHandler.php');
+require_once('lib/TwiMLHelper.php');
 
 // header("content-type: text/xml");
 

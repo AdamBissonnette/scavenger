@@ -5,8 +5,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 if (isset($data))
 {
-    require('bootstrap.php');
-    require('lib/EntityHelper.php');
+    require_once('bootstrap.php');
 
     $json = "{}";
 

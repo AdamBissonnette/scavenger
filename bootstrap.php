@@ -3,6 +3,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 require_once "vendor/autoload.php";
+require_once "lib/EntityHelper.php";
 include_once "lib/LogTypes.php";
 
 // Create a simple "default" Doctrine ORM configuration for Annotations
