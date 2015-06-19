@@ -1,5 +1,8 @@
 <?php
 
+include_once('lib/AuthenticationHandler.php');
+do_authenticate();
+
 header('Content-type: application/json');
 
 $data = json_decode(file_get_contents("php://input"));

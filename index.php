@@ -1,31 +1,6 @@
 <?php
-ob_start();
-if (!isset($_SERVER['PHP_AUTH_USER']) || $_COOKIE['isin'] != "1") {
-    header('WWW-Authenticate: Basic realm="My Realm"');
-    header('HTTP/1.0 401 Unauthorized');
-    setcookie ("isin", "1");
-    die('<a href="http://www.jabberwocky.com/carroll/walrus.html">Here is the secret url</a>');
-} 
-else {
-    if($_SERVER['PHP_AUTH_USER'] == "USER" &&  $_SERVER['PHP_AUTH_PW']== "PASSWORD") {
-        $logout = "<a href='".$_SERVER['PHP_SELF']."?action=logout'>logout</a>";
-    }
-    else {
-        setcookie ("isin", "", time() - 3600);
-        $url=$_SERVER['PHP_SELF'];
-        header("location: $url");
-    }
-    if (isset($_GET['action']))
-    {
-
-        if($_GET['action'] == "logout") {
-            setcookie ("isin", "", time() - 3600);
-            $url=$_SERVER['PHP_SELF'];
-            header("location: $url");
-        }
-    }
-}
-ob_end_flush();
+    include_once('lib/AuthenticationHandler.php');
+    do_authenticate();
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +43,7 @@ ob_end_flush();
         <li><a ui-sref="app.log" href="#">Logs</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><?php echo $logout; ?></li>
+        <li><?php echo "<a href='".$_SERVER['PHP_SELF']."?action=logout'>logout</a>"; ?></li>
       </ul>
     </div>
   </div>

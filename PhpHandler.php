@@ -2,6 +2,9 @@
 require_once('lib/ScavengerHandler.php');
 require_once('lib/TwiMLHelper.php');
 
+include_once('lib/AuthenticationHandler.php');
+do_authenticate();
+
 // header("content-type: text/xml");
 
 $message = $_GET;
