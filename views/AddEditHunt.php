@@ -16,19 +16,19 @@
             </div>
             <div class="form-group">
                 <label for="inputStory" class="control-label">Story ID</label>
-                <select class="form-control" id="inputStory" ng-model="huntCtrlFormData.story">
+                <select class="form-control" id="inputStory" ng-model="huntCtrlFormData.story.id">
                     <option ng-repeat="story in stories" value="{{story.id}}">{{story.id}} | {{story.name}}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="inputParty" class="control-label">Party ID</label>
-                <select class="form-control" id="inputParty" ng-model="huntCtrlFormData.party">
+                <select class="form-control" id="inputParty" ng-model="huntCtrlFormData.party.id">
                     <option ng-repeat="party in parties" value="{{party.id}}">{{party.id}} | {{party.name}}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="inputClue" class="control-label">Clue ID</label>
-                <select class="form-control" id="inputClue" ng-model="huntCtrlFormData.clue">
+                <select class="form-control" id="inputClue" ng-model="huntCtrlFormData.clue.id">
                     <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
             </div>

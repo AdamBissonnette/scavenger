@@ -50,5 +50,5 @@ if (isset($data))
             break;
     }
 
-    echo $json;
+    echo sprintf("%s", $json);
 }

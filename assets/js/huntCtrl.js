@@ -84,9 +84,9 @@ angular.module('scavengerApp')
       $scope.huntCtrlFormData.id = item.id;
       $scope.huntCtrlFormData.start = item.start;
       $scope.huntCtrlFormData.end = item.end;
-      $scope.huntCtrlFormData.story = item.story;
-      $scope.huntCtrlFormData.party = item.party;
-      $scope.huntCtrlFormData.clue = item.clue;
+      $scope.huntCtrlFormData.story = item.story.id;
+      $scope.huntCtrlFormData.party = item.party.id;
+      $scope.huntCtrlFormData.clue = item.clue.id;
       $scope.huntCtrlFormData.hintsUsed = item.hintsUsed;
      }
 

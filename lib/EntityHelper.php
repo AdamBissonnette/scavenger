@@ -15,7 +15,7 @@ function getEntities($data, $entityManager)
 
     if (count($json) == 0)
     {
-        $json = "";
+        $json = null;
     }
 
     return json_encode($json);
