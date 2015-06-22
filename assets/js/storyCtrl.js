@@ -26,10 +26,10 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    $scope.storyCtrlFormData = {id : "-1", name : "", description : "", clueid: "-1"};
+    $scope.storyCtrlFormData = {id : "-1", name : "", description : "", clueid: "-1", end: "", hint: ""};
 
     $scope.storyCtrlFormData.submit = function(item, event) {
-      var data = {fn: "aestory", id : $scope.storyCtrlFormData.id, name : $scope.storyCtrlFormData.name, description : $scope.storyCtrlFormData.description, clueid: $scope.storyCtrlFormData.clueid}
+      var data = {fn: "aestory", id : $scope.storyCtrlFormData.id, name : $scope.storyCtrlFormData.name, description : $scope.storyCtrlFormData.description, clueid: $scope.storyCtrlFormData.clueid, end: $scope.storyCtrlFormData.end, hint: $scope.storyCtrlFormData.hint}
 
       list.http(data,
           function (response) {
@@ -48,6 +48,8 @@ angular.module('scavengerApp')
       $scope.storyCtrlFormData.name = "";
       $scope.storyCtrlFormData.description = "";
       $scope.storyCtrlFormData.clueid = -1;
+      $scope.storyCtrlFormData.end = "";
+      $scope.storyCtrlFormData.hint = "";
      }
 
      $scope.editItem = function(item) {
@@ -55,6 +57,8 @@ angular.module('scavengerApp')
       $scope.storyCtrlFormData.name = item.name;
       $scope.storyCtrlFormData.description = item.description;
       $scope.storyCtrlFormData.clueid = item.clueid;
+      $scope.storyCtrlFormData.end = item.end;
+      $scope.storyCtrlFormData.hint = item.end;
      }
 
     $scope.deleteItem = function(item) {

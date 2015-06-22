@@ -24,6 +24,20 @@ class Story implements JsonSerializable
      * @ManyToOne(targetEntity="Clue", inversedBy="trailings")
      **/
     protected $firstClue;
+
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $endMessage = "";
+
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $defaultHint = "";
+
+
     /**
      * @Column(type="integer")    
      * @var string
@@ -87,6 +101,26 @@ class Story implements JsonSerializable
         return $id;
     }
 
+    public function getEndMessage()
+    {
+        return $this->endMessage;
+    }
+
+    public function setEndMessage($endMessage)
+    {
+        $this->endMessage = $endMessage;
+    }
+
+    public function getDefaultHint()
+    {
+        return $this->defaultHint;
+    }
+
+    public function setDefaultHint($defaultHint)
+    {
+        $this->defaultHint = $defaultHint;
+    }
+
     /**
      * @OneToMany(targetEntity="Hunt", mappedBy="story")
      * @var hunts[]
@@ -126,7 +160,9 @@ class Story implements JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'description'=> $this->description,
-            'clueid'=> $this->getFirstClueID()
+            'clueid'=> $this->getFirstClueID(),
+            'hint'=>$this->defaultHint,
+            'end'=>$this->endMessage
         );
     }
 }

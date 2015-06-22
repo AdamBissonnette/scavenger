@@ -128,6 +128,8 @@ function addEditStory($data, $entityManager)
     $name = $data->name;
     $description = $data->description;
     $clueid = $data->clueid;
+    $end = $data->end;
+    $hint = $data->hint;
 
     $story = $entityManager->find("Story", $id);
     if (!$story) {
@@ -136,6 +138,8 @@ function addEditStory($data, $entityManager)
 
     $story->setName($name);
     $story->setDescription($description);
+    $story->setEndMessage($end);
+    $story->setDefaultHint($hint);
 
     $entityManager->persist($story);
 

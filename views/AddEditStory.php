@@ -22,6 +22,14 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="inputDefaultHint" class="control-label">Default Hint Message</label>                
+                <textarea ng-model="storyCtrlFormData.hint" type="text" class="form-control" id="inputDefaultHint" placeholder="This hint is displayed if no others are available" maxlength="255"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="inputEndMessage" class="control-label">End Message</label>                
+                <textarea ng-model="storyCtrlFormData.end" type="text" class="form-control" id="inputEndMessage" placeholder="This message is displayed when a party finishes every clue in the story" maxlength="255"></textarea>
+            </div>
+            <div class="form-group">
                 <div>
                     <button ng-click="storyCtrlFormData.submit()" class="btn btn-primary" type="submit">
                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
@@ -46,12 +54,16 @@
             <th>ID</th>
             <th>Name</th>
             <th>First Clue</th>
+            <th>Default Hint Message</th>
+            <th>End Message</th>
             <th>Controls</th>
         </tr>
         <tr ng-repeat='item in storyList' | orderObjectBy: "id">
             <td> {{ item.id }} </td>
             <td> {{ item.name }} </td>
             <td> {{ item.clueid }} </td>
+            <td> {{ item.hint }} </td>
+            <td> {{ item.end }} </td>
             <td class="controls">
                 <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

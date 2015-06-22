@@ -41,6 +41,7 @@ class ScavengerHandler
     var $hunt = null;
     var $clue = null;
     var $answer = null;
+    var $story = null;
 
     function __construct($incomingMessage, $em)
     {
@@ -119,7 +120,7 @@ class ScavengerHandler
                         }
                         else
                         {
-                            $response_body = "You've completed the shareware version of our adventure.  Tell Adam and Berkley your feedback!";
+                            $response_body = ScavengerHandler::GetEndMessage(1, $this->entityManager);;
                             $this->hunt->setCurrentClue(null);
                             $this->entityManager->flush();
                             $outgoing_message_type = LogTypes::TYPE_END;
@@ -141,7 +142,7 @@ class ScavengerHandler
                         }
                         else
                         {
-                            $response_body = "Oops - I think we're off track and I don't have any hints for you on this one.";
+                            $response_body = ScavengerHandler::GetDefaultHint(1, $this->entityManager);;
                         }
                     }
                 }
@@ -276,6 +277,20 @@ class ScavengerHandler
         $story = $entityManager->find("Story", $storyID);
 
         return $story->getFirstClue();
+    }
+
+    static function GetDefaultHint($storyID=1, $entityManager)
+    {
+        $story = $entityManager->find("Story", $storyID);
+
+        return $story->getDefaultHint();        
+    }
+
+    static function GetEndMessage($storyID=1, $entityManager)
+    {
+        $story = $entityManager->find("Story", $storyID);
+
+        return $story->getEndMessage();        
     }
 
     static function FindHintsForClue($curClue)
