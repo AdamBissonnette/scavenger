@@ -204,20 +204,33 @@ function addEditHunt($data, $entityManager)
     if ($clue != null)
     {
         $clue = $entityManager->find("Clue", $clue);
-        $hunt->setCurrentClue($clue);
+    }
+    else
+    {
+        $clue = null;
     }
 
     if ($party != null)
     {
         $party = $entityManager->find("Party", $party);
-        $hunt->setParty($party);
+    }
+    else
+    {
+        $party = null;
     }
 
     if ($story != null)
     {
         $story = $entityManager->find("Story", $story);
-        $hunt->setStory($story);
     }
+    else
+    {
+        $story = null;
+    }
+
+    $hunt->setParty($party);
+    $hunt->setStory($story);
+    $hunt->setCurrentClue($clue);
 
     $entityManager->persist($hunt);
     $entityManager->flush();
