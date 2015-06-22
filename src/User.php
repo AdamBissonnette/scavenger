@@ -24,7 +24,7 @@ class User implements JsonSerializable
     protected $email;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", unique = true)
      * @var string
      */
     protected $phone;
@@ -112,6 +112,18 @@ class User implements JsonSerializable
         $this->state = $state;
     }
 
+    public function getPartyID()
+    {
+        $id = -1;
+
+        if ($this->party != null)
+        {
+            $id = $this->party->getId();
+        }
+
+        return $id;
+    }
+
     /**
      * @//ManyToMany(targetEntity="Party", mappedBy="users")
      * @//var parties[]
@@ -126,7 +138,7 @@ class User implements JsonSerializable
             'email'=> $this->email,
             'phone'=> $this->phone,
             'date'=> $this->registrationDate->getTimestamp() * 1000,
-            'party'=>($this->party != null)?$this->party->jsonSerialize():null
+            'party'=> $this->getPartyID()
         );
     }
 
@@ -138,7 +150,7 @@ class User implements JsonSerializable
             'email'=> $this->email,
             'phone'=> $this->phone,
             'date'=> $this->registrationDate->getTimestamp() * 1000,
-            'party'=>json_encode(($this->party != null)?$this->party->getId():null)
+            'party'=> $this->getPartyID()
         );
     }
 }
