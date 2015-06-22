@@ -283,6 +283,9 @@ function addEditUser($data, $entityManager)
         }
     }
 
+    //Replace above with catching database exception
+    //http://stackoverflow.com/questions/3967226/checking-for-duplicate-keys-with-doctrine-2
+
     if (isset($data->party))
     {
         $party = $entityManager->find("Party", $data->party);

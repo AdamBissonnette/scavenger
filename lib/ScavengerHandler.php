@@ -98,6 +98,10 @@ class ScavengerHandler
                     $this->hunt->setCurrentClue($this->clue);
                     $this->entityManager->flush();
                 }
+                elseif (preg_match("/^quit\s?party/i", trim($body))) {
+                    $this->user->setParty(null);
+                    $this->entityManager->flush();
+                }
 
                 if (!$responseFound)
                 {
