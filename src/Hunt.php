@@ -34,7 +34,7 @@ class Hunt implements JsonSerializable
     protected $end;
 
     /**
-     * @OneToOne(targetEntity="Clue")
+     * @ManyToOne(targetEntity="Clue")
      * @var currentClue
      */
     protected $currentClue;
@@ -126,15 +126,51 @@ class Hunt implements JsonSerializable
         $this->state = $state;
     }
 
+    public function getClueID()
+    {
+        $id = -1;
+
+        if ($this->currentClue != null)
+        {
+            $id = $this->currentClue->getId();
+        }
+
+        return $id;
+    }
+
+    public function getPartyID()
+    {
+        $id = -1;
+
+        if ($this->party != null)
+        {
+            $id = $this->party->getId();
+        }
+
+        return $id;
+    }
+
+    public function getStoryID()
+    {
+        $id = -1;
+
+        if ($this->story != null)
+        {
+            $id = $this->story->getId();
+        }
+
+        return $id;
+    }
+
     public function jsonSerialize()
     {
         return array(
              'id' => $this->id,
-             'story'=> ($this->story != null)?$this->story->jsonSerialize():null,
+             'story'=> $this->getStoryID(),
              'start'=> $this->start,
              'end'=> $this->end,
-             'clue'=> ($this->currentClue != null)?$this->currentClue->jsonSerialize():null,
-             'party'=>($this->party != null)?$this->party->jsonSerialize():null,
+             'clue'=> $this->getClueID(),
+             'party'=>$this->getPartyID(),
              'hintsUsed'=>$this->hintsUsed
         );
     }

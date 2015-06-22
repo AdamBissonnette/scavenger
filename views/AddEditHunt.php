@@ -16,19 +16,22 @@
             </div>
             <div class="form-group">
                 <label for="inputStory" class="control-label">Story ID</label>
-                <select class="form-control" id="inputStory" ng-model="huntCtrlFormData.story.id">
+                <select class="form-control" id="inputStory" ng-model="huntCtrlFormData.story">
+                    <option value=""></option>
                     <option ng-repeat="story in stories" value="{{story.id}}">{{story.id}} | {{story.name}}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="inputParty" class="control-label">Party ID</label>
-                <select class="form-control" id="inputParty" ng-model="huntCtrlFormData.party.id">
+                <select class="form-control" id="inputParty" ng-model="huntCtrlFormData.party">
+                    <option value=""></option>
                     <option ng-repeat="party in parties" value="{{party.id}}">{{party.id}} | {{party.name}}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="inputClue" class="control-label">Clue ID</label>
-                <select class="form-control" id="inputClue" ng-model="huntCtrlFormData.clue.id">
+                <select class="form-control" id="inputClue" ng-model="huntCtrlFormData.clue">
+                    <option value=""></option>
                     <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
             </div>
@@ -71,9 +74,9 @@
         <td> {{ item.id }} </td>
         <td> {{ item.start }} </td>
         <td> {{ item.end }} </td>
-        <td> {{ item.story.id }} </td>
-        <td> {{ item.party.id }} </td>
-        <td> {{ item.clue.id }} </td>
+        <td> {{ item.story }} </td>
+        <td> {{ item.party }} </td>
+        <td> {{ item.clue }} </td>
         <td> {{ item.hintsUsed }} </td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
