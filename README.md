@@ -17,5 +17,9 @@ This is a simple project to create and run sms/mms based scavenger hunts with Tw
 * Update DB: vendor/bin/doctrine orm:schema-tool:update --force
 * Delete DB: vendor/bin/doctrine orm:schema-tool:drop --force (Note: this won't actually delete your sqlite.db file!)
 
+# Authentication
+
+* We're using very simple authentication found in the AuthenticationHandler - default Username is USER and Password is PASSWORD (don't save yours in the repo!)
+
 #DB Diagram
 * ![alt tag](https://raw.githubusercontent.com/MManifesto/scavenger/master/db.png)
