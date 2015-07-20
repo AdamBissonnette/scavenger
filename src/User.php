@@ -132,13 +132,19 @@ class User implements JsonSerializable
 
     public function jsonSerialize()
     {
+        $party = null;
+        if ($this->getParty() != null)
+        {
+            $party = $this->getParty()->jsonSerialize();
+        }
+
         return array(
             'id' => $this->id,
             'name'=> $this->name,
             'email'=> $this->email,
             'phone'=> $this->phone,
             'date'=> $this->registrationDate->getTimestamp() * 1000,
-            'party'=> $this->getPartyID()
+            'party'=> $party
         );
     }
 

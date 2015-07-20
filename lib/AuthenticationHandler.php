@@ -2,13 +2,18 @@
 function do_authenticate()
 {
     ob_start();
+    $is_curl = true;
     $cookie_val = "";
     if (isset($_COOKIE['isin']))
     {
         $cookie_val = $_COOKIE['isin'];
     }
+    elseif(isset($_REQUEST["is_curl"]))
+    {
+        $is_curl = true;
+    }
 
-    if (!isset($_SERVER['PHP_AUTH_USER']) || $cookie_val != "1") {
+    if (!isset($_SERVER['PHP_AUTH_USER']) || ($cookie_val != "1" && !$is_curl)) {
         header('WWW-Authenticate: Basic realm="Super Secret Place"');
         header('HTTP/1.0 401 Unauthorized');
         setcookie ("isin", "1");
@@ -23,16 +28,22 @@ function do_authenticate()
             $url=$_SERVER['PHP_SELF'];
             header("location: $url");
         }
+
         if (isset($_GET['action']))
         {
-
             if($_GET['action'] == "logout") {
-                setcookie ("isin", "", time() - 3600);
-                $url=$_SERVER['PHP_SELF'];
-                header("location: $url");
+                do_logout();
             }
         }
     }
     ob_end_flush();
 }
+
+function do_logout()
+{
+    setcookie ("isin", "", time() - 3600);
+    $url=$_SERVER['PHP_SELF'];
+    header("location: $url");    
+}
+
 ?>

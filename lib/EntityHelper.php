@@ -259,11 +259,11 @@ function addEditUser($data, $entityManager)
 
     $user = $entityManager->find("User", $id);
 
-    if (!$user) {
+    if (!isset($user)) {
         //check for a matching phone number
         if ($userByFrom != null)
         {
-            throw new Exception("That phone number is already registered in our system.");
+            throw new Exception("Oops! That phone number is already registered in our system.");
         }
         else
         {
@@ -276,11 +276,12 @@ function addEditUser($data, $entityManager)
         //check for changed phone number
         if ($userByFrom != null)
         {
-            if ($userByFrom->getId() != $user->getId())
+            $isSameUser = ((int) $userByFrom->getId()) == ((int) $user->getId());
+            if (!$isSameUser)
             {
-                throw new Exception("That phone number is already registered in our system.");
+                throw new Exception("Ah! That phone number is already registered in our system.");
             }
-        }
+        }    
     }
 
     //Replace above with catching database exception
@@ -304,7 +305,7 @@ function addEditUser($data, $entityManager)
 
     $user->setName($name);
     $user->setEmail($email);
-    $user->setPhone($phone);
+    $user->setPhone((string)$phone);
     $user->setParty($party);
     
     $entityManager->persist($user);

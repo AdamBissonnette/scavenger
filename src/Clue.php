@@ -43,7 +43,12 @@ class Clue implements JsonSerializable
 
     public function getValue()
     {
-        return $this->value;
+        $escapedValue = str_replace( "?", "[question_mark]", $this->value );
+        $convertedValue = mb_convert_encoding($escapedValue, "ASCII");
+        $strippedValue = str_replace("?", "�", $convertedValue);
+        $restoredValue = str_replace( "[question_mark]", "?", $strippedValue );
+
+        return mb_convert_encoding($restoredValue, "ASCII");
     }
 
     public function setValue($value)
@@ -199,7 +204,7 @@ class Clue implements JsonSerializable
         return array(
             'id' => $this->id,
             'name' => $this->name,
-            'value'=> $this->value,
+            'value'=> $this->getValue(),
             'answers' => $this->answers->toArray(),
             'trailings' => $this->trailings->toArray(),
             'hints' => $this->hints->toArray()

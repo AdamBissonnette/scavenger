@@ -57,7 +57,7 @@ if (isset($data))
             $user = $_SERVER['PHP_AUTH_USER'];
         }
 
-        $json = json_encode(LogMessage($logdata, $entityManager, $user, null)->jsonSerialize());
+        $json = json_encode(LogMessage($logdata, $entityManager, null, null)->jsonSerialize());
 
         echo $json;
     }
