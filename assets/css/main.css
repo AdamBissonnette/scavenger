@@ -43,8 +43,11 @@
 
 .value {white-space: pre-wrap;}
 
+#inputValue {height: 200px;}
+
 .sidebar-wrapper {position: fixed;}
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1000px), screen and (max-height: 650px) {
     .sidebar-wrapper {position: static;}
+    #inputValue {height: auto;}
 }
