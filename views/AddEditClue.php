@@ -25,9 +25,10 @@
                         Reset
                     </button>
 
-                    <!-- <pre>{{clueCtrlFormData}}</pre> -->
                 </div>
             </div>
+            
+            <div class="well">Char Count: {{clueCtrlFormData.value.length}}<br /> SMS Count: {{clueCtrlFormData.value.length / 160}}</div>
         </form>
 
         <hr />
@@ -47,6 +48,9 @@
         <th>ID</th>
         <th>Name</th>
         <th>Value</th>
+        <th>Is MMS</th>
+        <th>Char Count</th>
+        <th>SMS Count</th>
         <th>Arrived At By (Answer IDs)</th>
         <th>Accepts (Answer IDs)</th>
         <th>Controls</th>
@@ -55,6 +59,9 @@
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td class="value">{{ item.value }}</td>
+        <td>{{item.value.indexOf("Ø") > -1}}</td>
+        <td>{{item.value.length}}</td>
+        <td>{{item.value.length / 160}}</td>
         <td><span ng-repeat="answer in item.trailings">{{answer.id}} - {{answer.name}} </span></td>
         <td><span ng-repeat="answer in item.answers">[{{answer.id}} - {{answer.name}}]</span></td>
         <td class="controls">

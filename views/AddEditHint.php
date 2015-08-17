@@ -38,6 +38,8 @@
                     <!-- <pre>{{hintCtrlFormData}}</pre> -->
                 </div>
             </div>
+
+            <div class="well">Char Count: {{hintCtrlFormData.value.length}}<br /> SMS Count: {{hintCtrlFormData.value.length / 160}}</div>
         </form>
     </div>
 </div>

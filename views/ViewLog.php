@@ -25,7 +25,7 @@
         <td> {{ item.date | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
         <td> {{ item.direction }} </td>
         <td> {{ item.type }} </td>
-        <td> data </td>
+        <td> {{ item.data }} </td>
         <td class="controls">
             <button class="btn btn-default" ng-click='deleteItem(item)' title="Archive">
                 <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
