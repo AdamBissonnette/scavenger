@@ -43,7 +43,7 @@ if (isset($data))
             break;
             case 'DELETE':
                 try { $entity = deleteEntity($data, $entityManager); } catch(Exception $e) {$message = $e->getMessage();};
-                $logdata = array('from' => "curl", 'to' => "webhook", 'value' => $message, 'data' => $entity, 'direction' => LogTypes::DIRECTION_INCOMING, 'type' => LogTypes::TYPE_DELETE_USER);
+                $logdata = array('from' => "curl", 'to' => "webhook", 'value' => "Kick user", 'data' => $entity, 'direction' => LogTypes::DIRECTION_INCOMING, 'type' => LogTypes::TYPE_DELETE_USER);
             break;
             default:
                 exit(0);
