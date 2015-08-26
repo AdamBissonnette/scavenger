@@ -28,8 +28,7 @@ class ScavengerHandler
     var $entityManager = null;
     var $message = null;
     var $globals = array('authGlobals' => array(
-                            array("regex" => "/(start)/i", "smsresponse" => "Your adventure is now starting!", "startedresponse" => "You have already started your adventure!", "mmsresponse" => null),
-                            array("regex" => "/(time)/i", "smsresponse" => "The time is at hand!")
+                            array("regex" => "/(.*)/i", "smsresponse" => "In order to start your adventure you must text \"Start\".")
                             ),
                         'noAuthGlobals' => array(
                             array('regex' => "/.*/", "smsresponse" => "You don't appear the be registered.")
@@ -239,7 +238,12 @@ class ScavengerHandler
 
         if ($isAuthenticated)
         {
-            //Derp
+            foreach ($this->globals["authGlobals"] as $command) {
+                if (preg_match($command["regex"], $body))
+                {
+                    return $command["smsresponse"];
+                }
+            }
         }
         else
         {
