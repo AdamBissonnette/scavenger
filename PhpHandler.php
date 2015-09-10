@@ -11,28 +11,25 @@ $message = $_GET;
 $format = $message["format"];
 
 $Scavenger = new ScavengerHandler($message, $entityManager);
-
 $response_body = $Scavenger->CreateResponse($message);
 
-if (!empty($response_body["body"]))
+$output = "";
+
+if ($format == "xml")
 {
-    $output = "";
+    $xml = format_TwiML($response_body);
+    $xmlDoc = new DOMDocument();
+    $xmlDoc->loadXML($xml);
+    $xmlDoc->formatOutput=true;
 
-    if ($format == "xml")
-    {
-        $xml = format_TwiML($response_body);
-        $xmlDoc = new DOMDocument();
-        $xmlDoc->loadXML($xml);
-        $xmlDoc->formatOutput=true;
-
-        $output = "<pre style='white-space: pre-wrap'>" . htmlentities($xmlDoc->saveXML()) . "</pre>";
-    }
-    else
-    {
-        $output = $response_body["body"];
-    }
-
-    echo $output;
+    $output = "<pre style='white-space: pre-wrap'>" . htmlentities($xmlDoc->saveXML()) . "</pre>";
 }
+else
+{
+    $output = $response_body["body"];
+}
+
+echo $output;
+
 
 ?>
