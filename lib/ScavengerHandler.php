@@ -91,26 +91,8 @@ class ScavengerHandler
                     $responseFound = true;
                     $response_body = $this->clue->getValue();
                 }
-                elseif (preg_match("/^hint/i", trim($body)))
-                {
-                    $responseFound = true;
-                    $hintFound = false;
-
-                    $outgoing_message_type = LogTypes::TYPE_HINT;
-                    $hint = ScavengerHandler::FindHintsForClue($this->clue, $this->entityManager);
-
-                    if ($hint != null)
-                    {
-                        $response_body = $hint->getValue();
-                    }
-                    else
-                    {
-                        $response_body = ScavengerHandler::GetDefaultHint(1, $this->entityManager);;
-                    }
-                }
                 elseif (preg_match("/^restart/i", trim($body))) {
                     $responseFound = true;
-                    // $this->clue = null;
                     $this->clue = ScavengerHandler::GetFirstClue(1, $this->entityManager);
                     $response_body = $this->clue->getValue();
                     $this->hunt->setCurrentClue($this->clue);
@@ -180,16 +162,17 @@ class ScavengerHandler
                 $outgoing_message_type = LogTypes::TYPE_GLOBAL;
                 $responseFound = false;
 
-                if (preg_match("/^start$/i", trim($body)))
-                {
-                    //Send first clue
-                    $responseFound = true;
-                    $this->clue = ScavengerHandler::GetFirstClue(1, $this->entityManager);
-                    $response_body = $this->clue->getValue();
-                    $this->hunt->setCurrentClue($this->clue);
-                    $this->entityManager->flush();
-                    $incoming_message_type = LogTypes::TYPE_START;
-                    $outgoing_message_type = LogTypes::TYPE_START;
+                switch ($body) {
+                    case preg_match("/start/i", $body)?true:false:
+                        //Send first clue
+                        $responseFound = true;
+                        $this->clue = ScavengerHandler::GetFirstClue(1, $this->entityManager);
+                        $response_body = $this->clue->getValue();
+                        $this->hunt->setCurrentClue($this->clue);
+                        $this->entityManager->flush();
+                        $incoming_message_type = LogTypes::TYPE_START;
+                        $outgoing_message_type = LogTypes::TYPE_START;
+                    break;
                 }
 
                 if (!$responseFound)
@@ -217,10 +200,7 @@ class ScavengerHandler
         if ($this->party != null)
         {
             foreach ($this->party->getUsers() as $user) {
-                if ($user->getState() == 1)
-                {
-                    $response_to[] .= $user->getPhone();
-                }
+                $response_to[] .= $user->getPhone();
             }
         }
         else
@@ -275,27 +255,24 @@ class ScavengerHandler
     static function FindAnswerForClueByValue($clue, $message=null)
     {
         $curAnswer = null;
+        $acceptableAnswers = $clue->getAnswers();
 
-        if (!empty($message["Body"]) && $message["NumMedia"] >= 1)
-        {
-            $acceptableAnswers = $clue->getAnswers();
-
-            foreach ($acceptableAnswers as $answer) {
-                if ($answer->getValue() == "/media/")
+        foreach ($acceptableAnswers as $answer) {
+            if ($answer->getValue() == "/media/")
+            {
+                if ($message["NumMedia"] >= 1)
                 {
-                    if ($message["NumMedia"] >= 1)
-                    {
-                        $curAnswer = $answer;
-                        break;
-                    }
-                }
-                else if (preg_match($answer->getValue(), trim($message["Body"]) )) {
                     $curAnswer = $answer;
                     break;
                 }
-
             }
+            else if (preg_match($answer->getValue(), $message["Body"])) {
+                $curAnswer = $answer;
+                break;
+            }
+
         }
+
         return $curAnswer;
     }
 
