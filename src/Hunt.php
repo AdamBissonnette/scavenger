@@ -34,6 +34,12 @@ class Hunt implements JsonSerializable
     protected $end;
 
     /**
+     * @Column(type="string")    
+     * @var string
+     */
+    protected $code = "";
+
+    /**
      * @ManyToOne(targetEntity="Clue")
      * @var currentClue
      */
@@ -116,6 +122,16 @@ class Hunt implements JsonSerializable
         $this->party = $partyIn;
     }
 
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
     public function getState()
     {
         return $this->state;
@@ -169,9 +185,16 @@ class Hunt implements JsonSerializable
              'story'=> $this->getStoryID(),
              'start'=> $this->start,
              'end'=> $this->end,
+             'code'=> $this->code,
              'clue'=> $this->getClueID(),
              'party'=>$this->getPartyID(),
              'hintsUsed'=>$this->hintsUsed
         );
+    }
+
+    //Borrowed from http://php.net/manual/en/function.mt-rand.php#112889
+    public static function GenerateCode ($l, $c = 'abcdefghijklmnopqrstuvwxyz1234567890') {
+        for ($s = '', $cl = strlen($c)-1, $i = 0; $i < $l; $s .= $c[mt_rand(0, $cl)], ++$i);
+        return $s;
     }
 }
