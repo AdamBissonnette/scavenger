@@ -186,6 +186,15 @@ function addEditHunt($data, $entityManager)
         $end = $data->end;
     }
 
+    if ($data->code != "")
+    {
+        $code = $data->code;
+    }
+    else
+    {
+        $code = Hunt::GenerateCode("6");
+    }
+
     $hintsUsed = $data->hintsUsed;
 
     $clue = $data->clue;
@@ -200,6 +209,8 @@ function addEditHunt($data, $entityManager)
     $hunt->setStart($start);
     $hunt->setEnd($end);
     $hunt->setHintsUsed($hintsUsed);
+
+    $hunt->setCode($code);
 
     if ($clue != null)
     {

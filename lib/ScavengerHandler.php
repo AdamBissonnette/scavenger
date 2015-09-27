@@ -179,21 +179,28 @@ class ScavengerHandler
                 $outgoing_message_type = LogTypes::TYPE_GLOBAL;
                 $responseFound = false;
 
-                if (preg_match("/^start$/i", trim($body)))
-                {
-                    //Send first clue
-                    $responseFound = true;
-                    $this->clue = ScavengerHandler::GetFirstClue(1, $this->entityManager);
-                    $response_body = $this->clue->getValue();
-                    $this->hunt->setCurrentClue($this->clue);
+                if (preg_match("/^quit\s?party/i", trim($body))) {
+                    $this->user->setParty(null);
                     $this->entityManager->flush();
-                    $incoming_message_type = LogTypes::TYPE_START;
-                    $outgoing_message_type = LogTypes::TYPE_START;
                 }
-
-                if (!$responseFound)
+                else
                 {
-                    $response_body = $this->_checkGlobals($body, true);
+                    if (preg_match("/^start$/i", trim($body)))
+                    {
+                        //Send first clue
+                        $responseFound = true;
+                        $this->clue = ScavengerHandler::GetFirstClue(1, $this->entityManager);
+                        $response_body = $this->clue->getValue();
+                        $this->hunt->setCurrentClue($this->clue);
+                        $this->entityManager->flush();
+                        $incoming_message_type = LogTypes::TYPE_START;
+                        $outgoing_message_type = LogTypes::TYPE_START;
+                    }
+
+                    if (!$responseFound)
+                    {
+                        $response_body = $this->_checkGlobals($body, true);
+                    }
                 }
             }
         }
@@ -201,6 +208,7 @@ class ScavengerHandler
         {
             $incoming_message_type = LogTypes::TYPE_GLOBAL;
             $outgoing_message_type = LogTypes::TYPE_GLOBAL;
+
             //Do global commands for unregistered users
             $response_body = $this->_checkGlobals($body);
         }
@@ -235,6 +243,60 @@ class ScavengerHandler
     function _checkGlobals($body, $isAuthenticated=false, $hasStarted=false, $curClue=null)
     {
         $responseToGlobal = "";
+
+        $codes = null;
+        if (preg_match("/^join ?(.+)$/i", trim($body), $codes))
+        {
+            $hunt = ScavengerHandler::FindHuntByCode($codes[1], $this->entityManager);
+
+            if (isset($hunt))
+            {
+                $fromPhone = $this->message["From"];
+                $curParty = $hunt->getParty();
+
+                if (!isset($this->user))
+                {
+                    $user = (object) [
+                        'id' => -1,
+                        'name' => '',
+                        'email' => '',
+                        'phone' => (string) $fromPhone,
+                        'party' => $curParty->getId(),
+                      ];
+
+                    try { addEditUser($user, $this->entityManager); } catch(Exception $e) {return $e->getMessage();};
+                }
+                else
+                {
+                    if (isset($this->party))
+                    {
+                        if ($this->party->getId() == $curParty->getId())
+                        {
+                            return "You've already joined this group.";
+                        }
+                        else
+                        {
+                            return "You're already registered to a group - you'll have to text 'quit party' to join this one.";
+                        }
+                    }
+
+                    $user = (object) [
+                        'id' => $this->user->getId(),
+                        'name' => $this->user->getName(),
+                        'email' => $this->user->getEmail(),
+                        'phone' => $this->user->getPhone(),
+                        'party' => $curParty->getId(),
+                      ];
+
+                    try { addEditUser($user, $this->entityManager); } catch(Exception $e) {return $e->getMessage();};
+                }
+
+                return "You've joined the party!";
+            }
+
+            return "We don't seem to have that code on file.";
+
+        }
 
         if ($isAuthenticated)
         {
@@ -335,5 +397,13 @@ class ScavengerHandler
         }
 
         return $curHint;
+    }
+
+    static function FindHuntByCode($code, $entityManager)
+    {
+        $repository = $entityManager->getRepository("Hunt");
+        $hunt = $repository->findOneBy(array('code' => $code, 'end' => null));
+
+        return $hunt;
     }
 }
