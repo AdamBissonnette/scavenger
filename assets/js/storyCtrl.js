@@ -70,7 +70,7 @@ angular.module('scavengerApp')
       $scope.storyCtrlFormData.code = item.code;
       $scope.storyCtrlFormData.maxUsers = item.maxUsers;
       $scope.storyCtrlFormData.end = item.end;
-      $scope.storyCtrlFormData.hint = item.end;
+      $scope.storyCtrlFormData.hint = item.hint;
      }
 
     $scope.deleteItem = function(item) {
