@@ -192,7 +192,7 @@ function addEditHunt($data, $entityManager)
     }
     else
     {
-        $code = Hunt::GenerateCode("6");
+        $code = GenerateCode();
     }
 
     $hintsUsed = $data->hintsUsed;
@@ -411,5 +411,10 @@ function assignClueHint($data, $entityManager, $clue=null, $hint=null)
     $entityManager->flush();
 }
 
+//Borrowed from http://php.net/manual/en/function.mt-rand.php#112889
+function GenerateCode ($l="6", $c = 'abcdefghijklmnopqrstuvwxyz1234567890') {
+    for ($s = '', $cl = strlen($c)-1, $i = 0; $i < $l; $s .= $c[mt_rand(0, $cl)], ++$i);
+    return $s;
+}
 
 ?>

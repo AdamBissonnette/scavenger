@@ -40,6 +40,12 @@ class Hunt implements JsonSerializable
     protected $code = "";
 
     /**
+     * @Column(type="integer", nullable=true)    
+     * @var int
+     */
+    protected $maxUsers = -1;
+
+    /**
      * @ManyToOne(targetEntity="Clue")
      * @var currentClue
      */
@@ -132,6 +138,16 @@ class Hunt implements JsonSerializable
         $this->code = $code;
     }
 
+    public function getMaxUsers()
+    {
+        return $this->maxUsers;
+    }
+
+    public function setMaxUsers($maxUsers)
+    {
+        $this->maxUsers = $maxUsers;
+    }
+
     public function getState()
     {
         return $this->state;
@@ -190,11 +206,5 @@ class Hunt implements JsonSerializable
              'party'=>$this->getPartyID(),
              'hintsUsed'=>$this->hintsUsed
         );
-    }
-
-    //Borrowed from http://php.net/manual/en/function.mt-rand.php#112889
-    public static function GenerateCode ($l, $c = 'abcdefghijklmnopqrstuvwxyz1234567890') {
-        for ($s = '', $cl = strlen($c)-1, $i = 0; $i < $l; $s .= $c[mt_rand(0, $cl)], ++$i);
-        return $s;
     }
 }

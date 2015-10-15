@@ -37,6 +37,17 @@ class Story implements JsonSerializable
      */
     protected $defaultHint = "";
 
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $code = "";
+
+    /**
+     * @Column(type="integer", nullable=true)    
+     * @var int
+     */
+    protected $maxUsers = -1;
 
     /**
      * @Column(type="integer")    
@@ -121,6 +132,26 @@ class Story implements JsonSerializable
         $this->defaultHint = $defaultHint;
     }
 
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    public function getMaxUsers()
+    {
+        return $this->maxUsers;
+    }
+
+    public function setMaxUsers($maxUsers)
+    {
+        $this->maxUsers = $maxUsers;
+    }
+
     /**
      * @OneToMany(targetEntity="Hunt", mappedBy="story")
      * @var hunts[]
@@ -128,7 +159,7 @@ class Story implements JsonSerializable
     protected $hunts = null;
 
     /**
-     * @ManyToMany(targetEntity="Clue")
+     * @OneToMany(targetEntity="Clue", mappedBy="story")
      * @var clues[]
      */
     protected $clues = null;
