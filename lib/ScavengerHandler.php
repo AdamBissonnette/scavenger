@@ -312,7 +312,7 @@ class ScavengerHandler
     {
         $curAnswer = null;
 
-        if (!empty($message["Body"]) && $message["NumMedia"] >= 1)
+        if (!empty($message["Body"]) || $message["NumMedia"] >= 1)
         {
             $acceptableAnswers = $clue->getAnswers();
 
