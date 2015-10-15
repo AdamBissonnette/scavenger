@@ -176,6 +176,13 @@ function addEditParty($data, $entityManager)
 
 function addEditHunt($data, $entityManager)
 {
+    $hunt = createHunt($data, $entityManager);
+
+    return json_encode($hunt->jsonSerialize());
+}
+
+function createHunt($data, $entityManager)
+{
     $id = $data->id;
 
     $start = null;
@@ -252,7 +259,7 @@ function addEditHunt($data, $entityManager)
     $entityManager->persist($hunt);
     $entityManager->flush();
 
-    return json_encode($hunt->jsonSerialize());
+    return $hunt;
 }
 
 function FindUserByFrom($from, $entityManager)

@@ -247,54 +247,24 @@ class ScavengerHandler
         $codes = null;
         if (preg_match("/^join ?(.+)$/i", trim($body), $codes))
         {
-            $hunt = ScavengerHandler::FindHuntByCode($codes[1], $this->entityManager);
+            $story = ScavengerHandler::FindStoryByCode($codes[1], $this->entityManager);
 
-            if (isset($hunt))
+            if (isset($story))
             {
-                $fromPhone = $this->message["From"];
-                $curParty = $hunt->getParty();
-
-                if (!isset($this->user))
-                {
-                    $user = (object) [
-                        'id' => -1,
-                        'name' => '',
-                        'email' => '',
-                        'phone' => (string) $fromPhone,
-                        'party' => $curParty->getId(),
-                      ];
-
-                    try { addEditUser($user, $this->entityManager); } catch(Exception $e) {return $e->getMessage();};
-                }
-                else
-                {
-                    if (isset($this->party))
-                    {
-                        if ($this->party->getId() == $curParty->getId())
-                        {
-                            return "You've already joined this group.";
-                        }
-                        else
-                        {
-                            return "You're already registered to a group - you'll have to text 'quit party' to join this one.";
-                        }
-                    }
-
-                    $user = (object) [
-                        'id' => $this->user->getId(),
-                        'name' => $this->user->getName(),
-                        'email' => $this->user->getEmail(),
-                        'phone' => $this->user->getPhone(),
-                        'party' => $curParty->getId(),
-                      ];
-
-                    try { addEditUser($user, $this->entityManager); } catch(Exception $e) {return $e->getMessage();};
-                }
-
-                return "You've joined the party!";
+                $hunt = $this->AddHuntToStory($story);
+                return $this->AddUserToHunt($hunt);
             }
+            else
+            {
+                $hunt = ScavengerHandler::FindHuntByCode($codes[1], $this->entityManager);
 
-            return "We don't seem to have that code on file.";
+                if (isset($hunt))
+                {
+                    return $this->AddUserToHunt($hunt);
+                }
+
+                return "We don't seem to have that code on file.";
+            }
 
         }
 
@@ -399,11 +369,93 @@ class ScavengerHandler
         return $curHint;
     }
 
+    static function FindStoryByCode($code, $entityManager)
+    {
+        $repository = $entityManager->getRepository("Story");
+        $story = $repository->findOneBy(array('code' => $code, 'state' => 1));
+
+        return $story;        
+    }
+
     static function FindHuntByCode($code, $entityManager)
     {
         $repository = $entityManager->getRepository("Hunt");
-        $hunt = $repository->findOneBy(array('code' => $code, 'end' => null));
+        $hunt = $repository->findOneBy(array('code' => $code, 'end' => null, 'state' => 1));
 
         return $hunt;
+    }
+
+    function AddHuntToStory($story)
+    {
+        $hunt = (object) [
+            'id' => -1,
+            'start' => "",
+            'end' => "",
+            'hintsUsed' => 0,
+            'code' => '',
+            'clue' => -1,
+            'maxUsers' => $story->getMaxUsers(),
+            'story' => $story->getID(),
+            'party' => -1
+        ];
+
+        return createHunt($hunt, $this->entityManager);
+    }
+
+    function AddUserToHunt($hunt)
+    {
+        $fromPhone = $this->message["From"];
+        $curParty = $hunt->getParty();
+
+        if (!isset($curParty)) //if the hunt has no party set then lets create one
+        {
+            $party = new Party();
+
+            $this->entityManager->persist($party);
+
+            $hunt->setParty($party);
+            $this->entityManager->flush();
+
+            $curParty = $party;
+        }
+
+        if (!isset($this->user))
+        {
+            $user = (object) [
+                'id' => -1,
+                'name' => '',
+                'email' => '',
+                'phone' => (string) $fromPhone,
+                'party' => $curParty->getId(),
+              ];
+
+            try { addEditUser($user, $this->entityManager); } catch(Exception $e) {return $e->getMessage();};
+        }
+        else
+        {
+            if (isset($this->party))
+            {
+                if ($this->party->getId() == $curParty->getId())
+                {
+                    return "You've already joined this group.";
+                }
+                else
+                {
+                    return "You're already registered to a group - you'll have to text 'quit party' to join this one.";
+                }
+            }
+
+            $user = (object) [
+                'id' => $this->user->getId(),
+                'name' => $this->user->getName(),
+                'email' => $this->user->getEmail(),
+                'phone' => $this->user->getPhone(),
+                'party' => $curParty->getId(),
+              ];
+
+            try { addEditUser($user, $this->entityManager); } catch(Exception $e) {return $e->getMessage();};
+        }
+
+        return "You've joined the party!";
     }
 }
