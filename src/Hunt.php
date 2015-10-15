@@ -197,14 +197,15 @@ class Hunt implements JsonSerializable
     public function jsonSerialize()
     {
         return array(
-             'id' => $this->id,
-             'story'=> $this->getStoryID(),
-             'start'=> $this->start,
-             'end'=> $this->end,
-             'code'=> $this->code,
-             'clue'=> $this->getClueID(),
-             'party'=>$this->getPartyID(),
-             'hintsUsed'=>$this->hintsUsed
+                'id' => $this->id,
+                'story'=> $this->getStoryID(),
+                'start'=> $this->start,
+                'end'=> $this->end,
+                'code' => $this->code,
+                'maxUsers' => $this->maxUsers,
+                'clue'=> $this->getClueID(),
+                'party'=>$this->getPartyID(),
+                'hintsUsed'=>$this->hintsUsed
         );
     }
 }

@@ -190,6 +190,8 @@ class Story implements JsonSerializable
         return array(
             'id' => $this->id,
             'name' => $this->name,
+            'code' => $this->code,
+            'maxUsers' => $this->maxUsers,
             'description'=> $this->description,
             'clueid'=> $this->getFirstClueID(),
             'hint'=>$this->defaultHint,

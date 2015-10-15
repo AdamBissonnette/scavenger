@@ -128,6 +128,8 @@ function addEditStory($data, $entityManager)
     $name = $data->name;
     $description = $data->description;
     $clueid = $data->clueid;
+    $code = $data->code;
+    $maxUsers = $data->maxUsers;
     $end = $data->end;
     $hint = $data->hint;
 
@@ -140,6 +142,8 @@ function addEditStory($data, $entityManager)
     $story->setDescription($description);
     $story->setEndMessage($end);
     $story->setDefaultHint($hint);
+    $story->setCode($code);
+    $story->setMaxUsers($maxUsers);
 
     $entityManager->persist($story);
 
@@ -200,6 +204,7 @@ function addEditHunt($data, $entityManager)
     $clue = $data->clue;
     $party = $data->party;
     $story = $data->story;
+    $maxUsers = $data->maxUsers;
 
     $hunt = $entityManager->find("Hunt", $id);
     if (!$hunt) {
@@ -211,6 +216,7 @@ function addEditHunt($data, $entityManager)
     $hunt->setHintsUsed($hintsUsed);
 
     $hunt->setCode($code);
+    $hunt->setMaxUsers($maxUsers);
 
     if ($clue != null)
     {
