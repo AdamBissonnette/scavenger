@@ -15,6 +15,14 @@
                 <input ng-model="huntCtrlFormData.end" type="text" class="form-control" id="inputEnd" placeholder="End Date" maxlength="255">
             </div>
             <div class="form-group">
+               <label for="inputCode" class="control-label">Code</label>
+                <input ng-model="huntCtrlFormData.code" type="text" class="form-control" id="inputCode" placeholder="Code" maxlength="255">
+            </div>
+            <div class="form-group">
+               <label for="inputMaxUsers" class="control-label">Max Users</label>
+                <input ng-model="huntCtrlFormData.maxUsers" type="text" class="form-control" id="inputMaxUsers" placeholder="MaxUsers" maxlength="255">
+            </div>
+            <div class="form-group">
                 <label for="inputStory" class="control-label">Story ID</label>
                 <select class="form-control" id="inputStory" ng-model="huntCtrlFormData.story">
                     <option value=""></option>
@@ -64,6 +72,8 @@
         <th>ID</th>
         <th>Start</th>
         <th>End</th>
+        <th>Code</th>
+        <th>Max Users</th>
         <th>Story</th>
         <th>Party</th>
         <th>Current Clue</th>
@@ -74,6 +84,8 @@
         <td> {{ item.id }} </td>
         <td> {{ item.start }} </td>
         <td> {{ item.end }} </td>
+        <td> {{ item.code }} </td>
+        <td> {{ item.maxUsers }}</td>
         <td> {{ item.story }} </td>
         <td> {{ item.party }} </td>
         <td> {{ item.clue }} </td>

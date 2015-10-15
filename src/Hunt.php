@@ -34,6 +34,18 @@ class Hunt implements JsonSerializable
     protected $end;
 
     /**
+     * @Column(type="string")    
+     * @var string
+     */
+    protected $code = "";
+
+    /**
+     * @Column(type="integer", nullable=true)    
+     * @var int
+     */
+    protected $maxUsers = -1;
+
+    /**
      * @ManyToOne(targetEntity="Clue")
      * @var currentClue
      */
@@ -116,6 +128,26 @@ class Hunt implements JsonSerializable
         $this->party = $partyIn;
     }
 
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    public function getMaxUsers()
+    {
+        return $this->maxUsers;
+    }
+
+    public function setMaxUsers($maxUsers)
+    {
+        $this->maxUsers = $maxUsers;
+    }
+
     public function getState()
     {
         return $this->state;
@@ -165,13 +197,15 @@ class Hunt implements JsonSerializable
     public function jsonSerialize()
     {
         return array(
-             'id' => $this->id,
-             'story'=> $this->getStoryID(),
-             'start'=> $this->start,
-             'end'=> $this->end,
-             'clue'=> $this->getClueID(),
-             'party'=>$this->getPartyID(),
-             'hintsUsed'=>$this->hintsUsed
+                'id' => $this->id,
+                'story'=> $this->getStoryID(),
+                'start'=> $this->start,
+                'end'=> $this->end,
+                'code' => $this->code,
+                'maxUsers' => $this->maxUsers,
+                'clue'=> $this->getClueID(),
+                'party'=>$this->getPartyID(),
+                'hintsUsed'=>$this->hintsUsed
         );
     }
 }

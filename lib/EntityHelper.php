@@ -128,6 +128,8 @@ function addEditStory($data, $entityManager)
     $name = $data->name;
     $description = $data->description;
     $clueid = $data->clueid;
+    $code = $data->code;
+    $maxUsers = $data->maxUsers;
     $end = $data->end;
     $hint = $data->hint;
 
@@ -140,6 +142,8 @@ function addEditStory($data, $entityManager)
     $story->setDescription($description);
     $story->setEndMessage($end);
     $story->setDefaultHint($hint);
+    $story->setCode($code);
+    $story->setMaxUsers($maxUsers);
 
     $entityManager->persist($story);
 
@@ -172,6 +176,13 @@ function addEditParty($data, $entityManager)
 
 function addEditHunt($data, $entityManager)
 {
+    $hunt = createHunt($data, $entityManager);
+
+    return json_encode($hunt->jsonSerialize());
+}
+
+function createHunt($data, $entityManager)
+{
     $id = $data->id;
 
     $start = null;
@@ -186,11 +197,21 @@ function addEditHunt($data, $entityManager)
         $end = $data->end;
     }
 
+    if ($data->code != "")
+    {
+        $code = $data->code;
+    }
+    else
+    {
+        $code = GenerateCode();
+    }
+
     $hintsUsed = $data->hintsUsed;
 
     $clue = $data->clue;
     $party = $data->party;
     $story = $data->story;
+    $maxUsers = $data->maxUsers;
 
     $hunt = $entityManager->find("Hunt", $id);
     if (!$hunt) {
@@ -200,6 +221,9 @@ function addEditHunt($data, $entityManager)
     $hunt->setStart($start);
     $hunt->setEnd($end);
     $hunt->setHintsUsed($hintsUsed);
+
+    $hunt->setCode($code);
+    $hunt->setMaxUsers($maxUsers);
 
     if ($clue != null)
     {
@@ -235,7 +259,7 @@ function addEditHunt($data, $entityManager)
     $entityManager->persist($hunt);
     $entityManager->flush();
 
-    return json_encode($hunt->jsonSerialize());
+    return $hunt;
 }
 
 function FindUserByFrom($from, $entityManager)
@@ -400,5 +424,10 @@ function assignClueHint($data, $entityManager, $clue=null, $hint=null)
     $entityManager->flush();
 }
 
+//Borrowed from http://php.net/manual/en/function.mt-rand.php#112889
+function GenerateCode ($l="6", $c = 'abcdefghijklmnopqrstuvwxyz1234567890') {
+    for ($s = '', $cl = strlen($c)-1, $i = 0; $i < $l; $s .= $c[mt_rand(0, $cl)], ++$i);
+    return $s;
+}
 
 ?>

@@ -20,6 +20,11 @@ class Clue implements JsonSerializable
      * @var string
      */
     protected $value;
+
+    /**
+     * @ManyToOne(targetEntity="Story", inversedBy="clues")
+     **/
+    protected $story = null;
     /**
      * @Column(type="integer")    
      * @var string
@@ -29,6 +34,16 @@ class Clue implements JsonSerializable
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getStory()
+    {
+        return $this->story;
+    }
+
+    public function setStory($storyIn)
+    {
+        $this->story = $storyIn;
     }
 
     public function getName()

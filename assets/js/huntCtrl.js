@@ -46,12 +46,14 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    $scope.huntCtrlFormData = {id : "-1", start: "", end : "", story: "-1", party: "-1", clue: "-1", hintsUsed: 0};
+    $scope.huntCtrlFormData = {id : "-1", start: "", end : "", code: "", maxUsers: "-1", story: "-1", party: "-1", clue: "-1", hintsUsed: 0};
 
     $scope.huntCtrlFormData.submit = function(item, event) {
       var data = {fn: "aehunt", id : $scope.huntCtrlFormData.id,
                    start: $scope.huntCtrlFormData.start, 
                    end : $scope.huntCtrlFormData.end,
+                   code : $scope.huntCtrlFormData.code,
+                   maxUsers : $scope.huntCtrlFormData.maxUsers,
                    story: $scope.huntCtrlFormData.story,
                    party: $scope.huntCtrlFormData.party,
                    clue: $scope.huntCtrlFormData.clue,
@@ -74,6 +76,8 @@ angular.module('scavengerApp')
       $scope.huntCtrlFormData.id = -1;
       $scope.huntCtrlFormData.start = "";
       $scope.huntCtrlFormData.end = "";
+      $scope.huntCtrlFormData.code = "";
+      $scope.huntCtrlFormData.maxUsers = -1;
       $scope.huntCtrlFormData.story = -1;
       $scope.huntCtrlFormData.party = -1;
       $scope.huntCtrlFormData.clue = -1;
@@ -84,6 +88,8 @@ angular.module('scavengerApp')
       $scope.huntCtrlFormData.id = item.id;
       $scope.huntCtrlFormData.start = item.start;
       $scope.huntCtrlFormData.end = item.end;
+      $scope.huntCtrlFormData.code = item.code;
+      $scope.huntCtrlFormData.maxUsers = item.maxUsers;
       $scope.huntCtrlFormData.story = item.story;
       $scope.huntCtrlFormData.party = item.party;
       $scope.huntCtrlFormData.clue = item.clue;

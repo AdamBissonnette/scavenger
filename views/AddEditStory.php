@@ -12,6 +12,14 @@
                 <input ng-model="storyCtrlFormData.name" type="text" class="form-control" id="inputName" placeholder="Enter Name" maxlength="255"></textarea>
             </div>
             <div class="form-group">
+               <label for="inputCode" class="control-label">Code</label>
+                <input ng-model="storyCtrlFormData.code" type="text" class="form-control" id="inputCode" placeholder="Code" maxlength="255">
+            </div>
+            <div class="form-group">
+               <label for="inputMaxUsers" class="control-label">Max Users</label>
+                <input ng-model="storyCtrlFormData.maxUsers" type="text" class="form-control" id="inputMaxUsers" placeholder="MaxUsers" maxlength="255">
+            </div>
+            <div class="form-group">
                 <label for="inputDescription" class="control-label">Description</label>                
                 <textarea ng-model="storyCtrlFormData.description" type="text" class="form-control" id="inputDescription" placeholder="Enter description" maxlength="255"></textarea>
             </div>
@@ -53,6 +61,8 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Code</th>
+            <th>Max Users</th>
             <th>First Clue</th>
             <th>Default Hint Message</th>
             <th>End Message</th>
@@ -61,6 +71,8 @@
         <tr ng-repeat='item in storyList' | orderObjectBy: "id">
             <td> {{ item.id }} </td>
             <td> {{ item.name }} </td>
+            <td> {{ item.code }}</td>
+            <td> {{ item.maxUsers }}</td>
             <td> {{ item.clueid }} </td>
             <td> {{ item.hint }} </td>
             <td> {{ item.end }} </td>

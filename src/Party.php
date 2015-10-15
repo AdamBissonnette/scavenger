@@ -15,7 +15,7 @@ class Party implements JsonSerializable
      * @Column(type="string")
      * @var string
      */
-    protected $name;
+    protected $name = "";
 
     /**
      * @Column(type="integer")    
