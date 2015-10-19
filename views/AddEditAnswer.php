@@ -42,6 +42,7 @@
     <ul>
         <li><a href="https://www.regex101.com" target="_blank">https://www.regex101.com</a></li>
         <li>Any text response == /.*/</li>
+        <li>Media response == /media/</li>
     </ul>
 
     </div>
