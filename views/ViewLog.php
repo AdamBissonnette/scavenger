@@ -11,6 +11,8 @@
         <th>From</th>
         <th>To</th>
         <th>Value</th>
+        <th>Clue</th>
+        <th>Answer</th>
         <th>Date</th>
         <th>Direction</th>
         <th>Type</th>
@@ -22,6 +24,8 @@
         <td> {{ item.from }} </td>
         <td> {{ item.to }} </td>
         <td> {{ item.value }} </td>
+        <td> {{ item.clueid }} </td>
+        <td> {{ item.answerid }} </td>
         <td> {{ item.date | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
         <td> {{ item.direction }} </td>
         <td> {{ item.type }} </td>

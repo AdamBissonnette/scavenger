@@ -39,6 +39,7 @@ class ScavengerHandler
     var $party = null;
     var $hunt = null;
     var $clue = null;
+    var $prevClue = null;
     var $answer = null;
     var $story = null;
 
@@ -74,6 +75,7 @@ class ScavengerHandler
 
             if (isset($this->hunt))
             {
+                $this->prevClue = $this->clue;
                 $this->clue = $this->hunt->getCurrentClue();
             }
 
@@ -219,7 +221,9 @@ class ScavengerHandler
 
         //Log Outgoing Message
         $data = array('from' => $this->message["To"], 'to' => $this->message["From"], 'value' => $response_body, 'data' => format_TwiML($response_body), 'direction' => LogTypes::DIRECTION_OUTGOING, 'type' => $outgoing_message_type);
-        LogMessage($data, $this->entityManager, $this->user, $this->hunt);
+
+        $clue = (isset($this->prevClue))?$this->prevClue:$this->clue;
+        LogMessage($data, $this->entityManager, $this->user, $this->hunt, $clue, $this->answer);
 
         if ($this->party != null)
         {

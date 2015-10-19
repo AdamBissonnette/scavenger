@@ -22,7 +22,7 @@ $conn = array(
 // obtaining the entity manager
 $entityManager = EntityManager::create($conn, $config);
 
-function LogMessage($data, $em, $user=null, $hunt=null)
+function LogMessage($data, $em, $user=null, $hunt=null, $clue=null, $answer=null)
 {
     // var_dump($data);
     $log = new Log();
@@ -36,6 +36,8 @@ function LogMessage($data, $em, $user=null, $hunt=null)
     $log->setUser($user);
     $log->setHunt($hunt);
     $log->setData($data["data"]);
+    $log->setClue($clue);
+    $log->setAnswer($answer);
 
     $em->persist($log);
     $em->flush();
