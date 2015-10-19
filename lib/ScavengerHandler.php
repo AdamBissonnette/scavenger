@@ -471,6 +471,12 @@ class ScavengerHandler
         {
             $answers = $matches[1][0];  //answers
             $maxChars = $matches[2][0]; //maxChars
+
+            if (!is_int($maxChars))
+            {
+                $maxChars = 30;
+            }
+
             $value = $matches[3][0];    //default
 
             $answerList = explode('a', trim($answers, "a"));
@@ -481,8 +487,12 @@ class ScavengerHandler
 
                 if (isset($log))
                 {
-                    $value = $log->getValue();
-                    break;
+                    if (count($log->getValue <= $maxChars))
+                    {
+                        $value = $log->getValue();
+                        break;
+                    }
+
                 }
             }
 
