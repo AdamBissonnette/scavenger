@@ -142,7 +142,7 @@ class ScavengerHandler
                         else
                         {
                             $response_body = ScavengerHandler::GetEndMessage(1, $this->entityManager);;
-                            $this->hunt->setCurrentClue(null);
+                            //$this->hunt->setCurrentClue(null);
                             $this->entityManager->flush();
                             $outgoing_message_type = LogTypes::TYPE_END;
                         }
