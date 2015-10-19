@@ -474,7 +474,7 @@ class ScavengerHandler
 
             if (!is_int($maxChars))
             {
-                $maxChars = 30;
+                $maxChars = 150;
             }
 
             $value = $matches[3][0];    //default
@@ -483,7 +483,7 @@ class ScavengerHandler
 
             foreach ($answerList as $answerID) {
                 $repository = $this->entityManager->getRepository("Log");
-                $log = $repository->findOneBy(array('answer' => $answerID, 'hunt' => $this->hunt, 'type' => 3));
+                $log = $repository->findOneBy(array('answer' => $answerID, 'hunt' => $this->hunt, 'type' => 3), array('date' => 'DESC'));
 
                 if (isset($log))
                 {
@@ -492,7 +492,6 @@ class ScavengerHandler
                         $value = $log->getValue();
                         break;
                     }
-
                 }
             }
 
