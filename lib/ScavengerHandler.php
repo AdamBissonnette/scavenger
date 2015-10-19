@@ -90,7 +90,7 @@ class ScavengerHandler
                 if (preg_match("/^clue/i", trim($body)))
                 {
                     $responseFound = true;
-                    $response_body = $this->clue->getValue();
+                    $response_body = $this->replace_variables($this->clue->getValue());
                 }
                 elseif (preg_match("/^hint/i", trim($body)))
                 {
@@ -136,7 +136,7 @@ class ScavengerHandler
                         {
                             //Send the next clue
                             //Update the currentClue
-                            $response_body = $nextClue->getValue();
+                            $response_body = $this->replace_variables($nextClue->getValue());
                             $this->hunt->setCurrentClue($nextClue);
                             $this->entityManager->flush();
                             $outgoing_message_type = LogTypes::TYPE_CLUE;
@@ -217,13 +217,12 @@ class ScavengerHandler
 
         //Log Incoming Message
         $data = array('from' => $this->message["From"], 'to' => $this->message["To"], 'value' => $this->message["Body"], 'data' => json_encode($this->message), 'direction' => LogTypes::DIRECTION_INCOMING, 'type' => $incoming_message_type);
-        LogMessage($data, $this->entityManager, $this->user, $this->hunt);
+        LogMessage($data, $this->entityManager, $this->user, $this->hunt, $this->prevClue, $this->answer);
 
         //Log Outgoing Message
         $data = array('from' => $this->message["To"], 'to' => $this->message["From"], 'value' => $response_body, 'data' => format_TwiML($response_body), 'direction' => LogTypes::DIRECTION_OUTGOING, 'type' => $outgoing_message_type);
 
-        $clue = (isset($this->prevClue))?$this->prevClue:$this->clue;
-        LogMessage($data, $this->entityManager, $this->user, $this->hunt, $clue, $this->answer);
+        LogMessage($data, $this->entityManager, $this->user, $this->hunt, $this->clue);
 
         if ($this->party != null)
         {
@@ -461,5 +460,37 @@ class ScavengerHandler
         }
 
         return "You've joined the party!";
+    }
+
+    function replace_variables($message_out)
+    {
+        $matches = [];
+        preg_match_all('/\[((?:a\d+)+)(?:,(\d+)?)?(?:,(.+)?)?]/', $message_out, $matches);
+
+        if (count($matches[1]) > 0)
+        {
+            $answers = $matches[1][0];  //answers
+            $maxChars = $matches[2][0]; //maxChars
+            $value = $matches[3][0];    //default
+
+            $answerList = explode('a', trim($answers, "a"));
+
+            foreach ($answerList as $answerID) {
+                $repository = $this->entityManager->getRepository("Log");
+                $log = $repository->findOneBy(array('answer' => $answerID, 'hunt' => $this->hunt, 'type' => 3));
+
+                if (isset($log))
+                {
+                    $value = $log->getValue();
+                    break;
+                }
+            }
+
+            return preg_replace('/\[((?:a\d+)+)(?:,(\d+)?)?(?:,(.+)?)?]/', $value, $message_out);
+        }
+
+        return $message_out;
+
+        
     }
 }
