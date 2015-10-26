@@ -38,6 +38,13 @@
                 <textarea ng-model="storyCtrlFormData.end" type="text" class="form-control" id="inputEndMessage" placeholder="This message is displayed when a party finishes every clue in the story" maxlength="255"></textarea>
             </div>
             <div class="form-group">
+                <label for="inputType" class="control-label">Type</label>                
+                <select class="form-control" id="inputType" ng-model="storyCtrlFormData.type">
+                    <option value="0" selected>0 - Default</option>
+                    <option value="1">1 - AutoStart with Code</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <div>
                     <button ng-click="storyCtrlFormData.submit()" class="btn btn-primary" type="submit">
                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
@@ -66,6 +73,7 @@
             <th>First Clue</th>
             <th>Default Hint Message</th>
             <th>End Message</th>
+            <th>Type</th>
             <th>Controls</th>
         </tr>
         <tr ng-repeat='item in storyList' | orderObjectBy: "id">
@@ -76,6 +84,7 @@
             <td> {{ item.clueid }} </td>
             <td> {{ item.hint }} </td>
             <td> {{ item.end }} </td>
+            <td> {{ item.type }}</td>
             <td class="controls">
                 <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

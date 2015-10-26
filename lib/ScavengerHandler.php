@@ -255,7 +255,20 @@ class ScavengerHandler
             if (isset($story))
             {
                 $hunt = $this->AddHuntToStory($story);
-                return $this->AddUserToHunt($hunt);
+
+                if ($story->getType() == 1)
+                {
+                    $this->clue = $story->GetFirstClue(); //Return first clue of story
+                    $hunt->setCurrentClue($this->clue);
+                    $this->hunt = $hunt;
+
+                    return $this->clue->getValue();
+                }
+                else
+                {
+                    $this->hunt = $hunt;
+                    return $this->AddUserToHunt($hunt);
+                }
             }
             else
             {
@@ -263,6 +276,7 @@ class ScavengerHandler
 
                 if (isset($hunt))
                 {
+                    $this->hunt = $hunt;
                     return $this->AddUserToHunt($hunt);
                 }
 
