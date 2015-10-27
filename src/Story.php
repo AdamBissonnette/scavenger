@@ -50,6 +50,12 @@ class Story implements JsonSerializable
     protected $maxUsers = -1;
 
     /**
+     * @Column(type="integer", nullable=true)    
+     * @var string
+     */
+    protected $type=1;
+
+    /**
      * @Column(type="integer")    
      * @var string
      */
@@ -78,6 +84,16 @@ class Story implements JsonSerializable
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     public function getState()
@@ -195,7 +211,8 @@ class Story implements JsonSerializable
             'description'=> $this->description,
             'clueid'=> $this->getFirstClueID(),
             'hint'=>$this->defaultHint,
-            'end'=>$this->endMessage
+            'end'=>$this->endMessage,
+            'type'=>$this->type
         );
     }
 }

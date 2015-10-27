@@ -54,6 +54,16 @@ class Log implements JsonSerializable
     protected $hunt;
 
     /**
+     * @ManyToOne(targetEntity="Clue")
+     **/
+    protected $clue = null;
+
+    /**
+     * @ManyToOne(targetEntity="Answer")
+     **/
+    protected $answer = null;
+
+    /**
      * @Column(type="string")
      * @var string
      */
@@ -149,6 +159,28 @@ class Log implements JsonSerializable
         $this->clue = $clue;
     }
 
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
+    public function getAnswerID()
+    {
+        $id = -1;
+
+        if ($this->answer != null)
+        {
+            $id = $this->answer->getId();
+        }
+
+        return $id;
+    }
+
+    public function setAnswer($answer)
+    {
+        $this->answer = $answer;
+    }
+
     public function getHunt()
     {
         return $this->hunt;
@@ -196,6 +228,8 @@ class Log implements JsonSerializable
             'to'=> $this->toNumber,
             'from'=> $this->fromNumber,
             'value'=> $this->value,
+            'clueid' => $this->getClueID(),
+            'answerid' => $this->getAnswerID(),
             'date'=> $this->date->getTimestamp() * 1000,
             'direction'=>$this->direction,
             'type' => $this->type,

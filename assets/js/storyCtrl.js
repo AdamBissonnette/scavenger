@@ -26,7 +26,7 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    $scope.storyCtrlFormData = {id : "-1", name : "", description : "", clueid: "-1", code: "", maxUsers: "-1", end: "", hint: ""};
+    $scope.storyCtrlFormData = {id : "-1", name : "", description : "", clueid: "-1", code: "", maxUsers: "-1", end: "", hint: "", type: "0"};
 
     $scope.storyCtrlFormData.submit = function(item, event) {
       var data = {fn: "aestory",
@@ -37,7 +37,8 @@ angular.module('scavengerApp')
        code: $scope.storyCtrlFormData.code,
        maxUsers: $scope.storyCtrlFormData.maxUsers,
        end: $scope.storyCtrlFormData.end,
-       hint: $scope.storyCtrlFormData.hint}
+       hint: $scope.storyCtrlFormData.hint,
+       type: $scope.storyCtrlFormData.type}
 
       list.http(data,
           function (response) {
@@ -60,6 +61,7 @@ angular.module('scavengerApp')
       $scope.storyCtrlFormData.maxUsers = -1;
       $scope.storyCtrlFormData.end = "";
       $scope.storyCtrlFormData.hint = "";
+      $scope.storyCtrlFormData.type = 0;
      }
 
      $scope.editItem = function(item) {
@@ -71,6 +73,7 @@ angular.module('scavengerApp')
       $scope.storyCtrlFormData.maxUsers = item.maxUsers;
       $scope.storyCtrlFormData.end = item.end;
       $scope.storyCtrlFormData.hint = item.hint;
+      $scope.storyCtrlFormData.type = item.type;
      }
 
     $scope.deleteItem = function(item) {

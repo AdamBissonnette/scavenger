@@ -132,6 +132,7 @@ function addEditStory($data, $entityManager)
     $maxUsers = $data->maxUsers;
     $end = $data->end;
     $hint = $data->hint;
+    $type = $data->type;
 
     $story = $entityManager->find("Story", $id);
     if (!$story) {
@@ -144,6 +145,7 @@ function addEditStory($data, $entityManager)
     $story->setDefaultHint($hint);
     $story->setCode($code);
     $story->setMaxUsers($maxUsers);
+    $story->setType($type);
 
     $entityManager->persist($story);
 

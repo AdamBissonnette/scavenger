@@ -39,6 +39,7 @@ class ScavengerHandler
     var $party = null;
     var $hunt = null;
     var $clue = null;
+    var $prevClue = null;
     var $answer = null;
     var $story = null;
 
@@ -74,6 +75,7 @@ class ScavengerHandler
 
             if (isset($this->hunt))
             {
+                $this->prevClue = $this->clue;
                 $this->clue = $this->hunt->getCurrentClue();
             }
 
@@ -88,7 +90,7 @@ class ScavengerHandler
                 if (preg_match("/^clue/i", trim($body)))
                 {
                     $responseFound = true;
-                    $response_body = $this->clue->getValue();
+                    $response_body = $this->replace_variables($this->clue->getValue());
                 }
                 elseif (preg_match("/^hint/i", trim($body)))
                 {
@@ -134,7 +136,7 @@ class ScavengerHandler
                         {
                             //Send the next clue
                             //Update the currentClue
-                            $response_body = $nextClue->getValue();
+                            $response_body = $this->replace_variables($nextClue->getValue());
                             $this->hunt->setCurrentClue($nextClue);
                             $this->entityManager->flush();
                             $outgoing_message_type = LogTypes::TYPE_CLUE;
@@ -142,7 +144,7 @@ class ScavengerHandler
                         else
                         {
                             $response_body = ScavengerHandler::GetEndMessage(1, $this->entityManager);;
-                            $this->hunt->setCurrentClue(null);
+                            //$this->hunt->setCurrentClue(null);
                             $this->entityManager->flush();
                             $outgoing_message_type = LogTypes::TYPE_END;
                         }
@@ -215,11 +217,12 @@ class ScavengerHandler
 
         //Log Incoming Message
         $data = array('from' => $this->message["From"], 'to' => $this->message["To"], 'value' => $this->message["Body"], 'data' => json_encode($this->message), 'direction' => LogTypes::DIRECTION_INCOMING, 'type' => $incoming_message_type);
-        LogMessage($data, $this->entityManager, $this->user, $this->hunt);
+        LogMessage($data, $this->entityManager, $this->user, $this->hunt, $this->prevClue, $this->answer);
 
         //Log Outgoing Message
         $data = array('from' => $this->message["To"], 'to' => $this->message["From"], 'value' => $response_body, 'data' => format_TwiML($response_body), 'direction' => LogTypes::DIRECTION_OUTGOING, 'type' => $outgoing_message_type);
-        LogMessage($data, $this->entityManager, $this->user, $this->hunt);
+
+        LogMessage($data, $this->entityManager, $this->user, $this->hunt, $this->clue);
 
         if ($this->party != null)
         {
@@ -252,7 +255,20 @@ class ScavengerHandler
             if (isset($story))
             {
                 $hunt = $this->AddHuntToStory($story);
-                return $this->AddUserToHunt($hunt);
+
+                if ($story->getType() == 1)
+                {
+                    $this->clue = $story->GetFirstClue(); //Return first clue of story
+                    $hunt->setCurrentClue($this->clue);
+                    $this->hunt = $hunt;
+
+                    return $this->clue->getValue();
+                }
+                else
+                {
+                    $this->hunt = $hunt;
+                    return $this->AddUserToHunt($hunt);
+                }
             }
             else
             {
@@ -260,6 +276,7 @@ class ScavengerHandler
 
                 if (isset($hunt))
                 {
+                    $this->hunt = $hunt;
                     return $this->AddUserToHunt($hunt);
                 }
 
@@ -457,5 +474,46 @@ class ScavengerHandler
         }
 
         return "You've joined the party!";
+    }
+
+    function replace_variables($message_out)
+    {
+        $matches = [];
+        preg_match_all('/\[((?:a\d+)+)(?:,(\d+)?)?(?:,(.+)?)?]/', $message_out, $matches);
+
+        if (count($matches[1]) > 0)
+        {
+            $answers = $matches[1][0];  //answers
+            $maxChars = $matches[2][0]; //maxChars
+
+            if (!is_int($maxChars))
+            {
+                $maxChars = 150;
+            }
+
+            $value = $matches[3][0];    //default
+
+            $answerList = explode('a', trim($answers, "a"));
+
+            foreach ($answerList as $answerID) {
+                $repository = $this->entityManager->getRepository("Log");
+                $log = $repository->findOneBy(array('answer' => $answerID, 'hunt' => $this->hunt, 'type' => 3), array('date' => 'DESC'));
+
+                if (isset($log))
+                {
+                    if (count($log->getValue <= $maxChars))
+                    {
+                        $value = $log->getValue();
+                        break;
+                    }
+                }
+            }
+
+            return preg_replace('/\[((?:a\d+)+)(?:,(\d+)?)?(?:,(.+)?)?]/', $value, $message_out);
+        }
+
+        return $message_out;
+
+        
     }
 }
