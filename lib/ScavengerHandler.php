@@ -261,6 +261,7 @@ class ScavengerHandler
                     $this->clue = $story->GetFirstClue(); //Return first clue of story
                     $hunt->setCurrentClue($this->clue);
                     $this->hunt = $hunt;
+                    $this->AddUserToHunt($hunt);
 
                     return $this->clue->getValue();
                 }
