@@ -39,6 +39,7 @@
         <li><a ui-sref="app.parties" href="#">Parties</a></li>
         <li><a ui-sref="app.users" href="#">Users</a></li>
         <li><a ui-sref="app.hunts" href="#">Hunts</a></li>
+        <li><a ui-sref="app.map" href="#">Map</a></li>
         <li><a ui-sref="app.twiMLTests" href="#">Testing</a></li>
         <li><a ui-sref="app.log" href="#">Logs</a></li>
       </ul>
@@ -68,5 +69,8 @@
         <script src='assets/js/answerAssignmentCtrl.js'></script>
         <script src='assets/js/twiMLTests.js'></script>
         <script src='assets/js/logCtrl.js'></script>
+        <script src='assets/js/app.js'></script>
+        <script src='assets/js/mapCtrl.js'></script>
+        <script src='assets/js/cytoscape.min.js'></script>
     </body>
 </html>

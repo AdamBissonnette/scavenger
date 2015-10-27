@@ -68,6 +68,12 @@ angular.module('scavengerApp', ['ui.router'])
     controller: 'logCtrl'
   })
 
+  .state('app.map', {
+    url: '/map',
+    templateUrl: 'views/ViewMap.php',
+    controller: 'mapCtrl'
+  })
+
   .state('app.twiMLTests', {
     url: '/TwiMLTests/',
     templateUrl: 'views/TwiMLTests.php',
