@@ -26,21 +26,21 @@
                 <label for="inputStory" class="control-label">Story ID</label>
                 <select class="form-control" id="inputStory" ng-model="huntCtrlFormData.story">
                     <option value=""></option>
-                    <option ng-repeat="story in stories" value="{{story.id}}">{{story.id}} | {{story.name}}</option>
+                    <option ng-repeat='story in stories | orderObjectBy: "id"' value="{{story.id}}">{{story.id}} | {{story.name}}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="inputParty" class="control-label">Party ID</label>
                 <select class="form-control" id="inputParty" ng-model="huntCtrlFormData.party">
                     <option value=""></option>
-                    <option ng-repeat="party in parties" value="{{party.id}}">{{party.id}} | {{party.name}}</option>
+                    <option ng-repeat='party in parties | orderObjectBy: "id"' value="{{party.id}}">{{party.id}} | {{party.name}}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="inputClue" class="control-label">Clue ID</label>
                 <select class="form-control" id="inputClue" ng-model="huntCtrlFormData.clue">
                     <option value=""></option>
-                    <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
+                    <option ng-repeat='clue in clues | orderObjectBy: "id"' value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
             </div>
             <div class="form-group">

@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label for="inputNextClue" class="control-label">Next Clue ID</label>
                 <select class="form-control" id="inputNextClue" ng-model="answerCtrlFormData.clueid">
-                    <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
+                    <option ng-repeat='clue in clues | orderObjectBy: "id"' value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
             </div>
             <div class="form-group">

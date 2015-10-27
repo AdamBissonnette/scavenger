@@ -26,7 +26,7 @@
             <div class="form-group">
                 <label for="inputFirstClue" class="control-label">First Clue ID</label>
                 <select class="form-control" id="inputFirstClue" ng-model="storyCtrlFormData.clueid">
-                    <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
+                    <option ng-repeat='clue in clues | orderObjectBy: "id"' value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -76,7 +76,7 @@
             <th>Type</th>
             <th>Controls</th>
         </tr>
-        <tr ng-repeat='item in storyList' | orderObjectBy: "id">
+        <tr ng-repeat='item in storyList | orderObjectBy: "id"'>
             <td> {{ item.id }} </td>
             <td> {{ item.name }} </td>
             <td> {{ item.code }}</td>

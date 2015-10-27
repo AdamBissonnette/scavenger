@@ -36,7 +36,7 @@
         <div class="panel-heading">The clues selected here and will allow the user to continue to the Answers' "NextClue"</div>
         <div class="panel-body">
             <div ng-show="cLoaded">
-                <div ng-repeat="item in cList">
+                <div ng-repeat='item in cList | orderObjectBy: "id"'>
                     <div class="checkbox">
                       <label ng-click="assignAA($event, item)">
                         <input type="checkbox" ng-model="item.checked"> {id: {{item.id}}, name: {{item.name}}}

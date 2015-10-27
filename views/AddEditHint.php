@@ -13,7 +13,7 @@
             <div class="form-group">
                 <label for="inputClue" class="control-label">Clue ID</label>
                 <select class="form-control" id="inputClue" ng-model="hintCtrlFormData.clue">
-                    <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
+                    <option ng-repeat='clue in clues | orderObjectBy: "id"' value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
             </div>
             <div class="form-group">

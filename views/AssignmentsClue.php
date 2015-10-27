@@ -33,7 +33,7 @@
         <div class="panel-heading">The Answers selected here as correct</div>
         <div class="panel-body">
             <div ng-show="aaLoaded">
-                <div ng-repeat="item in aaList">
+                <div ng-repeat='item in aaList | orderObjectBy: "id"'>
                     <div class="checkbox">
                       <label ng-click="assignAA($event, item)">
                         <input type="checkbox" ng-model="item.checked"> {id: {{item.id}}, name: {{item.name}}, value: {{item.value}}}
@@ -54,7 +54,7 @@
         <div class="panel-heading">The Answers selected here when it is accepted by another clue</div>
         <div class="panel-body">
             <div ng-show="taLoaded">
-                <div ng-repeat="item in taList">
+                <div ng-repeat='item in taList | orderObjectBy: "id"'>
                     <div class="checkbox">
                       <label ng-click="assignTA($event, item)">
                         <input type="checkbox" ng-model="item.checked"> {id: {{item.id}}, name: {{item.name}}, value: {{item.value}}}
@@ -75,7 +75,7 @@
         <div class="panel-heading">When it receives an incorrect Answer</div>
         <div class="panel-body">    
             <div ng-show="hLoaded">
-                <div ng-repeat="item in hList">
+                <div ng-repeat='item in hList | orderObjectBy: "id"'>
                     <div class="checkbox">
                       <label ng-click="assignH($event, item)">
                         <input type="checkbox" ng-model="item.checked"> {id: {{item.id}}, name: {{item.name}}, value: {{item.value}}}
