@@ -47,6 +47,14 @@
 
 .sidebar-wrapper {position: fixed;}
 
+#cy {
+  height: 90%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 10;
+}
+
 @media screen and (max-width: 1000px), screen and (max-height: 650px) {
     .sidebar-wrapper {position: static;}
     #inputValue {height: auto;}

@@ -426,6 +426,41 @@ function assignClueHint($data, $entityManager, $clue=null, $hint=null)
     $entityManager->flush();
 }
 
+function getMap($entityManager)
+{
+    $clueRepository = $entityManager->getRepository("Clue");
+    $clues = $clueRepository->findBy(array("state" => 1));
+
+    $answerRepository = $entityManager->getRepository("Answer");
+    $answers = $answerRepository->findBy(array("state" => 1));
+
+    $map = array('nodes' => array(
+                ),
+                'edges' => array(
+                )
+            );
+
+    foreach ($clues as $clue) {
+        $clueID  = $clue->getID() . "-" . $clue->getName();
+        array_push($map['nodes'], array('data' => array('id' => $clueID ) ));
+
+        foreach ($clue->getAnswers() as $answer) {
+            $answerClue = $answer->getClue();
+            if (isset($answerClue))
+            {
+                $answerClueID = $answerClue->getID() . "-" . $answerClue->getName();
+                array_push($map['edges'], 
+                    array('data' => array('id' => 'a' . $answer->getID() . "-c" . $clue->getID() . "-c" . $answerClue->getID(),
+                        'weight' => 5,
+                        'source'=>$clueID,
+                        'target'=>$answerClueID) ));
+            }
+        }
+    }
+
+    return $map;
+}
+
 //Borrowed from http://php.net/manual/en/function.mt-rand.php#112889
 function GenerateCode ($l="6", $c = 'abcdefghijklmnopqrstuvwxyz1234567890') {
     for ($s = '', $cl = strlen($c)-1, $i = 0; $i < $l; $s .= $c[mt_rand(0, $cl)], ++$i);
