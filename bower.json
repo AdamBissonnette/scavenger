@@ -1,0 +1,14 @@
+{
+  "name": "lookgo",
+  "homepage": "https://lookgo.io/",
+  "authors": [
+    "Adam Bissonnette <adam@mediamanifesto.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "cytoscape": "2.4.9",
+    "jquery": "2.1.3",
+    "bootstrap": "3.3.4"
+  }
+}
