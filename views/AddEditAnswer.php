@@ -22,6 +22,13 @@
                 <textarea ng-model="answerCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value"></textarea>
             </div>
             <div class="form-group">
+                <label for="inputStory" class="control-label">Story ID</label>
+                <select class="form-control" id="inputStory" ng-model="answerCtrlFormData.storyid">
+                    <option value="0"></option>
+                    <option ng-repeat='story in stories | orderObjectBy: "id"' value="{{story.id}}">{{story.id}} | {{story.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <div>
                     <button ng-click="answerCtrlFormData.submit()" class="btn btn-primary" type="submit">
                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>

@@ -25,6 +25,13 @@
                 <input ng-model="hintCtrlFormData.priority" type="text" class="form-control" id="inputPriority" placeholder="Enter priority" maxlength="255">
             </div>
             <div class="form-group">
+                <label for="inputStory" class="control-label">Story ID</label>
+                <select class="form-control" id="inputStory" ng-model="hintCtrlFormData.storyid">
+                    <option value="0"></option>
+                    <option ng-repeat='story in stories | orderObjectBy: "id"' value="{{story.id}}">{{story.id}} | {{story.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <div class="">
                     <button ng-click="hintCtrlFormData.submit()" class="btn btn-primary" type="submit">
                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
