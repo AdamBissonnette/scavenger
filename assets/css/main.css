@@ -55,6 +55,18 @@
   top: 10;
 }
 
+.filters {}
+
+ul.unstyled {
+  list-style: none;
+}
+
+ul.unstyled li {
+  float: left;
+  padding: 5px 5px 5px 0;
+  font-weight: bold;
+}
+
 @media screen and (max-width: 1000px), screen and (max-height: 650px) {
     .sidebar-wrapper {position: static;}
     #inputValue {height: auto;}

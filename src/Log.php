@@ -144,7 +144,7 @@ class Log implements JsonSerializable
 
     public function getClueID()
     {
-        $id = -1;
+        $id = 0;
 
         if ($this->clue != null)
         {
@@ -166,7 +166,7 @@ class Log implements JsonSerializable
 
     public function getAnswerID()
     {
-        $id = -1;
+        $id = 0;
 
         if ($this->answer != null)
         {
@@ -191,6 +191,36 @@ class Log implements JsonSerializable
         $this->hunt = $huntIn;
     }
 
+    public function getHuntID()
+    {
+        if (isset($this->hunt))
+        {
+            return $this->hunt->getId();
+        }
+
+        return 0;
+    }
+
+    public function getStoryID()
+    {
+        if (isset($this->hunt))
+        {
+            return $this->hunt->getStory()->getId();
+        }
+
+        return 0;
+    }
+
+    public function getPartyID()
+    {
+        if (isset($this->hunt))
+        {
+            return $this->hunt->getParty()->getId();
+        }
+
+        return 0;
+    }
+
     public function getUser()
     {
         return $this->user;
@@ -201,6 +231,16 @@ class Log implements JsonSerializable
         $this->user = $userIn;
     }
 
+    public function getUserID()
+    {
+        if (isset($this->user))
+        {
+            return $this->user->getId();
+        }
+
+        return 0;
+    }
+
     public function getData()
     {
         return $this->data;
@@ -209,6 +249,31 @@ class Log implements JsonSerializable
     public function setData($dataIn)
     {
         $this->data = $dataIn;
+    }
+
+    public function getJSONData()
+    {
+        if ($this->direction == 2)
+        {
+            $json = json_decode($this->data);
+        }
+
+        return $this->data;
+    }
+
+    public function getMedia()
+    {
+        $output = null;
+        if ($this->direction == 2)
+        {
+            $json = json_decode($this->data);
+
+            if (isset($json->MediaUrl0))
+            {
+                $output = $json->MediaUrl0;
+            }
+        }
+        return $output;
     }
 
     public function getState()
@@ -230,10 +295,15 @@ class Log implements JsonSerializable
             'value'=> $this->value,
             'clueid' => $this->getClueID(),
             'answerid' => $this->getAnswerID(),
+            'userid'=> $this->getUserID(),
+            'huntid'=> $this->getHuntID(),
+            'partyid'=> $this->getPartyID(),
+            'storyid'=> $this->getStoryID(),
             'date'=> $this->date->getTimestamp() * 1000,
             'direction'=>$this->direction,
             'type' => $this->type,
-            'data' => $this->data
+            'data' => $this->getJSONData(),
+            'media0' => $this->getMedia()
         );
     }
 }
