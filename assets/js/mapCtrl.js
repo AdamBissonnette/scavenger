@@ -6,14 +6,9 @@ angular.module('scavengerApp')
 	      $state.go(stateName);
 	    };
 
-		var data = {fn: 'getMap'};
-		$.ajax({url: "callbacks.php",
-		    data: JSON.stringify(data),
-		    processData: false,
-		    dataType: "json",
-		    method: "POST",
-		    success: function(a) {loadCytoscape(a);},
-		    error: function (jqXHR, textStatus) {"Request failed: " + textStatus}
+		loadMap();
 
-		});
+		$scope.loadMap = function () {
+			loadMap();
+		}
 	}]);

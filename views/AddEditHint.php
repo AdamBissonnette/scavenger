@@ -13,7 +13,7 @@
             <div class="form-group">
                 <label for="inputClue" class="control-label">Clue ID</label>
                 <select class="form-control" id="inputClue" ng-model="hintCtrlFormData.clue">
-                    <option ng-repeat="clue in clues" value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
+                    <option ng-repeat='clue in clues | orderObjectBy: "id"' value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -23,6 +23,13 @@
             <div class="form-group">
                 <label for="inputPriority" class="control-label">Priority</label>
                 <input ng-model="hintCtrlFormData.priority" type="text" class="form-control" id="inputPriority" placeholder="Enter priority" maxlength="255">
+            </div>
+            <div class="form-group">
+                <label for="inputStory" class="control-label">Story ID</label>
+                <select class="form-control" id="inputStory" ng-model="hintCtrlFormData.storyid">
+                    <option value="0"></option>
+                    <option ng-repeat='story in stories | orderObjectBy: "id"' value="{{story.id}}">{{story.id}} | {{story.name}}</option>
+                </select>
             </div>
             <div class="form-group">
                 <div class="">
@@ -53,6 +60,7 @@
         <th>Value</th>
         <th>Clue</th>
         <th>Priority</th>
+        <th>Story</th>
         <th>Controls</th>
     </tr>
     <tr ng-repeat='item in hintList | orderObjectBy: "id"'>
@@ -61,6 +69,7 @@
         <td> {{ item.value }} </td>
         <td> {{ item.clue }} </td>
         <td> {{ item.priority }} </td>
+        <td> {{ item.storyid }}</td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

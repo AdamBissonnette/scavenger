@@ -23,7 +23,7 @@
                 <label for="inputCurClue" class="control-label">Party</label>
                 <select class="form-control" id="inputCurClue" ng-model="userCtrlFormData.party">
                     <option></option>
-                    <option ng-repeat="party in parties" value="{{party.id}}">{{party.id}} | {{party.name}}</option>
+                    <option ng-repeat='party in parties | orderObjectBy: "id"' value="{{party.id}}">{{party.id}} | {{party.name}}</option>
                 </select>
             </div>
 
@@ -57,7 +57,7 @@
         <th>Party</th>
         <th>Controls</th>
     </tr>
-    <tr ng-repeat='item in userList' | orderObjectBy: "id">
+    <tr ng-repeat='item in userList | orderObjectBy: "id"'>
         <td> {{ item.id }} </td>
         <td> {{ item.name }} </td>
         <td> {{ item.email }} </td>

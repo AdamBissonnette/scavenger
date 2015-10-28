@@ -8,7 +8,8 @@ angular.module('scavengerApp', ['ui.router'])
   .state('app', {
     abstract: true,
     url: '',
-    templateUrl: 'views/Container.php'
+    templateUrl: 'views/Container.php',
+    controller: 'navCtrl'
   })
   .state('app.clues', {
     url: '/clues',

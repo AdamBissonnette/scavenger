@@ -35,6 +35,10 @@ class Hint implements JsonSerializable
      */
     protected $usesLifeline = 1;
     /**
+     * @ManyToOne(targetEntity="Story", inversedBy="answers")
+     **/
+    protected $story=null;
+    /**
      * @Column(type="integer")    
      * @var string
      */
@@ -118,6 +122,28 @@ class Hint implements JsonSerializable
         $this->clue = $clue;
     }
 
+    public function setStory($story)
+    {
+        $this->story = $story;
+    }
+
+    public function getStory()
+    {
+        return $this->story;
+    }
+
+    public function getStoryID()
+    {
+        $id = -1;
+
+        if ($this->story != null)
+        {
+            $id = $this->story->getId();
+        }
+
+        return $id;
+    }
+
     public function __toString()
     {
         return strval($this->id);
@@ -130,6 +156,7 @@ class Hint implements JsonSerializable
             'name' => $this->name,
             'value'=> $this->value,
             'clue' => $this->getClueID(),
+            'storyid' => $this->getStoryID(),
             'priority' => $this->priority
         );
     }

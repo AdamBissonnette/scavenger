@@ -37,7 +37,7 @@
             <th>Name</th>
             <th>Controls</th>
         </tr>
-        <tr ng-repeat='item in partyList' | orderObjectBy: "id">
+        <tr ng-repeat='item in partyList | orderObjectBy: "id"'>
             <td> {{ item.id }} </td>
             <td> {{ item.name }} </td>
             <td class="controls">

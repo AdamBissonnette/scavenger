@@ -15,6 +15,13 @@
                 <textarea ng-model="clueCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value"></textarea>
             </div>
             <div class="form-group">
+                <label for="inputStory" class="control-label">Story ID</label>
+                <select class="form-control" id="inputStory" ng-model="clueCtrlFormData.storyid">
+                    <option value="0"></option>
+                    <option ng-repeat='story in navStories | orderObjectBy: "id"' value="{{story.id}}">{{story.id}} | {{story.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <div class="">
                     <button ng-click="clueCtrlFormData.submit()" class="btn btn-primary" type="submit">
                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
@@ -53,9 +60,10 @@
         <th>SMS Count</th>
         <th>Arrived At By (Answer IDs)</th>
         <th>Accepts (Answer IDs)</th>
+        <th>Story</th>
         <th>Controls</th>
     </tr>
-    <tr ng-repeat='item in clueList | orderObjectBy: "id"'>
+    <tr ng-repeat='item in clueList | orderObjectBy: "id" | filter:nav:strict'>
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td class="value">{{ item.value }}</td>
@@ -64,6 +72,7 @@
         <td>{{item.value.length / 160}}</td>
         <td><span ng-repeat="answer in item.trailings">{{answer.id}} - {{answer.name}} </span></td>
         <td><span ng-repeat="answer in item.answers">[{{answer.id}} - {{answer.name}}]</span></td>
+        <td>{{item.storyid}}</td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
