@@ -44,6 +44,7 @@ angular.module('scavengerApp')
           function (response) {
             data.id = response.id;
             $scope.storyList[data.id] = data;
+            $rootScope.navStories = $scope.storyList;
           },
           function(response){
             console.log(response);

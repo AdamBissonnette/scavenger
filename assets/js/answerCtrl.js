@@ -30,7 +30,7 @@ angular.module('scavengerApp')
     $scope.answerCtrlFormData = {id : "-1", name : "", value : "", clueid: "-1"};
 
     $scope.answerCtrlFormData.submit = function(item, event) {
-      var data = {fn: "aeanswer", id : $scope.answerCtrlFormData.id, name : $scope.answerCtrlFormData.name, value : $scope.answerCtrlFormData.value, clueid: $scope.answerCtrlFormData.clueid}
+      var data = {fn: "aeanswer", id : $scope.answerCtrlFormData.id, name : $scope.answerCtrlFormData.name, value : $scope.answerCtrlFormData.value, clueid: $scope.answerCtrlFormData.clueid, storyid : $scope.nav.storyid}
 
       list.http(data,
           function (response) {

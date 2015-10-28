@@ -56,13 +56,15 @@
             <th>Name</th>
             <th>Value</th>
             <th>Next Clue</th>
+            <th>Story</th>
             <th>Controls</th>
         </tr>
-        <tr ng-repeat='item in answerList | orderObjectBy: "id"'>
+        <tr ng-repeat='item in answerList | orderObjectBy: "id" | filter:nav:strict'>
             <td> {{ item.id }} </td>
             <td> {{ item.name }} </td>
             <td> {{ item.value }} </td>
             <td> {{ item.clueid }} </td>
+            <td> {{ item.storyid }}</td>
             <td class="controls">
                 <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

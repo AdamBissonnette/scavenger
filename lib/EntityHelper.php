@@ -49,6 +49,7 @@ function addEditClue($data, $entityManager)
     $id = $data->id;
     $name = $data->name;
     $value = $data->value;
+    $story = $data->storyid;
 
     $clue = $entityManager->find("Clue", $id);
     if (!$clue) {
@@ -57,6 +58,13 @@ function addEditClue($data, $entityManager)
 
     $clue->setName($name);
     $clue->setValue($value);
+
+    if ($story != null)
+    {
+        $story = $entityManager->find("Story", $data->storyid);
+    }
+
+    $clue->setStory($story);
 
     $entityManager->persist($clue);
     $entityManager->flush();
@@ -69,6 +77,7 @@ function addEditAnswer($data, $entityManager)
     $id = $data->id;
     $name = $data->name;
     $value = $data->value;
+    $story = $data->storyid;
 
     $answer = $entityManager->find("Answer", $id);
     if (!$answer) {
@@ -79,6 +88,13 @@ function addEditAnswer($data, $entityManager)
     $answer->setValue($value);
     $clue = $entityManager->find("Clue", $data->clueid);
     $data->checked = ($clue != null)?1:0;
+
+    if ($story != null)
+    {
+        $story = $entityManager->find("Story", $data->storyid);
+    }
+
+    $answer->setStory($story);
 
     $entityManager->persist($answer);
 
@@ -98,6 +114,7 @@ function addEditHint($data, $entityManager)
     $name = $data->name;
     $value = $data->value;
     $priority = $data->priority;
+    $story = $data->storyid;
 
     $hint = $entityManager->find("Hint", $id);
     if (!$hint) {
@@ -109,6 +126,13 @@ function addEditHint($data, $entityManager)
     $hint->setPriority($priority);
     $clue = $entityManager->find("Clue", $data->clue);
     $data->checked = ($clue != null)?1:0;
+
+    if ($story != null)
+    {
+        $story = $entityManager->find("Story", $data->storyid);
+    }
+
+    $hint->setStory($story);
 
     $entityManager->persist($hint);
 
@@ -426,13 +450,42 @@ function assignClueHint($data, $entityManager, $clue=null, $hint=null)
     $entityManager->flush();
 }
 
-function getMap($entityManager)
+function getMap($data, $entityManager)
 {
-    $clueRepository = $entityManager->getRepository("Clue");
-    $clues = $clueRepository->findBy(array("state" => 1));
+    $storyid = $data->storyid;
+    $story = null;
+    $clues = null;
+    $answers = null;
+    $hints = null;
 
-    $answerRepository = $entityManager->getRepository("Answer");
-    $answers = $answerRepository->findBy(array("state" => 1));
+    if ($storyid != "")
+    {
+        if ($storyid == 0)
+        {
+            $story = 0;
+        }
+        else
+        {
+            $story = $entityManager->find("Story", $data->storyid);
+        }
+    }
+
+    if (isset($story))
+    {
+        $clueRepository = $entityManager->getRepository("Clue");
+        $clues = $clueRepository->findBy(array("state" => 1, "story" => $story));
+
+        $answerRepository = $entityManager->getRepository("Answer");
+        $answers = $answerRepository->findBy(array("state" => 1, "story" => $story));
+    }
+    else
+    {
+        $clueRepository = $entityManager->getRepository("Clue");
+        $clues = $clueRepository->findBy(array("state" => 1));
+
+        $answerRepository = $entityManager->getRepository("Answer");
+        $answers = $answerRepository->findBy(array("state" => 1));    
+    }
 
     $map = array('nodes' => array(
                 ),

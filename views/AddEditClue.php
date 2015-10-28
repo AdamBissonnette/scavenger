@@ -53,9 +53,10 @@
         <th>SMS Count</th>
         <th>Arrived At By (Answer IDs)</th>
         <th>Accepts (Answer IDs)</th>
+        <th>Story</th>
         <th>Controls</th>
     </tr>
-    <tr ng-repeat='item in clueList | orderObjectBy: "id"'>
+    <tr ng-repeat='item in clueList | orderObjectBy: "id" | filter:nav:strict'>
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td class="value">{{ item.value }}</td>
@@ -64,6 +65,7 @@
         <td>{{item.value.length / 160}}</td>
         <td><span ng-repeat="answer in item.trailings">{{answer.id}} - {{answer.name}} </span></td>
         <td><span ng-repeat="answer in item.answers">[{{answer.id}} - {{answer.name}}]</span></td>
+        <td>{{item.storyid}}</td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

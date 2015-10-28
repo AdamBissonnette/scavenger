@@ -18,7 +18,7 @@ angular.module('scavengerApp')
     $scope.clueCtrlFormData = {id : "-1", name: "", value : ""};
 
     $scope.clueCtrlFormData.submit = function(item, event) {
-      var data = {fn: "aeclue", id : $scope.clueCtrlFormData.id, name: $scope.clueCtrlFormData.name, value : $scope.clueCtrlFormData.value}
+      var data = {fn: "aeclue", id : $scope.clueCtrlFormData.id, name: $scope.clueCtrlFormData.name, value : $scope.clueCtrlFormData.value, storyid : $scope.nav.storyid}
       list.http(data,
         function(response) {
         data.id = response.id;
@@ -41,6 +41,7 @@ angular.module('scavengerApp')
       $scope.clueCtrlFormData.id = item.id;
       $scope.clueCtrlFormData.name = item.name;
       $scope.clueCtrlFormData.value = item.value;
+      $scope.nav.storyid = item.storyid;
      }
 
     $scope.deleteItem = function(item) {
