@@ -44,6 +44,14 @@
         <li><a ui-sref="app.log" href="#">Logs</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li class="storyManager btn btn-primary">
+            <label for="navStory">Story</label>
+            <select id="navStory" ng-model="nav.storyid">
+                <option value="">Select All</option>
+                <option ng-repeat='story in navStories | orderObjectBy: "id"' value="{{story.id}}">{{story.id}} | {{story.name}}</option>
+                <option value="0">Null</option>
+            </select>
+        </li>
         <li><?php echo "<a href='".$_SERVER['PHP_SELF']."?action=logout'>logout</a>"; ?></li>
       </ul>
     </div>
@@ -57,6 +65,7 @@
 </div>   
         <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js'></script>
         <script src='assets/js/routes.js'></script>
+        <script src='assets/js/navCtrl.js'></script>
         <script src='assets/js/clueCtrl.js'></script>
         <script src='assets/js/answerCtrl.js'></script>
         <script src='assets/js/hintCtrl.js'></script>

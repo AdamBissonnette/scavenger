@@ -53,6 +53,7 @@
         <th>Value</th>
         <th>Clue</th>
         <th>Priority</th>
+        <th>Story</th>
         <th>Controls</th>
     </tr>
     <tr ng-repeat='item in hintList | orderObjectBy: "id"'>
@@ -61,6 +62,7 @@
         <td> {{ item.value }} </td>
         <td> {{ item.clue }} </td>
         <td> {{ item.priority }} </td>
+        <td> {{ item.storyid }}</td>
         <td class="controls">
             <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

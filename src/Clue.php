@@ -46,6 +46,18 @@ class Clue implements JsonSerializable
         $this->story = $storyIn;
     }
 
+    public function getStoryID()
+    {
+        $id = 0;
+
+        if ($this->story != null)
+        {
+            $id = $this->story->getId();
+        }
+
+        return $id;
+    }
+
     public function getName()
     {
         return $this->name;
@@ -222,7 +234,8 @@ class Clue implements JsonSerializable
             'value'=> $this->getValue(),
             'answers' => $this->answers->toArray(),
             'trailings' => $this->trailings->toArray(),
-            'hints' => $this->hints->toArray()
+            'hints' => $this->hints->toArray(),
+            'storyid' => $this->getStoryID()
         );
     }
 

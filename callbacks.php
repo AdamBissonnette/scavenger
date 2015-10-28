@@ -47,7 +47,7 @@ if (isset($data))
             assignClueHint($data, $entityManager);
             break;
         case 'getMap':
-            $map = getMap($entityManager);
+            $map = getMap($data, $entityManager);
 
             $json = json_encode($map);
         break;

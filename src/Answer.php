@@ -26,6 +26,10 @@ class Answer implements JsonSerializable
      **/
     protected $clue;
     /**
+     * @ManyToOne(targetEntity="Story", inversedBy="answers")
+     **/
+    protected $story=null;
+    /**
      * @Column(type="integer")    
      * @var string
      */
@@ -88,6 +92,28 @@ class Answer implements JsonSerializable
         $this->clue = $clue;
     }
 
+    public function getStory()
+    {
+        return $this->story;
+    }
+
+    public function getStoryID()
+    {
+        $id = 0;
+
+        if ($this->story != null)
+        {
+            $id = $this->story->getId();
+        }
+
+        return $id;
+    }
+
+    public function setStory($story)
+    {
+        $this->story = $story;
+    }
+
     public function __toString()
     {
         return strval($this->id);
@@ -99,7 +125,8 @@ class Answer implements JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'value'=> $this->value,
-            'clueid' => $this->getClueID()
+            'clueid' => $this->getClueID(),
+            'storyid' => $this->getStoryID()
         );
     }
 
