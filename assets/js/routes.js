@@ -69,8 +69,8 @@ angular.module('scavengerApp', ['ui.router'])
     controller: 'logCtrl'
   })
 
-  .state('app.map', {
-    url: '/map',
+  .state('app.maps', {
+    url: '/maps',
     templateUrl: 'views/ViewMap.php',
     controller: 'mapCtrl'
   })

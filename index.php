@@ -39,7 +39,7 @@
         <li><a ui-sref="app.parties" href="#">Parties</a></li>
         <li><a ui-sref="app.users" href="#">Users</a></li>
         <li><a ui-sref="app.hunts" href="#">Hunts</a></li>
-        <li><a ui-sref="app.map" href="#">Map</a></li>
+        <li><a ui-sref="app.maps" href="#">Maps</a></li>
         <li><a ui-sref="app.twiMLTests" href="#">Testing</a></li>
         <li><a ui-sref="app.log" href="#">Logs</a></li>
       </ul>
