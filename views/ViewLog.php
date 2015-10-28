@@ -101,6 +101,10 @@
                         <option value="0">Null</option>
                     </select>
                 </li>
+                <li>
+                    <label>Controls</label><br />
+                    <a href="#" class="btn btn-default" ng-click='reloadLogs()'>Reload Logs</a>
+                </li>
             </ul>
         </div>
     </div>
