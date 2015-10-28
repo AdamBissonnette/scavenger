@@ -2,8 +2,8 @@ angular.module('scavengerApp')
   .controller('logCtrl', ['$scope', '$rootScope', '$state', '$http', 'ListService', function($scope, $rootScope, $state, $http, ListService) {
 
     $scope.loaded = false;
-    var list = ListService;
 
+    var list = ListService;
     var cluesList = ListService;
 
     cluesList.http({fn: "getEntities", entityName: "Clue"},
@@ -79,6 +79,29 @@ angular.module('scavengerApp')
       function(response){
         console.log(response);
       });
+
+      list.http({fn: "getEntities", entityName: "Log"},
+      function (response) {
+          list.setList(response);
+          $scope.loaded = true;
+          $scope.list = list.getList();
+      },
+      function(response){
+        console.log(response);
+      });
+
+    $scope.reloadLogs = function() {
+      var list = ListService;
+      list.http({fn: "getEntities", entityName: "Log"},
+      function (response) {
+          list.setList(response);
+          $scope.loaded = true;
+          $scope.list = list.getList();
+      },
+      function(response){
+        console.log(response);
+      });
+    };
 
     $scope.deleteItem = function(item) {
       var data = {fn: 'deleteEntity', id : item.id, entityName: "Log"};
