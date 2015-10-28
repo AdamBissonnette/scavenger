@@ -122,7 +122,7 @@ class Hint implements JsonSerializable
         $this->clue = $clue;
     }
 
-    public function setStory($clue)
+    public function setStory($story)
     {
         $this->story = $story;
     }

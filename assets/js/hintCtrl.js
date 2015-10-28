@@ -26,10 +26,10 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    $scope.hintCtrlFormData = {id : "-1", name: "", value : "", clue: "-1", priority: "5"};
+    $scope.hintCtrlFormData = {id : "-1", name: "", value : "", clue: "-1", priority: "5", storyid: "-1"};
 
     $scope.hintCtrlFormData.submit = function(item, event) {
-      var data = {fn: "aehint", id : $scope.hintCtrlFormData.id, name: $scope.hintCtrlFormData.name, value : $scope.hintCtrlFormData.value, clue: $scope.hintCtrlFormData.clue, priority: $scope.hintCtrlFormData.priority, storyid : $scope.nav.storyid}
+      var data = {fn: "aehint", id : $scope.hintCtrlFormData.id, name: $scope.hintCtrlFormData.name, value : $scope.hintCtrlFormData.value, clue: $scope.hintCtrlFormData.clue, priority: $scope.hintCtrlFormData.priority, storyid : $scope.hintCtrlFormData.storyid}
 
       list.http(data, 
           function (response) {
@@ -58,6 +58,7 @@ angular.module('scavengerApp')
       $scope.hintCtrlFormData.value = item.value;
       $scope.hintCtrlFormData.clue = item.clue;
       $scope.hintCtrlFormData.priority = item.priority;
+      $scope.answerCtrlFormData.storyid = item.storyid;
      }
 
     $scope.deleteItem = function(item) {
