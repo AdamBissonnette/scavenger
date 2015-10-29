@@ -87,7 +87,7 @@
         <script src='assets/js/app.js'></script>
         <script src='assets/js/cytoscape.min.js'></script>
         <script src='assets/js/jquery.qtip.min.js'></script>
-        <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/2.2.5/cytoscape-qtip.js"></script>
+        <script src="assets/js/cytoscape-qtip.js"></script>
         <script src='assets/js/mapCtrl.js'></script>
     </body>
 </html>
