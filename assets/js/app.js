@@ -1,11 +1,14 @@
 function loadCytoscape(data)
 {
-
-    $('#cy').cytoscape({
+    window.map = cytoscape({
+      container: document.getElementById('cy'),
+      boxSelectionEnabled: false,
+      autounselectify: true,
+      hideLabelsOnViewport: true,
       style: cytoscape.stylesheet()
         .selector('node')
       .css({
-        'content': 'data(id)'
+        'content': 'data(label)'
       })
     .selector('edge')
       .css({
@@ -33,9 +36,41 @@ function loadCytoscape(data)
       
       ready: function(){
         // ready 1
+        for (var i = 0; i < data["nodes"].length; i++)
+        {
+          var item = data["nodes"][i];
+          var id = item["data"]["id"];
+
+          addQTip(id);
+        }
       }
     });
 
+}
+
+function addQTip(id)
+{
+  var element = map.$('#' + id);
+  var editClue = '<button type="button" class="btn btn-success" onclick="editItem(\'c\', %s)" data-toggle="modal" data-target="#addClue">edit</button> ';
+  var linkClue = '';//'<button type="button" class="btn btn-primary" onclick="linkItem(\'c\', %s)">link</button> ';
+  var delClue = '<button type="button" class="btn btn-danger" onclick="delItem(\'c\', %s)">delete</button>';
+
+  var controls = (editClue + linkClue + delClue).replace(/%s/g, element.data().item);
+
+  element.qtip({
+      content: controls,
+      position: {
+        my: 'top center',
+        at: 'bottom center'
+      },
+      style: {
+        classes: 'qtip-bootstrap',
+        tip: {
+          width: 16,
+          height: 8
+        }
+      }
+    });
 }
 
 function loadMap()
@@ -50,4 +85,23 @@ function loadMap()
         error: function (jqXHR, textStatus) {"Request failed: " + textStatus}
 
     });
+}
+
+function editItem(itemType, itemId)
+{
+  $('#' + itemType + itemId + 'edit').click();
+}
+
+function linkItem(itemType, itemId)
+{
+  $('#' + itemType + itemId + 'link').click(); 
+}
+
+function delItem(itemType, itemId)
+{
+  var r = confirm("Are you sure you want to delete this item?");
+  if (r == true) {
+    var ident = '#' + itemType + itemId;
+    $(ident + 'del').click();
+  }
 }

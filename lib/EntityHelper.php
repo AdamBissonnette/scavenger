@@ -494,19 +494,20 @@ function getMap($data, $entityManager)
             );
 
     foreach ($clues as $clue) {
-        $clueID  = $clue->getID() . "-" . $clue->getName();
-        array_push($map['nodes'], array('data' => array('id' => $clueID ) ));
+        $clueID  = 'c' . $clue->getID();
+        $label  = $clue->getID() . "-" . $clue->getName();
+        array_push($map['nodes'], array('data' => array('id' =>  $clueID, 'label' => $label, 'item' => $clue->getId() ) ));
 
         foreach ($clue->getAnswers() as $answer) {
             $answerClue = $answer->getClue();
             if (isset($answerClue))
             {
-                $answerClueID = $answerClue->getID() . "-" . $answerClue->getName();
+                $answerClueID = 'c' . $answerClue->getID();
                 array_push($map['edges'], 
                     array('data' => array('id' => 'a' . $answer->getID() . "-c" . $clue->getID() . "-c" . $answerClue->getID(),
                         'weight' => 5,
-                        'source'=>$clueID,
-                        'target'=>$answerClueID) ));
+                        'source'=> $clueID,
+                        'target'=> $answerClueID) ));
             }
         }
     }

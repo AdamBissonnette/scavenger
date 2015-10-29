@@ -10,6 +10,7 @@
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="assets/css/jquery.qtip.min.css">
         <link rel="stylesheet" href="assets/css/main.css">
 
         <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js'></script>
@@ -28,17 +29,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" ui-sref="app.clues" href="#">Scavenger Backend</a>
+      <a class="navbar-brand" ui-sref="app.stories" href="#">Scavenger Backend</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a ui-sref="app.stories" href="#">Stories</a></li>
-        <li><a ui-sref="app.clues" href="#">Clues</a></li>
-        <li><a ui-sref="app.answers" href="#">Answers</a></li>
-        <li><a ui-sref="app.hints" href="#">Hints</a></li>
-        <li><a ui-sref="app.parties" href="#">Parties</a></li>
-        <li><a ui-sref="app.users" href="#">Users</a></li>
-        <li><a ui-sref="app.hunts" href="#">Hunts</a></li>
+        <li>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Entities <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a ui-sref="app.stories" href="#">Stories</a></li>
+                <li><a ui-sref="app.clues" href="#">Clues</a></li>
+                <li><a ui-sref="app.answers" href="#">Answers</a></li>
+                <li><a ui-sref="app.hints" href="#">Hints</a></li>
+                <li><a ui-sref="app.parties" href="#">Parties</a></li>
+                <li><a ui-sref="app.users" href="#">Users</a></li>
+                <li><a ui-sref="app.hunts" href="#">Hunts</a></li>
+            </ul>
+        </li>
         <li><a ui-sref="app.maps" href="#">Maps</a></li>
         <li><a ui-sref="app.twiMLTests" href="#">Testing</a></li>
         <li><a ui-sref="app.log" href="#">Logs</a></li>
@@ -79,7 +85,9 @@
         <script src='assets/js/twiMLTests.js'></script>
         <script src='assets/js/logCtrl.js'></script>
         <script src='assets/js/app.js'></script>
-        <script src='assets/js/mapCtrl.js'></script>
         <script src='assets/js/cytoscape.min.js'></script>
+        <script src='assets/js/jquery.qtip.min.js'></script>
+        <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/2.2.5/cytoscape-qtip.js"></script>
+        <script src='assets/js/mapCtrl.js'></script>
     </body>
 </html>

@@ -1,4 +1,4 @@
-<div class="col-sm-3">                    
+<div class="col-sm-3 aeform">                    
     <div class="sidebar-wrapper">
     <h2>Add/Edit Hint</h2>
         <form class="form-horizontal col-sm-12">
@@ -13,7 +13,7 @@
             <div class="form-group">
                 <label for="inputClue" class="control-label">Clue ID</label>
                 <select class="form-control" id="inputClue" ng-model="hintCtrlFormData.clue">
-                    <option ng-repeat='clue in clues | orderObjectBy: "id"' value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
+                    <option ng-repeat='clue in clueList | orderObjectBy: "id"' value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -28,7 +28,7 @@
                 <label for="inputStory" class="control-label">Story ID</label>
                 <select class="form-control" id="inputStory" ng-model="hintCtrlFormData.storyid">
                     <option value="0"></option>
-                    <option ng-repeat='story in stories | orderObjectBy: "id"' value="{{story.id}}">{{story.id}} | {{story.name}}</option>
+                    <option ng-repeat='story in navStories | orderObjectBy: "id"' value="{{story.id}}">{{story.id}} | {{story.name}}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -50,7 +50,7 @@
         </form>
     </div>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-9 aelist">
     <h2>List Hints</h2>
     <br />
     <table ng-show="loaded" class='table table-bordered table-striped lists'>
@@ -63,7 +63,7 @@
         <th>Story</th>
         <th>Controls</th>
     </tr>
-    <tr ng-repeat='item in hintList | orderObjectBy: "id"'>
+    <tr ng-repeat='item in hintList | orderObjectBy: "id" | filter:nav:strict'>
         <td> {{ item.id }} </td>
         <td> {{ item.name }} </td>
         <td> {{ item.value }} </td>
@@ -71,10 +71,10 @@
         <td> {{ item.priority }} </td>
         <td> {{ item.storyid }}</td>
         <td class="controls">
-            <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
+            <button id="h{{item.id}}edit" class="btn btn-success" ng-click='hintCtrlFormData.editItem(item)' title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             </button>
-            <button class="btn btn-danger" ng-click='deleteItem(item)' title="Delete">
+            <button id="h{{item.id}}del" class="btn btn-danger" ng-click='hintCtrlFormData.deleteItem(item)' title="Delete">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
             </button>
         </td>

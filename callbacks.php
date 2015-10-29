@@ -13,6 +13,9 @@ if (isset($data))
         case 'getEntities':
             $json = getEntities($data, $entityManager);
         break;
+        case 'getEntity':
+            $json = getEntity($data, $entityManager);
+        break;
         case 'deleteEntity':
             $json = deleteEntity($data, $entityManager);
         break;

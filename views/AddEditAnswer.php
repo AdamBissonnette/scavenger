@@ -1,4 +1,4 @@
-<div class="col-sm-3">
+<div class="col-sm-3 aeform">
     <div class="sidebar-wrapper">
     <h2>Add/Edit Answer</h2>
         <i class='glyphicon-spinner glyphicon-spin glyphicon-large'></i>
@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label for="inputNextClue" class="control-label">Next Clue ID</label>
                 <select class="form-control" id="inputNextClue" ng-model="answerCtrlFormData.clueid">
-                    <option ng-repeat='clue in clues | orderObjectBy: "id"' value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
+                    <option ng-repeat='clue in clueList | orderObjectBy: "id"' value="{{clue.id}}">{{clue.id}} | {{clue.name}}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -25,7 +25,7 @@
                 <label for="inputStory" class="control-label">Story ID</label>
                 <select class="form-control" id="inputStory" ng-model="answerCtrlFormData.storyid">
                     <option value="0"></option>
-                    <option ng-repeat='story in stories | orderObjectBy: "id"' value="{{story.id}}">{{story.id}} | {{story.name}}</option>
+                    <option ng-repeat='story in navStories | orderObjectBy: "id"' value="{{story.id}}">{{story.id}} | {{story.name}}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -38,23 +38,20 @@
                         <span class="glyphicon glyphicon-floppy-remove" aria-hidden="true"></span>
                         Reset
                     </button>
-
-                    <!-- <pre>{{answerCtrlFormData}}</pre> -->
                 </div>
             </div>
         </form>
-
-    <hr />
-    <h4>Regex Tips</h4>
-    <ul>
-        <li><a href="https://www.regex101.com" target="_blank">https://www.regex101.com</a></li>
-        <li>Any text response == /.*/</li>
-        <li>Media response == /media/</li>
-    </ul>
+        <hr />
+        <h4>Regex Tips</h4>
+        <ul>
+            <li><a href="https://www.regex101.com" target="_blank">https://www.regex101.com</a></li>
+            <li>Any text response == /.*/</li>
+            <li>Media response == /media/</li>
+        </ul>
 
     </div>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-9 aelist">
     <h2>List Answers</h2>
     <br />
     <table ng-show="loaded" class='table table-bordered table-striped lists'>
@@ -73,15 +70,15 @@
             <td> {{ item.clueid }} </td>
             <td> {{ item.storyid }}</td>
             <td class="controls">
-                <button class="btn btn-success" ng-click='editItem(item)' title="Edit">
+                <button id="a{{item.id}}edit" class="btn btn-success" ng-click='answerCtrlFormData.editItem(item)' title="Edit">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 </button>
 
-                <button class="btn btn-primary" ng-click='changeState("app.answerAssignments", item)' title="Assign Clues">
+                <button class="btn btn-primary" ng-click='clueCtrlFormData.changeState("app.answerAssignments", item)' title="Assign Clues">
                     <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
                 </button>
 
-                <button class="btn btn-danger" ng-click='deleteItem(item)' title="Delete">
+                <button id="a{{item.id}}del" class="btn btn-danger" ng-click='answerCtrlFormData.deleteItem(item)' title="Delete">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                 </button>
             </td>

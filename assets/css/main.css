@@ -49,6 +49,9 @@
 #inputValue {height: 200px;}
 
 .sidebar-wrapper {position: fixed;}
+.storymap .sidebar-wrapper {position: initial}
+.storymap .aeform {width: 100%;}
+.storymap .aelist {display: none;}
 
 #cy {
   height: 85%;

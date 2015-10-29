@@ -42,14 +42,14 @@ angular.module('scavengerApp')
       $scope.clueCtrlFormData.value = "";
      }
 
-     $scope.editItem = function(item) {
+     $scope.clueCtrlFormData.editItem = function(item) {
       $scope.clueCtrlFormData.id = item.id;
       $scope.clueCtrlFormData.name = item.name;
       $scope.clueCtrlFormData.value = item.value;
       $scope.clueCtrlFormData.storyid = item.storyid;
      }
 
-    $scope.deleteItem = function(item) {
+    $scope.clueCtrlFormData.deleteItem = function(item) {
       var data = {fn: 'deleteEntity', id : item.id, entityName: "Clue"};
 
       list.http(data,
@@ -63,7 +63,7 @@ angular.module('scavengerApp')
       $scope.clueCtrlFormData.reset();
     };
 
-    $scope.changeState = function(stateName, item) {
+    $scope.clueCtrlFormData.changeState = function(stateName, item) {
       $state.go(stateName, {"clueid": item.id, "clue": item});
     };
 }]).filter('orderObjectBy', function(){

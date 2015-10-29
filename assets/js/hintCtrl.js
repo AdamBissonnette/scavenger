@@ -3,13 +3,13 @@ angular.module('scavengerApp')
     $scope.loaded = false;
     var list = ListService;
 
-    $scope.clues = {};
+    $scope.clueList = {};
     var cluesList = ListService;
 
     cluesList.http({fn: "getEntities", entityName: "Clue"},
       function (response) {
           cluesList.setList(response);
-          $scope.clues = cluesList.getList();
+          $scope.clueList = cluesList.getList();
       },
       function(response){
         console.log(response);
