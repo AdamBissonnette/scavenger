@@ -26,6 +26,22 @@ angular.module('scavengerApp')
       var data = {fn: "aeclue", id : $scope.clueCtrlFormData.id, name: $scope.clueCtrlFormData.name, value : $scope.clueCtrlFormData.value, storyid : $scope.clueCtrlFormData.storyid}
       list.http(data,
         function(response) {
+
+        try {
+          if (data.id == -1)
+          {
+            //add new element to the map
+            map.add({group: "nodes", data: {id: 'c' + response.id, label: response.id + '-' + data.name, item: response.id, weight: 5}, position: {x: 200, y: 100}});
+            addQTip('c' + response.id);
+          }
+          else
+          {
+            map.$('#c' + response.id).style("content", response.id + '-' + data.name);
+          }
+        } catch (err) {
+          //console.log(err);
+        }
+
         data.id = response.id;
         $scope.clueList[data.id] = data;
         list.setList($scope.clueList);
@@ -56,6 +72,12 @@ angular.module('scavengerApp')
         function(response) {
         delete $scope.clueList[item.id];
         list.setList($scope.clueList);
+        try {
+          map.remove(map.$('#c' + item.id));
+        }
+        catch (err) {
+          //console.log(err);
+        }
       },
       function(response) {
         console.log(response);

@@ -52,7 +52,7 @@ angular.module('scavengerApp')
       $scope.hintCtrlFormData.priority = 5;
      }
 
-     $scope.editItem = function(item) {
+     $scope.hintCtrlFormData.editItem = function(item) {
       $scope.hintCtrlFormData.id = item.id;
       $scope.hintCtrlFormData.name = item.name;
       $scope.hintCtrlFormData.value = item.value;
@@ -61,7 +61,7 @@ angular.module('scavengerApp')
       $scope.answerCtrlFormData.storyid = item.storyid;
      }
 
-    $scope.deleteItem = function(item) {
+    $scope.hintCtrlFormData.deleteItem = function(item) {
       var data = {fn: 'deleteEntity', id : item.id, entityName: "Hint"};
 
       list.http(data, 
