@@ -3,21 +3,19 @@ function loadCytoscape(data)
     window.map = cytoscape({
       container: document.getElementById('cy'),
       boxSelectionEnabled: false,
-      autounselectify: true,
+      autounselectify: false,
       hideLabelsOnViewport: true,
       style: cytoscape.stylesheet()
         .selector('node')
       .css({
         'content': 'data(label)'
       })
-    .selector('edge')
       .css({
         'target-arrow-shape': 'triangle',
         'width': 4,
         'line-color': '#ddd',
         'target-arrow-color': '#ddd'
       })
-    .selector('.highlighted')
       .css({
         'background-color': '#61bffc',
         'line-color': '#61bffc',
@@ -41,21 +39,18 @@ function loadCytoscape(data)
           var item = data["nodes"][i];
           var id = item["data"]["id"];
 
-          addQTip(id);
         }
       }
     });
 
 }
 
-function addQTip(id)
 {
   var element = map.$('#' + id);
   var editClue = '<button type="button" class="btn btn-success" onclick="editItem(\'c\', %s)" data-toggle="modal" data-target="#addClue">edit</button> ';
   var linkClue = '';//'<button type="button" class="btn btn-primary" onclick="linkItem(\'c\', %s)">link</button> ';
   var delClue = '<button type="button" class="btn btn-danger" onclick="delItem(\'c\', %s)">delete</button>';
 
-  var controls = (editClue + linkClue + delClue).replace(/%s/g, element.data().item);
 
   element.qtip({
       content: controls,

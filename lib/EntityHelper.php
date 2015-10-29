@@ -505,6 +505,7 @@ function getMap($data, $entityManager)
                 $answerClueID = 'c' . $answerClue->getID();
                 array_push($map['edges'], 
                     array('data' => array('id' => 'a' . $answer->getID() . "-c" . $clue->getID() . "-c" . $answerClue->getID(),
+                        'item' => $answer->getID(),
                         'weight' => 5,
                         'source'=> $clueID,
                         'target'=> $answerClueID) ));

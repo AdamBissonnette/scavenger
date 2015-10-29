@@ -31,8 +31,9 @@ angular.module('scavengerApp')
           if (data.id == -1)
           {
             //add new element to the map
-            map.add({group: "nodes", data: {id: 'c' + response.id, label: response.id + '-' + data.name, item: response.id, weight: 5}, position: {x: 200, y: 100}});
-            addQTip('c' + response.id);
+            var itemLabel = response.id + '-' + data.name;
+            map.add({group: "nodes", data: {id: 'c' + response.id, label: itemLabel, item: response.id, weight: 5}, position: {x: 200, y: 100}});
+            addQTip('c' + response.id, itemLabel, 'c');
           }
           else
           {

@@ -74,7 +74,7 @@
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 </button>
 
-                <button class="btn btn-primary" ng-click='clueCtrlFormData.changeState("app.answerAssignments", item)' title="Assign Clues">
+                <button id="a{{item.id}}link" class="btn btn-primary" ng-click='clueCtrlFormData.changeState("app.answerAssignments", item)' title="Assign Clues">
                     <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
                 </button>
 
