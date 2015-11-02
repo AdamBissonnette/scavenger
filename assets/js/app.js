@@ -154,7 +154,7 @@ function createLink(data, fromid, toid)
 {
   //add new element to the map
   var itemLabel = "a" + data.id + '-c' + fromid + '-c' + toid;
-  map.add({group: "edges", data: {id: itemLabel, item: data.id, weight: 5, source: "c" + fromid, target: "c" + toid}})
+  map.add({group: "edges", data: {id: itemLabel, item: data.id, weight: 5, source: "c" + fromid, target: "c" + toid, warning: true}})
     .style("line-color", "red")
     .style("target-arrow-color", "red");
 
