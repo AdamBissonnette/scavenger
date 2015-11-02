@@ -2,19 +2,24 @@ angular.module('scavengerApp')
   .controller('answerCtrl', ['$scope', '$rootScope', '$state', '$http', 'ListService', function($scope, $rootScope, $state, $http, ListService) {
 
     $scope.loaded = false;
-    $scope.clueList = {};
 
-    var cluesList = ListService;
+    if ($scope.clueList == null)
+    {
+      $scope.clueList = {};
+      var cluesList = ListService;
+
+      cluesList.http({fn: "getEntities", entityName: "Clue"},
+        function (response) {
+            cluesList.setList(response);
+            $scope.clueList = cluesList.getList();
+        },
+        function(response){
+          console.log(response);
+        });
+
+    }
+
     var list = ListService;
-
-    cluesList.http({fn: "getEntities", entityName: "Clue"},
-      function (response) {
-          cluesList.setList(response);
-          $scope.clueList = cluesList.getList();
-      },
-      function(response){
-        console.log(response);
-      });
 
     list.http({fn: "getEntities", entityName: "Answer"},
       function (response) {

@@ -4,12 +4,14 @@ angular.module('scavengerApp')
     var list = ListService;
     $scope.loaded = false;
 
+    $rootScope.clueList = {};
+
     list.http({fn: "getEntities", entityName: "Clue"},
       function (response) {
           list.setList(response);
           $scope.loaded = true;
           //console.log(response);
-          $scope.clueList = list.getList();
+          $rootScope.clueList = list.getList();
       },
       function(response){
         console.log(response);
@@ -73,12 +75,6 @@ angular.module('scavengerApp')
         function(response) {
         delete $scope.clueList[item.id];
         list.setList($scope.clueList);
-        try {
-          map.remove(map.$('#c' + item.id));
-        }
-        catch (err) {
-          //console.log(err);
-        }
       },
       function(response) {
         console.log(response);

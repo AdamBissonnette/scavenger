@@ -25,6 +25,9 @@ if (isset($data))
         case 'aeanswer':
             $json = addEditAnswer($data, $entityManager);
             break;
+        case 'linkclues':
+            $json = linkClues($data, $entityManager);
+            break;
         case 'aehint':
             $json = addEditHint($data, $entityManager);
             break;
