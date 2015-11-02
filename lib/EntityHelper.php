@@ -108,6 +108,28 @@ function addEditAnswer($data, $entityManager)
     return json_encode($answer->jsonSerialize());
 }
 
+function linkClues($data, $entityManager)
+{
+    $fromId = $data->fromid;
+    $toId = $data->toid;
+
+    $answer = new Answer();
+    $answer->setValue("");
+
+    $fromClue = $entityManager->find("Clue", $fromId);
+    $toClue = $entityManager->find("Clue", $toId);
+
+    $entityManager->persist($answer);
+
+    $answer->setName("a" . $answer->getId() . "-c" . $fromClue->getId() . "-c" . $toClue->getId() );
+    $answer->setClue($toClue);
+    $fromClue->addAnswer($answer);
+
+    $entityManager->flush();
+
+    return json_encode($answer);
+}
+
 function addEditHint($data, $entityManager)
 {
     $id = $data->id;
@@ -494,19 +516,33 @@ function getMap($data, $entityManager)
             );
 
     foreach ($clues as $clue) {
-        $clueID  = $clue->getID() . "-" . $clue->getName();
-        array_push($map['nodes'], array('data' => array('id' => $clueID ) ));
+        $clueID  = 'c' . $clue->getID();
+        $label  = $clue->getID() . "-" . $clue->getName();
+        array_push($map['nodes'], array('data' => array('id' =>  $clueID, 'label' => $label, 'item' => $clue->getId() ) ));
 
         foreach ($clue->getAnswers() as $answer) {
-            $answerClue = $answer->getClue();
-            if (isset($answerClue))
+            if ($answer->getState() == 1)
             {
-                $answerClueID = $answerClue->getID() . "-" . $answerClue->getName();
-                array_push($map['edges'], 
-                    array('data' => array('id' => 'a' . $answer->getID() . "-c" . $clue->getID() . "-c" . $answerClue->getID(),
-                        'weight' => 5,
-                        'source'=>$clueID,
-                        'target'=>$answerClueID) ));
+                $answerClue = $answer->getClue();
+                if (isset($answerClue))
+                {
+                    $warning = false;
+
+                    if ($answer->getValue() == "")
+                    {
+                        $warning = true;
+                    }
+
+                    $answerClueID = 'c' . $answerClue->getID();
+                    array_push($map['edges'], 
+                        array('data' => array('id' => 'a' . $answer->getID() . "-c" . $clue->getID() . "-c" . $answerClue->getID(),
+                            'label' => 'a' . $answer->getID() . "-c" . $clue->getID() . "-c" . $answerClue->getID(),
+                            'item' => $answer->getID(),
+                            'weight' => 5,
+                            'source'=> $clueID,
+                            'target'=> $answerClueID,
+                            'warning'=> $warning) ));
+                }
             }
         }
     }

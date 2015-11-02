@@ -4,12 +4,14 @@ angular.module('scavengerApp')
     var list = ListService;
     $scope.loaded = false;
 
+    $rootScope.clueList = {};
+
     list.http({fn: "getEntities", entityName: "Clue"},
       function (response) {
           list.setList(response);
           $scope.loaded = true;
           //console.log(response);
-          $scope.clueList = list.getList();
+          $rootScope.clueList = list.getList();
       },
       function(response){
         console.log(response);
@@ -26,6 +28,23 @@ angular.module('scavengerApp')
       var data = {fn: "aeclue", id : $scope.clueCtrlFormData.id, name: $scope.clueCtrlFormData.name, value : $scope.clueCtrlFormData.value, storyid : $scope.clueCtrlFormData.storyid}
       list.http(data,
         function(response) {
+
+        try {
+          if (data.id == -1)
+          {
+            //add new element to the map
+            var itemLabel = response.id + '-' + data.name;
+            map.add({group: "nodes", data: {id: 'c' + response.id, label: itemLabel, item: response.id, weight: 5}, position: {x: 200, y: 100}});
+            addQTip('c' + response.id, itemLabel, 'c');
+          }
+          else
+          {
+            map.$('#c' + response.id).style("content", response.id + '-' + data.name);
+          }
+        } catch (err) {
+          //console.log(err);
+        }
+
         data.id = response.id;
         $scope.clueList[data.id] = data;
         list.setList($scope.clueList);
@@ -42,14 +61,14 @@ angular.module('scavengerApp')
       $scope.clueCtrlFormData.value = "";
      }
 
-     $scope.editItem = function(item) {
+     $scope.clueCtrlFormData.editItem = function(item) {
       $scope.clueCtrlFormData.id = item.id;
       $scope.clueCtrlFormData.name = item.name;
       $scope.clueCtrlFormData.value = item.value;
       $scope.clueCtrlFormData.storyid = item.storyid;
      }
 
-    $scope.deleteItem = function(item) {
+    $scope.clueCtrlFormData.deleteItem = function(item) {
       var data = {fn: 'deleteEntity', id : item.id, entityName: "Clue"};
 
       list.http(data,
@@ -63,7 +82,7 @@ angular.module('scavengerApp')
       $scope.clueCtrlFormData.reset();
     };
 
-    $scope.changeState = function(stateName, item) {
+    $scope.clueCtrlFormData.changeState = function(stateName, item) {
       $state.go(stateName, {"clueid": item.id, "clue": item});
     };
 }]).filter('orderObjectBy', function(){

@@ -2,19 +2,24 @@ angular.module('scavengerApp')
   .controller('answerCtrl', ['$scope', '$rootScope', '$state', '$http', 'ListService', function($scope, $rootScope, $state, $http, ListService) {
 
     $scope.loaded = false;
-    $scope.clues = {};
 
-    var cluesList = ListService;
+    if ($scope.clueList == null)
+    {
+      $scope.clueList = {};
+      var cluesList = ListService;
+
+      cluesList.http({fn: "getEntities", entityName: "Clue"},
+        function (response) {
+            cluesList.setList(response);
+            $scope.clueList = cluesList.getList();
+        },
+        function(response){
+          console.log(response);
+        });
+
+    }
+
     var list = ListService;
-
-    cluesList.http({fn: "getEntities", entityName: "Clue"},
-      function (response) {
-          cluesList.setList(response);
-          $scope.clues = cluesList.getList();
-      },
-      function(response){
-        console.log(response);
-      });
 
     list.http({fn: "getEntities", entityName: "Answer"},
       function (response) {
@@ -51,7 +56,7 @@ angular.module('scavengerApp')
       $scope.answerCtrlFormData.clueid = -1;
      }
 
-     $scope.editItem = function(item) {
+     $scope.answerCtrlFormData.editItem = function(item) {
       $scope.answerCtrlFormData.id = item.id;
       $scope.answerCtrlFormData.name = item.name;
       $scope.answerCtrlFormData.clueid = item.clueid;
@@ -59,7 +64,7 @@ angular.module('scavengerApp')
       $scope.answerCtrlFormData.storyid = item.storyid;
      }
 
-    $scope.deleteItem = function(item) {
+    $scope.answerCtrlFormData.deleteItem = function(item) {
       var data = {fn: 'deleteEntity', id : item.id, entityName: "Answer"};
 
       list.http(data,
@@ -71,7 +76,7 @@ angular.module('scavengerApp')
           });
     };
 
-    $scope.changeState = function(stateName, item) {
+    $scope.answerCtrlFormData.changeState = function(stateName, item) {
       $state.go(stateName, {"answerid": item.id, "answer": item});
     };
 }]).filter('orderObjectBy', function(){

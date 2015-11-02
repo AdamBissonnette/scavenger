@@ -13,6 +13,9 @@ if (isset($data))
         case 'getEntities':
             $json = getEntities($data, $entityManager);
         break;
+        case 'getEntity':
+            $json = getEntity($data, $entityManager);
+        break;
         case 'deleteEntity':
             $json = deleteEntity($data, $entityManager);
         break;
@@ -21,6 +24,9 @@ if (isset($data))
             break;
         case 'aeanswer':
             $json = addEditAnswer($data, $entityManager);
+            break;
+        case 'linkclues':
+            $json = linkClues($data, $entityManager);
             break;
         case 'aehint':
             $json = addEditHint($data, $entityManager);

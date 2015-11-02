@@ -3,13 +3,13 @@ angular.module('scavengerApp')
     $scope.loaded = false;
     var list = ListService;
 
-    $scope.clues = {};
+    $scope.clueList = {};
     var cluesList = ListService;
 
     cluesList.http({fn: "getEntities", entityName: "Clue"},
       function (response) {
           cluesList.setList(response);
-          $scope.clues = cluesList.getList();
+          $scope.clueList = cluesList.getList();
       },
       function(response){
         console.log(response);
@@ -52,7 +52,7 @@ angular.module('scavengerApp')
       $scope.hintCtrlFormData.priority = 5;
      }
 
-     $scope.editItem = function(item) {
+     $scope.hintCtrlFormData.editItem = function(item) {
       $scope.hintCtrlFormData.id = item.id;
       $scope.hintCtrlFormData.name = item.name;
       $scope.hintCtrlFormData.value = item.value;
@@ -61,7 +61,7 @@ angular.module('scavengerApp')
       $scope.answerCtrlFormData.storyid = item.storyid;
      }
 
-    $scope.deleteItem = function(item) {
+    $scope.hintCtrlFormData.deleteItem = function(item) {
       var data = {fn: 'deleteEntity', id : item.id, entityName: "Hint"};
 
       list.http(data, 

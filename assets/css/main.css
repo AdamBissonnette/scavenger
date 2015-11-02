@@ -49,6 +49,9 @@
 #inputValue {height: 200px;}
 
 .sidebar-wrapper {position: fixed;}
+.storymap .sidebar-wrapper {position: initial}
+.storymap .aeform {width: 100%;}
+.storymap .aelist {display: none;}
 
 #cy {
   height: 85%;
@@ -58,6 +61,8 @@
   left: 0px;
   outline: 1px solid #000;
 }
+
+.qtip-content .item-title {font-size: 1.5em; margin: 0 0 5px; padding: 5px; background: #333; color: #fff; text-align: center; font-weight: bold;}
 
 .filters {}
 
