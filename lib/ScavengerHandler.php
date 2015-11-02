@@ -487,25 +487,32 @@ class ScavengerHandler
             $answers = $matches[1][0];  //answers
             $maxChars = $matches[2][0]; //maxChars
 
-            if (!is_int($maxChars))
-            {
-                $maxChars = 150;
-            }
-
             $value = $matches[3][0];    //default
 
             $answerList = explode('a', trim($answers, "a"));
 
             foreach ($answerList as $answerID) {
-                $repository = $this->entityManager->getRepository("Log");
-                $log = $repository->findOneBy(array('answer' => $answerID, 'hunt' => $this->hunt, 'type' => 3), array('date' => 'DESC'));
-
-                if (isset($log))
+                
+                if (isset($this->answer) && $this->answer->getId() == $answerID)
                 {
-                    if (count($log->getValue <= $maxChars))
+                    if (strlen($this->message["Body"]) <= $maxChars)
                     {
-                        $value = $log->getValue();
+                        $value = $this->message["Body"];
                         break;
+                    }
+                }
+                else
+                {
+                    $repository = $this->entityManager->getRepository("Log");
+                    $log = $repository->findOneBy(array('answer' => $answerID, 'hunt' => $this->hunt, 'type' => 3), array('id' => 'DESC'));
+
+                    if (isset($log))
+                    {
+                        if (strlen($log->getValue()) <= $maxChars)
+                        {
+                            $value = $log->getValue();
+                            break;
+                        }
                     }
                 }
             }
