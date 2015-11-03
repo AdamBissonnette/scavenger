@@ -41,20 +41,22 @@ function loadCytoscape(data)
           var item = data["nodes"][i];
           var id = item["data"]["id"];
 
+          map.$('#' +id).addClass(id);
           addQTip(id, item["data"]["label"], "c");
         }
 
         for (var i = 0; i < data["edges"].length; i++)
         {
-          var item = data["edges"][i];
+          var itemdata = data["edges"][i]["data"];
 
-          if (item["data"]["warning"])
+          if (itemdata["warning"])
           {
-            map.$('#' +item["data"]["id"]).style("line-color", "red").style("target-arrow-color", "red");
-            console.log(map.$('#' +item["data"]["id"]).style());
+            map.$('#' +itemdata["id"]).style("line-color", "red").style("target-arrow-color", "red");
+            //console.log(map.$('#' +itemdata["id"]).style());
           }
+          map.$('#' +itemdata["id"]).addClass("a" + itemdata["item"]);
 
-          addQTip(item["data"]["id"], item["data"]["id"], "a");
+          addQTip(itemdata["id"], itemdata["id"], "a");
         }
       }
     });
@@ -65,6 +67,11 @@ function addQTip(id, label, type)
 {
   var target = "";
   var linkCtrl = "";
+  var element = map.$('#' + id);
+
+  var title = '<div class="item-title">' + label + '</div>';
+  var delCtrl = '<button type="button" class="btn btn-danger" onclick="delItem(\''+ type+'\', %s)">delete</button></div>';
+
   switch (type)
   {
     case 'c':
@@ -73,17 +80,15 @@ function addQTip(id, label, type)
     break;
     case 'a':
       target = "#addAnswer";
+      delCtrl = '<button type="button" class="btn btn-danger" onclick="delLink(\''+ type+'\', %s)">delete</button></div>';
+      linkCtrl = '<div class="form-group"><select id="linkTo%s" class="linkTo form-control"><option value="-1">Select Clue</option></select><button type="button" class="form-control btn btn-primary" onclick="linkAnswer(%s)">Connect</button></div>';
     break;
     case 'h':
       target = "#addHint";
     break;
   }
 
-  var element = map.$('#' + id);
-  var title = '<div class="item-title">' + label + '</div>';
   var editCtrl = '<div class="form-group"><button type="button" class="btn btn-success" onclick="editItem(\''+ type+'\', %s)" data-toggle="modal" data-target="' + target +'">edit</button> ';
-  var delCtrl = '<button type="button" class="btn btn-danger" onclick="delItem(\''+ type+'\', %s)">delete</button></div>';
-
   var controls = (title + editCtrl + delCtrl + linkCtrl).replace(/%s/g, element.data().item);
 
   element.qtip({
@@ -129,7 +134,7 @@ function editItem(itemType, itemId)
   $('#' + itemType + itemId + 'edit').click();
 
   try {
-    map.$('#' + itemType + itemId).qtip('api').hide();
+    map.$('.' + itemType + itemId)[0].qtip('api').hide();
   } catch(e) {console.log(e);}
 }
 
@@ -150,11 +155,30 @@ function linkItem(itemId)
     });
 }
 
+function linkAnswer(itemId)
+{
+  var linkFrom = $('#linkTo' + itemId).val();
+  var selectedData = map.$(':selected').data();
+
+  var data = {fn: "assignAnswer", clueid: linkFrom, answerid: selectedData.item, checked: true};
+
+  $.ajax({url: "callbacks.php",
+      data: JSON.stringify(data),
+      processData: false,
+      dataType: "json",
+      method: "POST",
+      success: function() {createLink({id: selectedData.item}, linkFrom, selectedData.target.replace("c", ""));},
+      error: function (jqXHR, textStatus) {"Request failed: " + textStatus}
+
+  });
+}
+
 function createLink(data, fromid, toid)
 {
   //add new element to the map
-  var itemLabel = "a" + data.id + '-c' + fromid + '-c' + toid;
-  map.add({group: "edges", data: {id: itemLabel, item: data.id, weight: 5, source: "c" + fromid, target: "c" + toid, warning: true}})
+  var answerid = data.id;
+  var itemLabel = "a" + answerid + '-c' + fromid + '-c' + toid;
+  map.add({group: "edges", data: {id: itemLabel, item: answerid, weight: 5, source: "c" + fromid, target: "c" + toid, warning: true}})
     .style("line-color", "red")
     .style("target-arrow-color", "red");
 
@@ -165,10 +189,33 @@ function delItem(itemType, itemId)
 {
   var r = confirm("Are you sure you want to delete this item?");
   if (r == true) {
-    var ident = '#' + itemType + itemId;
-    console.log(ident);
-    $(ident + 'del').click();
+    var ident = itemType + itemId;
+    //console.log(ident);
+    $('#' + ident + 'del').click();
+    try {map.$('.' + ident).qtip('api').hide();} catch(e) {console.log(e);}
     map.$(':selected').remove();
-    try {map.$(ident).qtip('api').hide();} catch(e) {console.log(e);}
+  }
+}
+
+function delLink(itemType, itemId)
+{
+  var r = confirm("Are you sure you want to delete this item?");
+  if (r == true) {
+    var selectedData = map.$(':selected').data();
+    var sourceID = selectedData.source.replace("c", "");
+    var data = {fn: "assignAnswer", clueid: sourceID, answerid: selectedData.item, checked: false};
+
+    $.ajax({url: "callbacks.php",
+        data: JSON.stringify(data),
+        processData: false,
+        dataType: "json",
+        method: "POST",
+        success: function(data) {},
+        error: function (jqXHR, textStatus) {"Request failed: " + textStatus}
+
+    });
+
+    try {map.$(':selected').qtip('api').hide();} catch(e) {console.log(e);}
+    map.$(':selected').remove();
   }
 }
