@@ -390,7 +390,7 @@ class ScavengerHandler
     static function FindStoryByCode($code, $entityManager)
     {
         $repository = $entityManager->getRepository("Story");
-        $story = $repository->findOneBy(array('code' => $code, 'state' => 1));
+        $story = $repository->findOneBy(array('code' => strtoupper($code), 'state' => 1));
 
         return $story;        
     }
@@ -398,7 +398,7 @@ class ScavengerHandler
     static function FindHuntByCode($code, $entityManager)
     {
         $repository = $entityManager->getRepository("Hunt");
-        $hunt = $repository->findOneBy(array('code' => $code, 'end' => null, 'state' => 1));
+        $hunt = $repository->findOneBy(array('code' => strtoupper($code), 'end' => null, 'state' => 1));
 
         return $hunt;
     }
@@ -516,6 +516,8 @@ class ScavengerHandler
                     }
                 }
             }
+
+            $value = preg_replace('/\^|\&|Ø|<|>/', "", $value);
 
             return preg_replace('/\[((?:a\d+)+)(?:,(\d+)?)?(?:,(.+)?)?]/', $value, $message_out);
         }
