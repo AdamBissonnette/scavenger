@@ -380,7 +380,10 @@ class ScavengerHandler
         $hints = $curClue->getHints();
 
         foreach ($hints as $hint) {
-            $curHint = $hint;
+            if ($hint->getState() == 1)
+            {
+                $curHint = $hint;
+            }
             break;
         }
 
