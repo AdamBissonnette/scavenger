@@ -110,12 +110,17 @@ function addEditAnswer($data, $entityManager)
 
 function linkClues($data, $entityManager)
 {
-    $answerId = $data->answerid;
+    $answerId = -1;
+    if (isset($data->answerid))
+    {
+        $answerid = $data->answerid;
+    }
+
     $fromId = $data->fromid;
     $toId = $data->toid;
 
     $answer = $entityManager->find("Answer", $answerId);
-    if (!$answer != null)
+    if ($answerId == -1 || $answer == null)
     {
         $answer = new Answer();
     }
@@ -123,10 +128,16 @@ function linkClues($data, $entityManager)
     $answer->setValue("");
     $fromClue = $entityManager->find("Clue", $fromId);
     $toClue = $entityManager->find("Clue", $toId);
-    $answer->setStory($fromClue->getStory);
+    $answer->setStory($fromClue->getStory());
 
     $answer->setName("a" . $answer->getId() . "-c" . $fromClue->getId() . "-c" . $toClue->getId() );
     $answer->setClue($toClue);
+
+    if ($answerId == -1)
+    {
+        $entityManager->persist($answer);
+    }
+
     $fromClue->addAnswer($answer);
 
     $entityManager->flush();
