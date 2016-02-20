@@ -171,8 +171,15 @@ class ScavengerHandler
                 }
                 else
                 {
-                    $incoming_message_type = LogTypes::TYPE_GLOBAL;
-                    $outgoing_message_type = LogTypes::TYPE_GLOBAL;
+                    if ($incoming_message_type == LogTypes::TYPE_UNKNOWN)
+                    {
+                        $incoming_message_type = LogTypes::TYPE_GLOBAL;
+                    }
+
+                    if ($outgoing_message_type == LogTypes::TYPE_UNKNOWN)
+                    {
+                        $outgoing_message_type = LogTypes::TYPE_GLOBAL;
+                    }
                 }
             }
             else
@@ -187,7 +194,7 @@ class ScavengerHandler
                 }
                 else
                 {
-                    if (preg_match("/^start$/i", trim($body)))
+                    if (preg_match("/^start\.?$/i", trim($body)))
                     {
                         //Send first clue
                         $responseFound = true;
