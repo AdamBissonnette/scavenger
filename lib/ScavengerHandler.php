@@ -98,7 +98,7 @@ class ScavengerHandler
                     $hintFound = false;
 
                     $outgoing_message_type = LogTypes::TYPE_HINT;
-                    $hint = ScavengerHandler::FindHintsForClue($this->clue, $this->entityManager);
+                    $hint = ScavengerHandler::FindHintsForClue($this->clue, $this->hunt, $this->entityManager);
 
                     if ($hint != null)
                     {
@@ -157,7 +157,7 @@ class ScavengerHandler
                         $hintFound = false;
 
                         $outgoing_message_type = LogTypes::TYPE_HINT;
-                        $hint = ScavengerHandler::FindHintsForClue($this->clue, $this->entityManager);
+                        $hint = ScavengerHandler::FindHintsForClue($this->clue, $this->hunt, $this->entityManager);
 
                         if ($hint != null)
                         {
@@ -374,18 +374,27 @@ class ScavengerHandler
         return $story->getEndMessage();        
     }
 
-    static function FindHintsForClue($curClue)
+    static function FindHintsForClue($curClue, $curHunt, $entityManager)
     {
         $curHint = null;
-        $hints = $curClue->getHints();
 
-        foreach ($hints as $hint) {
-            if ($hint->getState() == 1)
-            {
-                $curHint = $hint;
-            }
-            break;
-        }
+        $repository = $entityManager->getRepository("Hint");
+        $searchParams = array('clue' => $curClue->getId(),
+                                           'state' => 1);
+        $orderParams = array('priority' => 'ASC');
+        $hints = $repository->findBy($searchParams, $orderParams);
+        $hintCount = count($hints);
+
+        $repository = $entityManager->getRepository("Log");
+        $searchParams = array('hunt' => $curHunt->getId(),
+                                         'clue' => $curClue->getId(),
+                                         'direction' => LogTypes::DIRECTION_OUTGOING,
+                                         'type' => LogTypes::TYPE_HINT,
+                                         'state' => 1);
+        $logs = $repository->findBy($searchParams);
+        $hintsSent = count($logs);
+
+        $curHint = $hints[$hintsSent % $hintCount];
 
         return $curHint;
     }
