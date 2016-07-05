@@ -15,6 +15,10 @@
             <textarea ng-model="clueCtrlFormData.value" type="text" class="form-control" id="inputClueValue" placeholder="Enter value"></textarea>
         </div>
         <div class="form-group">
+            <label for="inputClueName" class="control-label">From Number</label>
+            <input ng-model="clueCtrlFormData.fromNumber" type="text" class="form-control" id="inputFromNumber" placeholder="Enter from number">
+        </div>
+        <div class="form-group">
             <label for="inputClueStory" class="control-label">Story ID</label>
             <select class="form-control" id="inputClueStory" ng-model="clueCtrlFormData.storyid">
                 <option value="0"></option>
@@ -56,6 +60,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Value</th>
+        <th>From Number</th>
         <th>Is MMS</th>
         <th>Char Count</th>
         <th>SMS Count</th>
@@ -68,6 +73,7 @@
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td class="value">{{ item.value }}</td>
+        <td>{{ item.fromNumber }}</td>
         <td>{{item.value.indexOf("Ø") > -1}}</td>
         <td>{{item.value.length}}</td>
         <td>{{item.value.length / 160}}</td>

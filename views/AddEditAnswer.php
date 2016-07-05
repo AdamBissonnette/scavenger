@@ -22,6 +22,10 @@
                 <textarea ng-model="answerCtrlFormData.value" type="text" class="form-control" id="inputValue" placeholder="Enter value"></textarea>
             </div>
             <div class="form-group">
+                <label for="inputTo" class="control-label">To</label>                
+                <input ng-model="answerCtrlFormData.to" type="text" class="form-control" id="inputTo" placeholder="Enter To Number">
+            </div>
+            <div class="form-group">
                 <label for="inputStory" class="control-label">Story ID</label>
                 <select class="form-control" id="inputStory" ng-model="answerCtrlFormData.storyid">
                     <option value="0"></option>
@@ -59,6 +63,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Value</th>
+            <th>To Number</th>
             <th>Next Clue</th>
             <th>Story</th>
             <th>Controls</th>
@@ -67,6 +72,7 @@
             <td> {{ item.id }} </td>
             <td> {{ item.name }} </td>
             <td> {{ item.value }} </td>
+            <td> {{ item.to }} </td>
             <td> {{ item.clueid }} </td>
             <td> {{ item.storyid }}</td>
             <td class="controls">

@@ -49,6 +49,7 @@ function addEditClue($data, $entityManager)
     $id = $data->id;
     $name = $data->name;
     $value = $data->value;
+    $fromNumber = $data->fromNumber;
     $story = $data->storyid;
 
     $clue = $entityManager->find("Clue", $id);
@@ -58,10 +59,14 @@ function addEditClue($data, $entityManager)
 
     $clue->setName($name);
     $clue->setValue($value);
+    $clue->setFromNumber($fromNumber);
 
     if ($story != null)
     {
-        $story = $entityManager->find("Story", $data->storyid);
+        if ($story > 0)
+        {
+            $story = $entityManager->find("Story", $data->storyid);
+        }
     }
 
     $clue->setStory($story);
@@ -77,6 +82,7 @@ function addEditAnswer($data, $entityManager)
     $id = $data->id;
     $name = $data->name;
     $value = $data->value;
+    $toNumber = $data->to;
     $story = $data->storyid;
 
     $answer = $entityManager->find("Answer", $id);
@@ -86,6 +92,7 @@ function addEditAnswer($data, $entityManager)
 
     $answer->setName($name);
     $answer->setValue($value);
+    $answer->setTo($toNumber);
     $clue = $entityManager->find("Clue", $data->clueid);
     $data->checked = ($clue != null)?1:0;
 

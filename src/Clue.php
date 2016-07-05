@@ -20,6 +20,11 @@ class Clue implements JsonSerializable
      * @var string
      */
     protected $value;
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $fromNumber="";
 
     /**
      * @ManyToOne(targetEntity="Story", inversedBy="clues")
@@ -81,6 +86,16 @@ class Clue implements JsonSerializable
     public function setValue($value)
     {
         $this->value = $value;
+    }
+
+    public function getFromNumber($fromNumber)
+    {
+        $this->fromNumber = $fromNumber;
+    }
+
+    public function setFromNumber($fromNumber)
+    {
+        return $this->fromNumber;
     }
 
     public function getState()
@@ -232,6 +247,7 @@ class Clue implements JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'value'=> $this->getValue(),
+            'fromNumber'=>$this->fromNumber,
             'answers' => $this->answers->toArray(),
             'trailings' => $this->trailings->toArray(),
             'hints' => $this->hints->toArray(),
@@ -247,6 +263,7 @@ class Clue implements JsonSerializable
             'id' => array("label" => "ID", "disabled" => true, "type" => "text", "value" => $values["id"]),
             'name'=> array("label" => "Name", "disabled" => false, "type" => "text", "value" => $values["name"]),
             'value'=> array("label" => "Description", "disabled" => false, "type" => "textarea", "value" => $values["value"]),
+            'fromNumber'=>array("label" => "From Number", "disabled" => false, "type" => "text", "value" => $values["fromNumber"]),
             // 'answers' => array("label" => "Answers", "disabled" => false, "type" => "list", "value" => $values["answers"])
         );
     }

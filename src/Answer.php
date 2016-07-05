@@ -22,6 +22,11 @@ class Answer implements JsonSerializable
      */
     protected $value;
     /**
+     * @Column(type="string")    
+     * @var string
+     */
+    protected $toNumber="";
+    /**
      * @ManyToOne(targetEntity="Clue", inversedBy="trailings")
      **/
     protected $clue;
@@ -58,6 +63,16 @@ class Answer implements JsonSerializable
     public function setValue($value)
     {
         $this->value = $value;
+    }
+
+    public function getTo()
+    {
+        return $this->toNumber;
+    }
+
+    public function setTo($toNumber)
+    {
+        $this->toNumber = $toNumber;
     }
 
     public function getState()
@@ -125,6 +140,7 @@ class Answer implements JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'value'=> $this->value,
+            'to'=> $this->toNumber,
             'clueid' => $this->getClueID(),
             'storyid' => $this->getStoryID()
         );
@@ -136,6 +152,7 @@ class Answer implements JsonSerializable
             'id' => array("type" => "text", "value" => $this->id),
             'name' => array("type" => "text", "value" => $this->name),
             'value'=> array("type" => "textarea", "value" => $this->value),
+            'to'=> array("type" => "text", "value" => $this->toNumber),
             'clueid' => array("type" => "select", "value" => $this->getClueID(),
              "data" => array("fn" => "gclues", "format" => "{{item.id}} | {{item.name}}")
              )

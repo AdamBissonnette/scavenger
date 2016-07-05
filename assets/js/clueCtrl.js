@@ -17,7 +17,7 @@ angular.module('scavengerApp')
         console.log(response);
       });
 
-    $scope.clueCtrlFormData = {id : "-1", name: "", value : "", storyid : "-1"};
+    $scope.clueCtrlFormData = {id : "-1", name: "", value : "", fromNumber : "", storyid : "-1"};
 
     $scope.clueCtrlFormData.submit = function(item, event) {
       var navstoryid = -1;
@@ -25,7 +25,7 @@ angular.module('scavengerApp')
       {
         navstoryid = $scope.nav.storyid;
       }
-      var data = {fn: "aeclue", id : $scope.clueCtrlFormData.id, name: $scope.clueCtrlFormData.name, value : $scope.clueCtrlFormData.value, storyid : $scope.clueCtrlFormData.storyid}
+      var data = {fn: "aeclue", id : $scope.clueCtrlFormData.id, name: $scope.clueCtrlFormData.name, value : $scope.clueCtrlFormData.value, fromNumber : $scope.clueCtrlFormData.fromNumber, storyid : $scope.clueCtrlFormData.storyid}
       list.http(data,
         function(response) {
 
@@ -59,12 +59,15 @@ angular.module('scavengerApp')
       $scope.clueCtrlFormData.id = -1;
       $scope.clueCtrlFormData.name = "";
       $scope.clueCtrlFormData.value = "";
+      $scope.clueCtrlFormData.fromNumber = "";  
+      $scope.clueCtrlFormData.storyid = -1;  
      }
 
      $scope.clueCtrlFormData.editItem = function(item) {
       $scope.clueCtrlFormData.id = item.id;
       $scope.clueCtrlFormData.name = item.name;
       $scope.clueCtrlFormData.value = item.value;
+      $scope.clueCtrlFormData.fromNumber = item.fromNumber;
       $scope.clueCtrlFormData.storyid = item.storyid;
      }
 
