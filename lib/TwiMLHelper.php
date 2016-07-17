@@ -18,6 +18,13 @@ function format_TwiML($response)
     $response_template = "<Response>%s</Response>";
 
     $response_body = "";
+    $response_from = "";
+
+    if (isset($response["from"]))
+    {
+        $response_from = $response["from"];
+    }
+
     $messages = explode("^", $message);
 
     if (count($messages) > 1)
@@ -27,12 +34,12 @@ function format_TwiML($response)
             array_shift($messages);
         }
         foreach ($messages as $cur_message) {
-            $response_body .= format_Message_Service($cur_message);
+            $response_body .= format_Message_Service($cur_message, $response_from);
         }
     }
     else
     {
-        $response_body = format_Message_Service($message);
+        $response_body = format_Message_Service($message, $response_from);
     }
 
     $to_template = 'to="%s"';
@@ -52,10 +59,16 @@ function format_TwiML($response)
     return sprintf($response_template, $response);
 }
 
-function format_Message_Service($message_in)
+function format_Message_Service($message_in, $from_number="")
 {
+    $from_attr = "";
+    if ($from_number != "")
+    {  
+        $from_attr = sprintf(' from="+%s"', $from_number);
+    }
+
     $mms_code = "Ø";
-    $message_template = "<Message @to>%s</Message>";
+    $message_template = "<Message @to" . $from_attr . ">%s</Message>";
     $sms_template = "<Body>%s</Body>";
     $mms_template = "<Media>%s</Media>";
 

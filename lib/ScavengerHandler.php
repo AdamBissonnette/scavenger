@@ -129,24 +129,33 @@ class ScavengerHandler
 
                     if (isset($this->answer))
                     {
-                        //Get the next clue from the answer and format that as a 
-                        $nextClue = $this->answer->getClue();
-
-                        if (isset($nextClue))
+                        if ($this->answer->getToNumber() == $this->message["To"])
                         {
-                            //Send the next clue
-                            //Update the currentClue
-                            $response_body = $this->replace_variables($nextClue->getValue());
-                            $this->hunt->setCurrentClue($nextClue);
-                            $this->entityManager->flush();
-                            $outgoing_message_type = LogTypes::TYPE_CLUE;
+                            //Get the next clue from the answer and format that as a 
+                            $nextClue = $this->answer->getClue();
+
+                            if (isset($nextClue))
+                            {
+                                //Send the next clue
+                                //Update the currentClue
+                                $response_body = $this->replace_variables($nextClue->getValue());
+                                $this->hunt->setCurrentClue($nextClue);
+                                $this->entityManager->flush();
+                                $outgoing_message_type = LogTypes::TYPE_CLUE;
+                            }
+                            else
+                            {
+                                $response_body = ScavengerHandler::GetEndMessage(1, $this->entityManager);;
+                                //$this->hunt->setCurrentClue(null);
+                                $this->entityManager->flush();
+                                $outgoing_message_type = LogTypes::TYPE_END;
+                            }
                         }
                         else
                         {
-                            $response_body = ScavengerHandler::GetEndMessage(1, $this->entityManager);;
-                            //$this->hunt->setCurrentClue(null);
+                            $response_body = "Oops, I think you meant to text that to someone else in the adventure.";
                             $this->entityManager->flush();
-                            $outgoing_message_type = LogTypes::TYPE_END;
+                            $outgoing_message_type = LogTypes::TYPE_HINT;
                         }
                     }
                     else
@@ -245,7 +254,18 @@ class ScavengerHandler
             $response_to[] .= $this->message["From"];
         }
 
-        $response = array("body" => $response_body, "recipients" => $response_to);
+        $response_from = "";
+
+        if ($this->clue->getFromNumber() != "")
+        {
+            $fromNumber = $this->clue->getFromNumber();
+            if ($fromNumber != "")
+            {
+                $response_from = $fromNumber;
+            } 
+        }
+
+        $response = array("body" => $response_body, "recipients" => $response_to, "from" => $response_from);
 
         return $response;
     }
@@ -541,8 +561,6 @@ class ScavengerHandler
             return preg_replace('/\[((?:a\d+)+)(?:,(\d+)?)?(?:,(.+)?)?]/', $value, $message_out);
         }
 
-        return $message_out;
-
-        
+        return $message_out;   
     }
 }
