@@ -4,7 +4,7 @@
 
     <form action="PhpHandler.php" method="get" target="resultsFrame">
         <div class="form-group">
-            <label for="From" class="control-label">Phone</label>
+            <label for="From" class="control-label">From Number</label>
             <input type="text" class="form-control" id="From" name="From" value="+13063704254">
         </div>
         <div class="form-group">
@@ -16,13 +16,16 @@
             <input type="text" class="form-control" id="NumMedia" name="NumMedia" value="0" />
         </div>
         <div class="form-group">
+            <label for="To" class="control-label">To Number</label>
+            <input type="text" class="form-control" id="To" name="To" value="TwiMLTest" />
+        </div>
+        <div class="form-group">
             <label for="format" class="control-label">Output Format</label>
             <select class="form-control"  id="format" name="format">
                 <option value="text">Text</option>
                 <option value="xml">XML</option>
             </select>
         </div>
-        <input type="hidden" name="To" value="TwiMLTest" />
         <div class="form-group">
             <div>
                 <input type="submit" class="btn btn-primary" />
