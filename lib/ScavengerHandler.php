@@ -129,7 +129,7 @@ class ScavengerHandler
 
                     if (isset($this->answer))
                     {
-                        if ($this->answer->getToNumber() == $this->message["To"])
+                        if ($this->answer->getTo() == $this->message["To"])
                         {
                             //Get the next clue from the answer and format that as a 
                             $nextClue = $this->answer->getClue();
