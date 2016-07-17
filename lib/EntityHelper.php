@@ -63,10 +63,7 @@ function addEditClue($data, $entityManager)
 
     if ($story != null)
     {
-        if ($story > 0)
-        {
-            $story = $entityManager->find("Story", $data->storyid);
-        }
+        $story = $entityManager->find("Story", $data->storyid);
     }
 
     $clue->setStory($story);
