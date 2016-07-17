@@ -90,12 +90,12 @@ class Clue implements JsonSerializable
 
     public function getFromNumber($fromNumber)
     {
-        $this->fromNumber = $fromNumber;
+        return $this->fromNumber;
     }
 
     public function setFromNumber($fromNumber)
     {
-        return $this->fromNumber;
+        $this->fromNumber = $fromNumber;
     }
 
     public function getState()
